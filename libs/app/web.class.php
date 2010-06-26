@@ -3,6 +3,18 @@
 require_once('org.octris.core/app.class.php');
 
 namespace org\octris\core\app {
+    /****c* app/web
+     * NAME
+     *      web
+     * FUNCTION
+     *      core class for web applications
+     * COPYRIGHT
+     *      copyright (c) 2010 by Harald Lapp
+     * AUTHOR
+     *      Harald Lapp <harald@octris.org>
+     ****
+     */
+
     class web extends \org\octris\core\app {
     }
 
