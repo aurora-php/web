@@ -1,8 +1,8 @@
 <?php
 
-require_once('org.octris.core/app.class.php');
-
 namespace org\octris\core\app {
+    require_once('org.octris.core/app.class.php');
+
     /****c* app/web
      * NAME
      *      web
