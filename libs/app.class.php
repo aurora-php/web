@@ -16,6 +16,16 @@ namespace org\octris\core {
      */
 
     class app {
+        /****v* app/$instance
+         * SYNOPSIS
+         */
+        private static $instance = null;
+        /*
+         * FUNCTION
+         *      application instance
+         ****
+         */
+        
         /****m* app/__construct
          * SYNOPSIS
          */
@@ -57,7 +67,11 @@ namespace org\octris\core {
          ****
          */
         {
-            return new static();
+            if (is_null(self::$instance)) {
+                self::$instance = new static();
+            }
+            
+            return self::$instance;
         }
     }
 
