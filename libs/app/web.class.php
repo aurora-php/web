@@ -27,5 +27,5 @@ namespace org\octris\core\app {
     $_SERVER  = new validate\wrapper($_SERVER);
     $_ENV     = new validate\wrapper($_ENV);
     $_REQUEST = new validate\wrapper($_REQUEST);
+    $_FILES   = new validate\wrapper($_FILES);
 }
-
