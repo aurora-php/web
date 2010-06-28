@@ -1,6 +1,8 @@
 <?php
 
 namespace org\octris\core\app {
+    use \org\octris\core\validate as validate;
+    
     require_once('org.octris.core/app.class.php');
 
     /****c* app/web
@@ -19,11 +21,11 @@ namespace org\octris\core\app {
     }
 
     // enable validation for superglobals
-    $_COOKIE  = new \org\octris\core\validate\wrapper($_COOKIE);
-    $_GET     = new \org\octris\core\validate\wrapper($_GET);
-    $_POST    = new \org\octris\core\validate\wrapper($_POST);
-    $_SERVER  = new \org\octris\core\validate\wrapper($_SERVER);
-    $_ENV     = new \org\octris\core\validate\wrapper($_ENV);
-    $_REQUEST = new \org\octris\core\validate\wrapper($_REQUEST);
+    $_COOKIE  = new validate\wrapper($_COOKIE);
+    $_GET     = new validate\wrapper($_GET);
+    $_POST    = new validate\wrapper($_POST);
+    $_SERVER  = new validate\wrapper($_SERVER);
+    $_ENV     = new validate\wrapper($_ENV);
+    $_REQUEST = new validate\wrapper($_REQUEST);
 }
 
