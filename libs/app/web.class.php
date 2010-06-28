@@ -17,7 +17,23 @@ namespace org\octris\core\app {
      ****
      */
 
-    class web extends \org\octris\core\app {
+    abstract class web extends \org\octris\core\app {
+        /****m* web/getTemplate
+         * SYNOPSIS
+         */
+        function getTemplate()
+        /*
+         * FUNCTION
+         *      create new instance of template engine and setup common stuff needed for templates of a web application
+         * OUTPUTS
+         *      (tpl) -- instance of template engine
+         ****
+         */
+        {
+            $tpl = new \org\octris\core\tpl(\org\octris\core\tpl::T_WEB);
+            
+            return $tpl;
+        }
     }
 
     // enable validation for superglobals
