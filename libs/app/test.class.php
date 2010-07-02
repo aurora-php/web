@@ -30,7 +30,7 @@ namespace org\octris\core\app {
          *      a method which is protected / private and make it possible
          *      to write a testcase for it.
          * INPUTS
-         *      * $class (string) -- name of class the method is located in
+         *      * $class (mixed) -- name or instance of class the method is located in
          *      * $name (string) -- name of method to enable access to
          * OUTPUTS
          *      (ReflectionMethod) -- method object
@@ -54,7 +54,7 @@ namespace org\octris\core\app {
          * FUNCTION
          *      Implements the same as ~getMethod~ for object properties.
          * INPUTS
-         *      * $class (string) -- name of class the property is located in
+         *      * $class (mixed) -- name or instance of class the property is located in
          *      * $name (string) -- name of property to enable access to
          * OUTPUTS
          *      (ReflectionProperty) -- property object
