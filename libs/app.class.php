@@ -50,7 +50,7 @@ namespace org\octris\core {
          ****
          */
         {
-            $pkg = preg_replace('|\\\\|', '/', preg_replace('|\\\\|', '.', $classpath, 2)) . '.class.php';
+            $pkg = preg_replace('|\\\\|', '/', preg_replace('|\\\\|', '.', ltrim($classpath, '\\\\'), 2)) . '.class.php';
 
             require_once($pkg);
         }
