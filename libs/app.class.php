@@ -55,6 +55,25 @@ namespace org\octris\core {
             require_once($pkg);
         }
         
+        /****m* app/triggerError
+         * SYNOPSIS
+         */
+        public static function triggerError($code, $string, $file, $line, $context)
+        /*
+         * FUNCTION
+         *      catches non OO errors and convert them to real exceptions
+         * INPUTS
+         *      * $code (int) -- error code
+         *      * $string (string) -- the error message
+         *      * $file (string) -- the name of the file the error was raised
+         *      * $line (int) -- the line number in which the error was raised
+         *      * $context (array) -- array of the active symbol table, when error was raised
+         ****
+         */
+        {
+            // TODO: implementation
+        }
+        
         /****m* app/getInstance
          * SYNOPSIS
          */
@@ -76,5 +95,6 @@ namespace org\octris\core {
     }
 
     spl_autoload_register(array('\org\octris\core\app', 'autoload'));
+    set_error_handler(array('\org\octris\core\app', 'triggerError'), E_ALL);
 }
 
