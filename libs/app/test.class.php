@@ -19,7 +19,7 @@ namespace org\octris\core\app {
      ****
      */
 
-    class test extends \org\octris\core\app {
+    class test {
         /****m* test/getMethod
          * SYNOPSIS
          */
