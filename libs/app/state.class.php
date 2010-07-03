@@ -118,7 +118,7 @@ namespace org\octris\core\app {
 
             if (hash(self::hash_algo, $frozen . $secret) != $sum) {
                 // error
-                if ($config->get('common.application.development')) {
+                if (config::get('common.application.development')) {
                     // debug output only on development server
                     print "$sum != " . hash(self::hash_algo, $frozen . $secret) . "<br />";
                     print $debug . "<br />";
