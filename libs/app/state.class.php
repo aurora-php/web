@@ -113,7 +113,7 @@ namespace org\octris\core\app {
 
             $pos    = (int)strpos($state, '|');
             $sum    = substr($state, 0, $pos);
-            $frozen = substr($state, $pos);
+            $frozen = substr($state, $pos + 1);
             $secret = (!is_null($secret) ? $secret : config::get('common.state.secret'));
 
             if (hash(self::hash_algo, $frozen . $secret) != $sum) {
