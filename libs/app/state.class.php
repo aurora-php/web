@@ -1,6 +1,8 @@
 <?php
 
 namespace org\octris\core\app {
+    use \org\octris\core\config as config;
+    
     /****c* app/state
      * NAME
      *      state
