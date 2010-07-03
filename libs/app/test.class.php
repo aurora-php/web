@@ -44,7 +44,7 @@ namespace org\octris\core\app {
         /****m* test/getMethod
          * SYNOPSIS
          */
-        static function getMethod($class, $name)
+        public static function getMethod($class, $name)
         /*
          * FUNCTION
          *      This is a helper method to unit tests to enable access to
@@ -70,7 +70,7 @@ namespace org\octris\core\app {
         /****m* test/getProperty
          * SYNOPSIS
          */
-        function getProperty($class, $name)
+        public static function getProperty($class, $name)
         /*
          * FUNCTION
          *      Implements the same as ~getMethod~ for object properties.
