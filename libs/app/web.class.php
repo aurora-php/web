@@ -18,6 +18,32 @@ namespace org\octris\core\app {
      */
 
     abstract class web extends \org\octris\core\app {
+        /****v* web/$headers
+         * SYNOPSIS
+         */
+        protected $headers = array();
+        /*
+         * FUNCTION
+         *      headers to push out when rendering website
+         ****
+         */
+        
+        /****m* web/addHeader
+         * SYNOPSIS
+         */
+        function addHeader($name, $value)
+        /*
+         * FUNCTION
+         *      Adds header to output when rendering website
+         * INPUTS
+         *      * $name (string) -- name of header to add
+         *      * $value (string) -- value to set for header
+         ****
+         */
+        {
+            $this->headers[$name] = $value;
+        }
+        
         /****m* web/getTemplate
          * SYNOPSIS
          */
