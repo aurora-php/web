@@ -125,7 +125,7 @@ namespace org\octris\core\app {
                     print_r(unserialize(gzuncompress($frozen)));
                 }
 
-                throw new Exception('hack attempt - checksum does not match!');
+                throw new \Exception('hack attempt - checksum does not match!');
             } else {
                 return new static(unserialize(gzuncompress($frozen)));
             }
