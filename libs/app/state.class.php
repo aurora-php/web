@@ -86,8 +86,6 @@ namespace org\octris\core\app {
          */
         {
             $frozen = gzcompress(serialize($this)); 
-            $crypt  = self::getCrypt();           
-
             $secret = (!is_null($secret) ? $secret : config::get('common.state.secret'));
             $sum    = hash(self::hash_algo, $frozen . $secret);
             $return = base64_encode($sum . '|' . $frozen);
