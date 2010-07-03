@@ -62,12 +62,16 @@ namespace org\octris\core\app {
         }
     }
 
-    // enable validation for superglobals
-    $_COOKIE  = new validate\wrapper($_COOKIE);
-    $_GET     = new validate\wrapper($_GET);
-    $_POST    = new validate\wrapper($_POST);
-    $_SERVER  = new validate\wrapper($_SERVER);
-    $_ENV     = new validate\wrapper($_ENV);
-    $_REQUEST = new validate\wrapper($_REQUEST);
-    $_FILES   = new validate\wrapper($_FILES);
+    if (!defined('OCTRIS_WRAPPER')) {
+        // enable validation for superglobals
+        define('OCTRIS_WRAPPER', true);
+
+        $_COOKIE  = new validate\wrapper($_COOKIE);
+        $_GET     = new validate\wrapper($_GET);
+        $_POST    = new validate\wrapper($_POST);
+        $_SERVER  = new validate\wrapper($_SERVER);
+        $_ENV     = new validate\wrapper($_ENV);
+        $_REQUEST = new validate\wrapper($_REQUEST);
+        $_FILES   = new validate\wrapper($_FILES);
+    }
 }

@@ -35,10 +35,6 @@ namespace org\octris\core\app {
             $pkg   = preg_replace('|\\\\|', '/', preg_replace('|\\\\|', '.', ltrim($classpath, '\\\\'), 2)) . '.class.php';
             
             require_once($pkg);
-
-            if ($class == 'cli' || $class == 'web') {
-                $_SERVER = new test\wrapper($_SERVER);
-            }
         }
         
         /****m* test/getMethod
@@ -91,4 +87,17 @@ namespace org\octris\core\app {
     }
 
     spl_autoload_register(array('\org\octris\core\app\test', 'autoload'));
+
+    if (!defined('OCTRIS_WRAPPER')) {
+        // enable validation for superglobals
+        define('OCTRIS_WRAPPER', true);
+
+        $_COOKIE  = new test\wrapper($_COOKIE);
+        $_GET     = new test\wrapper($_GET);
+        $_POST    = new test\wrapper($_POST);
+        $_SERVER  = new test\wrapper($_SERVER);
+        $_ENV     = new test\wrapper($_ENV);
+        $_REQUEST = new test\wrapper($_REQUEST);
+        $_FILES   = new test\wrapper($_FILES);
+    }
 }
