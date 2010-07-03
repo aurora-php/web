@@ -1,7 +1,6 @@
 <?php
 
 namespace org\octris\core\app {
-    require_once('org.octris.core/app.class.php');
     require_once('PHPUnit/Framework.php');
     
     /****c* app/test
@@ -20,6 +19,28 @@ namespace org\octris\core\app {
      */
 
     class test {
+        /****m* test/autoload
+         * SYNOPSIS
+         */
+        public static function autoload($classpath)
+        /*
+         * FUNCTION
+         *      class autoloader
+         * INPUTS
+         *      * $classpath (string) -- path of class to load
+         ****
+         */
+        {
+            $class = substr($classpath, strrpos($classpath, '\\') + 1);
+            $pkg   = preg_replace('|\\\\|', '/', preg_replace('|\\\\|', '.', ltrim($classpath, '\\\\'), 2)) . '.class.php';
+            
+            require_once($pkg);
+
+            if ($class == 'cli' || $class == 'web') {
+                $_SERVER = new test\wrapper($_SERVER);
+            }
+        }
+        
         /****m* test/getMethod
          * SYNOPSIS
          */
@@ -68,4 +89,6 @@ namespace org\octris\core\app {
             return $property;
         }
     }
+
+    spl_autoload_register(array('\org\octris\core\app\test', 'autoload'));
 }
