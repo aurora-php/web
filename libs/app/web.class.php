@@ -31,7 +31,7 @@ namespace org\octris\core\app {
         /****m* web/addHeader
          * SYNOPSIS
          */
-        function addHeader($name, $value)
+        public function addHeader($name, $value)
         /*
          * FUNCTION
          *      Adds header to output when rendering website
@@ -47,7 +47,7 @@ namespace org\octris\core\app {
         /****m* web/getTemplate
          * SYNOPSIS
          */
-        function getTemplate()
+        public function getTemplate()
         /*
          * FUNCTION
          *      create new instance of template engine and setup common stuff needed for templates of a web application
