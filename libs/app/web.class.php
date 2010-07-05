@@ -27,6 +27,61 @@ namespace org\octris\core\app {
          *      headers to push out when rendering website
          ****
          */
+
+        /****m* web/process
+         * SYNOPSIS
+         */
+        public function process()
+        /*
+         * FUNCTION
+         *      Main application processor. This is the only method that needs to
+         *      be called to invoke an application. Internally this method determines
+         *      the last visited page and handles everything required to determine
+         *      the next page to display.
+         * EXAMPLE
+         *      simple example to invoke an application, assuming that "test" implements
+         *      an application base on lima_apps
+         *
+         *      ..  source: php
+         *
+         *          $app = new test();
+         *          $app->process();
+         ****
+         */
+        {
+            $last_page = $this->getLastPage();
+            $action    = $last_page->getAction();
+            $last_page->validate($this, $action);
+
+            $next_page = $last_page->getNextPage($this, $this->entry_page);
+
+            $max = 3;
+
+            do {
+                $redirect_page = $next_page->prepareRender($this, $last_page, $action);
+
+                if (is_object($redirect_page) && $next_page != $redirect_page) {
+                    $next_page = $redirect_page;
+                } else {
+                    break;
+                }
+            } while (--$max);
+
+            // fix security context
+            $secure = $next_page->isSecure();
+
+            if ($secure != $this->isSSL() && $this->getRequestMethod() == 'GET') {
+                $this->redirectHttp(($secure ? $this->getSSLUrl() : $this->getNonSSLUrl()));
+                exit;
+            }
+
+            // process with page
+            $this->setLastPage($next_page);
+
+            $next_page->prepareMessages($this);
+            $next_page->sendHeaders($this->headers);
+            $next_page->render($this);
+        }
         
         /****m* web/addHeader
          * SYNOPSIS
