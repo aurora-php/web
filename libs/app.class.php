@@ -15,7 +15,7 @@ namespace org\octris\core {
      ****
      */
 
-    class app {
+    abstract class app {
         /****v* app/$instance
          * SYNOPSIS
          */
@@ -37,6 +37,16 @@ namespace org\octris\core {
          */
         {
         }
+
+        /****m* app/process
+         * SYNOPSIS
+         */
+        abstract public function process();
+        /*
+         * FUNCTION
+         *      methods to be implemented by application controller
+         ****
+         */
         
         /****m* app/autoload
          * SYNOPSIS
