@@ -1,6 +1,9 @@
 <?php
 
-namespace org\octris\core\app {
+namespace org\octris\core\app\web {
+    use \org\octris\core\app\web as app;
+    use \org\octris\core\validate as validate;
+    
     /****c* app/page
      * NAME
      *      page
@@ -72,8 +75,6 @@ namespace org\octris\core\app {
         /*
          * FUNCTION
          *      constructor
-         * INPUTS
-         *      * $app (object) -- application object
          ****
          */
         {
@@ -119,7 +120,7 @@ namespace org\octris\core\app {
         /****m* page/validate
          * SYNOPSIS
          */
-        function validate(lima_app $app, $action)
+        public function validate(lima_app $app, $action)
         /*
          * FUNCTION
          *      apply a validation ruleset
@@ -131,76 +132,18 @@ namespace org\octris\core\app {
          ****
          */
         {
-            return \org\octris\core\validate::getInstance()->validate($this, $action);
-        }
-
-        /****m* page/getAction
-         * SYNOPSIS
-         */
-        function getAction()
-        /*
-         * FUNCTION
-         *      determine the action the page called with
-         * OUTPUTS
-         *      (string) -- name of action
-         ****
-         */
-        {
-            static $action = '';
-
-            if ($action != '') {
-                return $action;
-            }
-
-            $method = strtoupper($_SERVER->import('REQUEST_METHOD', new lima_validate_alpha())->value);
-
-            if ($method == 'POST' || $method == 'GET') {
-                $method = ($method == 'POST' ? $_POST : $_GET);
-                $tmp    = $method->import('ACTION', new lima_validate_alphanum());
-                $action = ($tmp->isValid ? $tmp->value : $action);
-            }
-
-            if ($action == '') {
-                $arr = $_REQUEST->getIterator();
-
-                while ($arr->valid()) {
-                    if (preg_match('/^ACTION_([a-zA-Z]+)$/', $arr->key(), $m)) {
-                        $action = $m[1];
-
-                        return $action;
-                    }
-
-                    $arr->next();
-                }
-
-                $path_info = $_SERVER->import('PATH_INFO', new lima_validate_print());
-
-                if ($path_info->isValid) {
-                    $path = explode('/', substr($path_info->value, 1));
-
-                    if ($action = trim(array_shift($path))) {
-                        return $action;
-                    }
-                }
-            }
-
-            if ($action == '') {
-                $action = 'default';
-            }
-
-            return $action;
+            return validate::getInstance()->validate($this, $action);
         }
 
         /****m* page/getNextPage
          * SYNOPSIS
          */
-        function getNextPage(lima_app $app, $entry_page)
+        function getNextPage(lima_app $app)
         /*
          * FUNCTION
          *      get's next page from action and next_pages array of last page
          * INPUTS
          *      * $app (object) -- application object
-         *      * $entry_page (string) -- name of the entry page for possible fallback
          * OUTPUTS
          *      (object) -- instance of next page
          ****
