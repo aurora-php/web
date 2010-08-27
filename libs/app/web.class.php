@@ -18,6 +18,17 @@ namespace org\octris\core\app {
      */
 
     abstract class web extends \org\octris\core\app {
+        /****d* web/T_REQ_POST, T_REQ_GET
+         * SYNOPSIS
+         */
+        const T_REQ_POST = 'POST';
+        const T_REQ_GET  = 'GET';
+        /*
+         * FUNCTION
+         *      restuest methods
+         ****
+         */
+        
         /****v* web/$headers
          * SYNOPSIS
          */
@@ -49,8 +60,10 @@ namespace org\octris\core\app {
          ****
          */
         {
+            $module = self::getModule();
+            $action = self::getAction();
+
             $last_page = $this->getLastPage();
-            $action    = $last_page->getAction();
             $last_page->validate($this, $action);
 
             $next_page = $last_page->getNextPage($this, $this->entry_page);
@@ -97,6 +110,127 @@ namespace org\octris\core\app {
          */
         {
             $this->headers[$name] = $value;
+        }
+        
+        /****m* page/getModule
+         * SYNOPSIS
+         */
+        public static function getModule($action)
+        /*
+         * FUNCTION
+         *      Determine requested module with specified action. If a module was determined but the action is not
+         *      valid, this method will return default application module. The module must be reachable from inside
+         *      the application.
+         * OUTPUTS
+         *      (string) -- name of module requested
+         ****
+         */
+        {
+            static $module = '';
+            
+            if ($module != '') {
+                return $module;
+            }
+
+            $method = app::getRequestMethod();
+
+            if ($method == 'POST' || $method == 'GET') {
+                // try to determine action from a request parameter named ACTION
+                $method = ($method == 'POST' ? $_POST : $_GET);
+            
+                if ($method->validate('MODULE', validate::T_ALPHANUM)) {
+                    $module = $method['MODULE']->value;
+                }
+
+                if ($module == '') {
+                    // try to determine action from a request parameter named ACTION_...
+                    foreach ($method as $k => $v) {
+                        if (preg_match('/^MODULE_([a-zA-Z]+)$/', $k, $match)) {
+                            $module = $match[1];
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if ($module == '') {
+                $module = 'default';
+            } elseif (isset(self::$modules[$module])) {
+                $class = self::$modules[$module];
+                $class::entry
+            }
+
+            return $action;
+        }
+
+        /****m* page/getAction
+         * SYNOPSIS
+         */
+        public static function getAction()
+        /*
+         * FUNCTION
+         *      determine the action the page called with
+         * OUTPUTS
+         *      (string) -- name of action
+         ****
+         */
+        {
+            static $action = '';
+
+            if ($action != '') {
+                return $action;
+            }
+
+            $method = app::getRequestMethod();
+
+            if ($method == 'POST' || $method == 'GET') {
+                // try to determine action from a request parameter named ACTION
+                $method = ($method == 'POST' ? $_POST : $_GET);
+            
+                if ($method->validate('ACTION', validate::T_ALPHANUM)) {
+                    $action = $method['ACTION']->value;
+                }
+
+                if ($action == '') {
+                    // try to determine action from a request parameter named ACTION_...
+                    foreach ($method as $k => $v) {
+                        if (preg_match('/^ACTION_([a-zA-Z]+)$/', $k, $match)) {
+                            $action = $match[1];
+
+                            return $action;
+                        }
+                    }
+                }
+            }
+
+            if ($action == '') {
+                $action = 'default';
+            }
+
+            return $action;
+        }
+
+        /****m* web/getRequestMethod
+         * SYNOPSIS
+         */
+        public static function getRequestMethod()
+        /*
+         * FUNCTION
+         *      determine the method of the current request
+         * INPUTS
+         *      
+         * OUTPUTS
+         *      (int) -- type of request method
+         ****
+         */
+        {
+            static $method = '';
+            
+            if ($method == '' && $_SERVER->validate('REQUEST_METHOD', validate::T_ALPHA)) {
+                $method = strtoupper($_SERVER['REQUEST_METHOD']->value);
+            }
+
+            return $method;
         }
         
         /****m* web/getTemplate
