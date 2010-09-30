@@ -71,7 +71,7 @@ namespace org\octris\core\app\web {
         /****m* page/__construct
          * SYNOPSIS
          */
-        function __construct()
+        public function __construct()
         /*
          * FUNCTION
          *      constructor
@@ -83,7 +83,7 @@ namespace org\octris\core\app\web {
         /****m* page/__toString
          * SYNOPSIS
          */
-        function __toString()
+        public function __toString()
         /*
          * FUNCTION
          *      magic method __toString returns name of page class
@@ -96,7 +96,7 @@ namespace org\octris\core\app\web {
         /****m* page/isSecure
          * SYNOPSIS
          */
-        final function isSecure()
+        public final function isSecure()
         /*
          * FUNCTION
          *      return, whether page has to be secured
@@ -109,8 +109,8 @@ namespace org\octris\core\app\web {
         /****m* page/render, prepareRender
          * SYNOPSIS
          */
-        abstract function render(lima_app $app);
-        abstract function prepareRender(lima_app $app, lima_page $last_page, $action);
+        abstract public function render(lima_app $app);
+        abstract public function prepareRender(lima_app $app, lima_page $last_page, $action);
         /*
          * FUNCTION
          *      abstract methods must be defined in the application page classes
@@ -138,7 +138,7 @@ namespace org\octris\core\app\web {
         /****m* page/getNextPage
          * SYNOPSIS
          */
-        function getNextPage(lima_app $app)
+        public function getNextPage(lima_app $app)
         /*
          * FUNCTION
          *      get's next page from action and next_pages array of last page
@@ -175,7 +175,7 @@ namespace org\octris\core\app\web {
         /****m* page/getValidationRuleset
          * SYNOPSIS
          */
-        function getValidationRuleset($action)
+        public function getValidationRuleset($action)
         /*
          * FUNCTION
          *      returns a validation ruleset for specified action
@@ -198,7 +198,7 @@ namespace org\octris\core\app\web {
         /****m* page/addError
          * SYNOPSIS
          */
-        function addError($err)
+        public function addError($err)
         /*
          * FUNCTION
          *      add error message for current page
@@ -213,7 +213,7 @@ namespace org\octris\core\app\web {
         /****m* page/addMessage
          * SYNOPSIS
          */
-        function addMessage($msg)
+        public function addMessage($msg)
         /*
          * FUNCTION
          *      add message for current page
@@ -228,7 +228,7 @@ namespace org\octris\core\app\web {
         /****m* page/countErrors
          * SYNOPSIS
          */
-        function countErrors()
+        public function countErrors()
         /*
          * FUNCTION
          *      return number of errors for current page
@@ -241,7 +241,7 @@ namespace org\octris\core\app\web {
         /****m* page/countMessages
          * SYNOPSIS
          */
-        function countMessages()
+        public function countMessages()
         /*
          * FUNCTION
          *      return number of messages for current page
@@ -254,7 +254,7 @@ namespace org\octris\core\app\web {
         /****m* page/getErrors
          * SYNOPSIS
          */
-        function getErrors()
+        public function getErrors()
         /*
          * FUNCTION
          *      return all errors
@@ -267,7 +267,7 @@ namespace org\octris\core\app\web {
         /****m* page/getMessages
          * SYNOPSIS
          */
-        function getMessages()
+        public function getMessages()
         /*
          * FUNCTION
          *      return all messages
@@ -280,7 +280,7 @@ namespace org\octris\core\app\web {
         /****m* page/addErrors
          * SYNOPSIS
          */
-        function addErrors(array $errors)
+        public function addErrors(array $errors)
         /*
          * FUNCTION
          *      method to add multiple errors for page
@@ -295,7 +295,7 @@ namespace org\octris\core\app\web {
         /****m* page/addMessages
          * SYNOPSIS
          */
-        function addMessages(array $messages)
+        public function addMessages(array $messages)
         /*
          * FUNCTION
          *      method to add multiple messages for page
@@ -310,7 +310,7 @@ namespace org\octris\core\app\web {
         /****m* page/getValidateRulesets
          * SYNOPSIS
          */
-        function getValidateRulesets()
+        public function getValidateRulesets()
         /*
          * FUNCTION
          *      return validate rulesets
@@ -323,7 +323,7 @@ namespace org\octris\core\app\web {
         /****m* page/prepareMessages
          * SYNOPSIS
          */
-        function prepareMessages(lima_app $app)
+        public function prepareMessages(lima_app $app)
         /*
          * FUNCTION
          *      prepare messages for output page (eg error- or status messages)

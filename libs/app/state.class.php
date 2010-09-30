@@ -38,7 +38,7 @@ namespace org\octris\core\app {
         /****m* state/push
          * SYNOPSIS
          */
-        function push($name, $value)
+        public function push($name, $value)
         /*
          * FUNCTION
          *      push value into state
@@ -54,7 +54,7 @@ namespace org\octris\core\app {
         /****m* state/pop
          * SYNOPSIS
          */
-        function pop($name) 
+        public function pop($name) 
         /*
          * FUNCTION
          *      returns and delete value from state
@@ -74,7 +74,7 @@ namespace org\octris\core\app {
         /****m* state/freeze
          * SYNOPSIS
          */
-        function freeze($secret = null) 
+        public function freeze($secret = null) 
         /*
          * FUNCTION
          *      freeze object
@@ -96,7 +96,7 @@ namespace org\octris\core\app {
         /****m* state/thaw
          * SYNOPSIS
          */
-        static function thaw($state, $secret = null)
+        public static function thaw($state, $secret = null)
         /*
          * FUNCTION
          *      thaw object
