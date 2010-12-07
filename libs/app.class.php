@@ -3,6 +3,8 @@
 namespace org\octris\core {
     require_once('app/autoloader.class.php');
     
+    use \org\octris\core\validate as validate;
+
     /****c* core/app
      * NAME
      *      app
