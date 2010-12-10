@@ -48,16 +48,6 @@ namespace org\octris\core\app\web {
          ****
          */
 
-        /****v* page/$name
-         * SYNOPSIS
-         */
-        protected $name = '';
-        /*
-         * FUNCTION
-         *      stores name of page
-         ****
-         */
-
         /****m* page/$secure
          * SYNOPSIS
          */
@@ -106,11 +96,11 @@ namespace org\octris\core\app\web {
             return $this->secure;
         }
 
-        /****m* page/render, prepareRender
+        /****m* page/prepareRender, render
          * SYNOPSIS
          */
-        abstract public function render(lima_app $app);
-        abstract public function prepareRender(lima_app $app, lima_page $last_page, $action);
+        abstract public function prepareRender(\org\octris\core\app $app, lima_page $last_page, $action);
+        abstract public function render(\org\octris\core\app $app);
         /*
          * FUNCTION
          *      abstract methods must be defined in the application page classes
@@ -120,7 +110,7 @@ namespace org\octris\core\app\web {
         /****m* page/validate
          * SYNOPSIS
          */
-        public function validate(lima_app $app, $action)
+        public function validate(\org\octris\core\app $app, $action)
         /*
          * FUNCTION
          *      apply a validation ruleset
@@ -138,7 +128,7 @@ namespace org\octris\core\app\web {
         /****m* page/getNextPage
          * SYNOPSIS
          */
-        public function getNextPage(lima_app $app)
+        public function getNextPage(\org\octris\core\app $app)
         /*
          * FUNCTION
          *      get's next page from action and next_pages array of last page
@@ -323,7 +313,7 @@ namespace org\octris\core\app\web {
         /****m* page/prepareMessages
          * SYNOPSIS
          */
-        public function prepareMessages(lima_app $app)
+        public function prepareMessages(\org\octris\core\app $app)
         /*
          * FUNCTION
          *      prepare messages for output page (eg error- or status messages)
