@@ -194,10 +194,10 @@ namespace org\octris\core\app\web {
             return preg_replace('|^http://|i', 'https://', static::getUrl());
         }
 
-        /****m* request/getNonSSLHost
+        /****m* request/getNonSSLUrl
          * SYNOPSIS
          */
-        public static function getNonSSLHost()
+        public static function getNonSSLUrl()
         /*
          * FUNCTION
          *      return current URL forced to http
