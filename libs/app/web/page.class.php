@@ -58,16 +58,29 @@ namespace org\octris\core\app\web {
          ****
          */
 
+        /****v* page/$app
+         * SYNOPSIS
+         */
+        protected $app;
+        /*
+         * FUNCTION
+         *      application instance
+         ****
+         */
+
         /****m* page/__construct
          * SYNOPSIS
          */
-        public function __construct()
+        public function __construct(\org\octris\core\app $app)
         /*
          * FUNCTION
          *      constructor
+         * INPUTS
+         *      * $app (app) application instance
          ****
          */
         {
+            $this->app = $app;
         }
 
         /****m* page/__toString
@@ -99,8 +112,8 @@ namespace org\octris\core\app\web {
         /****m* page/prepareRender, render
          * SYNOPSIS
          */
-        abstract public function prepareRender(\org\octris\core\app $app, lima_page $last_page, $action);
-        abstract public function render(\org\octris\core\app $app);
+        abstract public function prepareRender(lima_page $last_page, $action);
+        abstract public function render();
         /*
          * FUNCTION
          *      abstract methods must be defined in the application page classes
@@ -110,12 +123,11 @@ namespace org\octris\core\app\web {
         /****m* page/validate
          * SYNOPSIS
          */
-        public function validate(\org\octris\core\app $app, $action)
+        public function validate($action)
         /*
          * FUNCTION
          *      apply a validation ruleset
          * INPUTS
-         *      * $app (object) -- application object
          *      * $action (string) -- action
          * OUTPUTS
          *      (bool) -- returns false, if validation failed, otherwise true
@@ -147,14 +159,14 @@ namespace org\octris\core\app\web {
                 if (is_array($this->next_pages) && isset($this->next_pages[$action])) {
                     // lookup next page from current page's next_page array
                     $class = $this->next_pages[$action];
-                    $next  = new $class($app);
+                    $next  = new $class($this->app);
                 } else {
                     // lookup next page from entry page's next_page array
-                    $entry = new $entry_page($app);
+                    $entry = new $entry_page($this->app);
 
                     if (is_array($entry->next_pages) && isset($entry->next_pages[$action])) {
                         $class = $entry->next_pages[$action];
-                        $next  = new $class($app);
+                        $next  = new $class($this->app);
                     }
                 }
             }
@@ -313,21 +325,19 @@ namespace org\octris\core\app\web {
         /****m* page/prepareMessages
          * SYNOPSIS
          */
-        public function prepareMessages(\org\octris\core\app $app)
+        public function prepareMessages()
         /*
          * FUNCTION
          *      prepare messages for output page (eg error- or status messages)
-         * INPUTS
-         *      * $app (object) -- application object
          ****
          */
         {
             if (count($this->errors) > 0) {
-                $app->setErrors($this->errors);
+                $this->app->setErrors($this->errors);
             }
 
             if (count($this->messages) > 0) {
-                $app->setMessages($this->messages);
+                $this->app->setMessages($this->messages);
             }
         }
     }
