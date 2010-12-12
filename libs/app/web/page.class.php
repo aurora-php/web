@@ -112,7 +112,7 @@ namespace org\octris\core\app\web {
         /****m* page/prepareRender, render
          * SYNOPSIS
          */
-        abstract public function prepareRender(lima_page $last_page, $action);
+        abstract public function prepareRender(\org\octris\core\app\web\page $last_page, $action);
         abstract public function render();
         /*
          * FUNCTION
@@ -319,7 +319,6 @@ namespace org\octris\core\app\web {
          ****
          */
         {
-            return lima_validate::getInstance()->export($this);
         }
 
         /****m* page/prepareMessages
