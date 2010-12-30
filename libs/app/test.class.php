@@ -99,5 +99,9 @@ namespace org\octris\core\app {
         $_ENV     = new test\wrapper($_ENV);
         $_REQUEST = new test\wrapper($_REQUEST);
         $_FILES   = new test\wrapper($_FILES);
+        
+        if (!$_ENV->validate('OCTRIS_BASE', validate::T_PATH)) {
+            die("OCTRIS_BASE is not set\n");
+        }
     }
 }

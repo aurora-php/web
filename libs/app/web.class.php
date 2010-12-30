@@ -333,5 +333,9 @@ namespace org\octris\core\app {
         $_ENV     = new validate\wrapper($_ENV);
         $_REQUEST = new validate\wrapper($_REQUEST);
         $_FILES   = new validate\wrapper($_FILES);
+        
+        if (!$_ENV->validate('OCTRIS_BASE', validate::T_PATH)) {
+            die("OCTRIS_BASE is not set\n");
+        }
     }
 }
