@@ -20,6 +20,32 @@ namespace org\octris\core {
      */
 
     abstract class app {
+        /****d* config/T_PATH_CACHE, T_PATH_DATA, T_PATH_ETC, T_PATH_HOST, T_PATH_LIBS, T_PATH_LIBSJS, T_PATH_LOCALE, T_PATH_RESOURCES, T_PATH_STYLES, T_PATH_LOG, T_PATH_WORK, T_PATH_WORK_LIBSJS, T_PATH_WORK_RESOURCES, T_PATH_WORK_STYLES, T_PATH_WORK_TPL
+         * SYNOPSIS
+         */
+        const T_PATH_CACHE          = '%s/cache/%s';
+        const T_PATH_DATA           = '%s/data/%s';
+        const T_PATH_ETC            = '%s/etc/%s';
+        const T_PATH_HOST           = '%s/host/%s';
+        const T_PATH_LIBS           = '%s/libs/%s';
+        const T_PATH_LIBSJS         = '%s/host/%s/libsjs';
+        const T_PATH_LOCALE         = '%s/locale/%s';
+        const T_PATH_LOG            = '%s/log/%s';
+        const T_PATH_RESOURCES      = '%s/host/%s/resources';
+        const T_PATH_STYLES         = '%s/host/%s/styles';
+        const T_PATH_TOOLS          = '%s/tools/%s';
+        const T_PATH_WORK           = '%s/work/%s';
+        const T_PATH_WORK_LIBS      = '%s/work/%s/libs';
+        const T_PATH_WORK_LIBSJS    = '%s/work/%s/libsjs';
+        const T_PATH_WORK_RESOURCES = '%s/work/%s/resources';
+        const T_PATH_WORK_STYLES    = '%s/work/%s/styles';
+        const T_PATH_WORK_TPL       = '%s/work/%s/templates';
+        /*
+         * FUNCTION
+         *      used in combination with app/getPath to determine path
+         ****
+         */
+
         /****d* app/T_CONTEXT_UNDEFINED, T_CONTEXT_CLI, T_CONTEXT_WEB, T_CONTEXT_TEST
          * SYNOPSIS
          */
@@ -118,6 +144,32 @@ namespace org\octris\core {
             return static::$context;
         }
         
+        /****m* config/getPath
+         * SYNOPSIS
+         */
+        public static function getPath($type, $module = '')
+        /*
+         * FUNCTION
+         *      returns path for specified type for current application
+         * INPUTS
+         *      * $type (string) -- type of path to return
+         *      * $module (string) -- (optional) name of module to return path for. default is: current application name
+         * OUTPUTS
+         *      (string) -- existing path or empty string, if path does not exist
+         ****
+         */
+        {
+            $return = sprintf(
+                $type,
+                $_ENV['OCTRIS_BASE']->value,
+                ($module 
+                    ? $module 
+                    : $_ENV['OCTRIS_APP']->value)
+            );
+
+            return realpath($return);
+        }
+
         /****m* app/getInstance
          * SYNOPSIS
          */
