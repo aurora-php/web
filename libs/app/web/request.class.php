@@ -208,5 +208,76 @@ namespace org\octris\core\app\web {
         {
             return preg_replace('|^https://|i', 'http://', static::getUrl());
         }
+        
+        /****m* web/negotiateLanguage
+         * SYNOPSIS
+         */
+        public function negotiateLanguage($supported, $default) 
+        /*
+         * FUNCTION
+         *      uses HTTP_ACCEPT_LANGUAGE to negotiate accepted language
+         * INPUTS
+         *      * $supported (array) -- array of supported languages
+         *      * $default (string) -- default language to use (fallback if no accepted language matches)
+         * OUTPUTS
+         *      (string) -- language
+         ****
+         */
+        {
+            // generate language array
+            $lc_supported = explode(',', $supported);
+
+            $keys = explode(',', str_replace('_', '-', strtolower($supported)));
+            $lc_supported = array_combine($keys, $lc_supported);
+
+            $short = explode(',', preg_replace('/_[A-Z0-9]+/', '', $supported));
+            $lc_supported = array_merge(
+                $lc_supported, 
+                array_flip(array_combine(array_reverse($lc_supported), $short))
+            );
+
+            // parse HTTP_ACCEPT_LANGUAGE
+            $http_accept_language = $_SERVER->import('HTTP_ACCEPT_LANGUAGE', new lima_validate_print());
+
+            $langs = ($http_accept_language->isSet && $http_accept_language->isValid 
+                      ? explode(',', $http_accept_language->value) 
+                      : array());
+
+            $lc_accepted = array();
+
+            foreach ($langs as $lang) if (preg_match('/([a-z]{1,2})(-([a-z0-9]+))?(;q=([0-9\.]+))?/', $lang, $match)) {
+                $code = $match[1];
+                $morecode = (array_key_exists(3, $match) ? $match[3] : '');
+                $fullcode = ($morecode ? $code . '-' . $morecode : $code);
+
+                $coef = sprintf('%3.1f', (array_key_exists(5, $match) && $match[5] ? $match[5] : '1'));
+
+                $key = $coef . '-' . $code;
+
+                $lc_accepted[$key] = array(
+                    'code' => $code,
+                    'coef' => $coef,
+                    'morecode' => $morecode,
+                    'fullcode' => $fullcode
+                );
+            }
+
+            krsort($lc_accepted);
+
+            // negotiate language
+            $lc_specified = $default;
+
+            foreach ($lc_accepted as $q => $lc) {
+                if (array_key_exists($lc['fullcode'], $lc_supported)) {
+                    $lc_specified = $lc_supported[$lc['fullcode']];
+                    break;
+                } elseif (array_key_exists($lc['code'], $lc_supported)) {
+                    $lc_specified = $lc_supported[$lc['code']];                    
+                    break;
+                }
+            }
+
+            return $lc_specified;
+        }
     }
 }
