@@ -184,7 +184,7 @@ namespace org\octris\core\app {
                 $module = 'default';
             } elseif (isset(self::$modules[$module])) {
                 $class = self::$modules[$module];
-                $class::entry
+                // $class::entry
             }
 
             return $action;
