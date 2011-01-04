@@ -98,11 +98,14 @@ namespace org\octris\core {
             }
     
             $_ENV['OCTRIS_DEVEL']->value = ($_ENV->validate('OCTRIS_DEVEL', validate::T_BOOL) && $_ENV['OCTRIS_DEVEL']->value);
+            
+            $this->initialize();
         }
 
         /****m* app/process
          * SYNOPSIS
          */
+        abstract protected function initialize();
         abstract public function process();
         /*
          * FUNCTION
