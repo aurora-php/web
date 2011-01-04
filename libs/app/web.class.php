@@ -39,6 +39,33 @@ namespace org\octris\core\app {
          ****
          */
 
+        /**
+         * Initialization of web application.
+         *
+         * @octdoc  m:web/initialize
+         */
+        protected function initialize()
+        /**/
+        {
+            $registry = \org\octris\core\registry::getInstance();
+            
+            // setup settings
+            // $settings = \org\octris\core\settings::getInstance();
+            // $settings->setStorage(function($instance) use ($registry) {
+            //     $name     = $registry['config']['common.settings.cookie'];
+            //     $lifetime = $registry['config']['common.settings.lifetime'];
+            // 
+            //     $cookie   = \org\octris\core\storage\cookie::getInstance($name, $lifetime);
+            // });
+            //     $depend = new \org\octris\core\dependency();
+            //     $depend->set('setting.storage', function($dep) use ($injection) {
+            // 
+            // 
+            //         return $cookie;
+            //     }, true);
+        }
+        
+
         /****m* web/process
          * SYNOPSIS
          */
