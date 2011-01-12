@@ -1,30 +1,24 @@
 <?php
 
 namespace org\octris\core\app {
-    /****c* app/autoloader
-     * NAME
-     *      autoloader
-     * FUNCTION
-     *      Static class which provides the autoloader.
-     * COPYRIGHT
-     *      copyright (c) 2010 by Harald Lapp
-     * AUTHOR
-     *      Harald Lapp <harald@octris.org>
-     ****
+    /**
+     * Class Autoloader.
+     *
+     * @octdoc      c:app/autoloader
+     * @copyright   copyright (c) 2010-2011 by Harald Lapp
+     * @author      Harald Lapp <harald@octris.org>
      */
-
-    class autoloader {
-        /****m* app/autoload
-         * SYNOPSIS
+    class autoloader
+    /**/
+    {
+        /**
+         * Class Autoloader.
+         *
+         * @octdoc  m:app/autoload
+         * @param   string      $classpath      Path of class to load.
          */
         public static function autoload($classpath)
-        /*
-         * FUNCTION
-         *      class autoloader
-         * INPUTS
-         *      * $classpath (string) -- path of class to load
-         ****
-         */
+        /**/
         {
             $pkg = preg_replace('|\\\\|', '/', preg_replace('|\\\\|', '.', ltrim($classpath, '\\\\'), 2)) . '.class.php';
 

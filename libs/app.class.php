@@ -5,23 +5,20 @@ namespace org\octris\core {
     
     use \org\octris\core\validate as validate;
 
-    /****c* core/app
-     * NAME
-     *      app
-     * FUNCTION
-     *      Core application class. This class needs to be the first
-     *      one included in an application, because it set's up a function
-     *      which will try to automatically load all required classes.
-     * COPYRIGHT
-     *      copyright (c) 2010 by Harald Lapp
-     * AUTHOR
-     *      Harald Lapp <harald@octris.org>
-     ****
+    /**
+     * Core application class.
+     *
+     * @octdoc      c:core/app
+     * @copyright   copyright (c) 2010-2011 by Harald Lapp
+     * @author      Harald Lapp <harald@octris.org>
      */
-
-    abstract class app {
-        /****d* config/T_PATH_CACHE, T_PATH_DATA, T_PATH_ETC, T_PATH_HOST, T_PATH_LIBS, T_PATH_LIBSJS, T_PATH_LOCALE, T_PATH_RESOURCES, T_PATH_STYLES, T_PATH_LOG, T_PATH_WORK, T_PATH_WORK_LIBSJS, T_PATH_WORK_RESOURCES, T_PATH_WORK_STYLES, T_PATH_WORK_TPL
-         * SYNOPSIS
+    abstract class app
+    /**/
+    {
+        /**
+         * Used in combination with app/getPath to determine path.
+         * 
+         * @octdoc  d:config/T_PATH_CACHE, T_PATH_DATA, T_PATH_ETC, T_PATH_HOST, T_PATH_LIBS, T_PATH_LIBSJS, T_PATH_LOCALE, T_PATH_RESOURCES, T_PATH_STYLES, T_PATH_LOG, T_PATH_WORK, T_PATH_WORK_LIBSJS, T_PATH_WORK_RESOURCES, T_PATH_WORK_STYLES, T_PATH_WORK_TPL
          */
         const T_PATH_CACHE          = '%s/cache/%s';
         const T_PATH_DATA           = '%s/data/%s';
@@ -40,11 +37,7 @@ namespace org\octris\core {
         const T_PATH_WORK_RESOURCES = '%s/work/%s/resources';
         const T_PATH_WORK_STYLES    = '%s/work/%s/styles';
         const T_PATH_WORK_TPL       = '%s/work/%s/templates';
-        /*
-         * FUNCTION
-         *      used in combination with app/getPath to determine path
-         ****
-         */
+        /**/
 
         /****d* app/T_CONTEXT_UNDEFINED, T_CONTEXT_CLI, T_CONTEXT_WEB, T_CONTEXT_TEST
          * SYNOPSIS
