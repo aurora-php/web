@@ -93,24 +93,20 @@ namespace org\octris\core\app {
         public static function thaw($state, $secret = '')
         /**/
         {
-            $debug = $state;
-            $state = base64_decode($state);
+            $decoded = base64_decode($state);
+            $sum     = '';
+            $frozen  = '';
 
-            $pos    = (int)strpos($state, '|');
-            $sum    = substr($state, 0, $pos);
-            $frozen = substr($state, $pos + 1);
-            $secret = (!is_null($secret) ? $secret : config::get('common.state.secret'));
+            if (($pos = strpos($decoded, '|')) !== false) {
+                $sum    = substr($decoded, 0, $pos);
+                $frozen = substr($decoded, $pos + 1);
+                
+                unset($decoded);
+            }
 
-            if (hash(self::hash_algo, $frozen . $secret) != $sum) {
-                // error
-                if (config::get('common.application.development')) {
-                    // debug output only on development server
-                    print "$sum != " . hash(self::hash_algo, $frozen . $secret) . "<br />";
-                    print $debug . "<br />";
-                    print_r(unserialize(gzuncompress($frozen)));
-                }
-
-                throw new \Exception('hack attempt - checksum does not match!');
+            if (($test = hash(self::hash_algo, $frozen . $secret)) != $sum) {
+                // hash did not match
+                throw new \Exception(sprintf('[%s !=  %s | %s]', $test, $sum, $state));
             } else {
                 return new static(unserialize(gzuncompress($frozen)));
             }
