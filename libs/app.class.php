@@ -86,7 +86,7 @@ namespace org\octris\core {
                 die("unable to import OCTRIS_APP or OCTRIS_BASE!\n");
             }
 
-            if (!$_ENV->validate('OCTRIS_APP', validate::T_ALPHANUM) || !$_ENV->validate('OCTRIS_BASE', validate::T_PRINT)) {
+            if (!$_ENV->validate('OCTRIS_APP', validate::T_ALPHANUM) || !$_ENV->validate('OCTRIS_BASE', validate::T_PRINTABLE)) {
                 die("unable to import OCTRIS_APP or OCTRIS_BASE - invalid settings!\n");
             }
     
