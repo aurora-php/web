@@ -22,8 +22,6 @@ namespace org\octris\core\app {
         {
             $pkg = preg_replace('|\\\\|', '/', preg_replace('|\\\\|', '.', ltrim($classpath, '\\\\'), 2)) . '.class.php';
 
-            print "[$pkg]";
-
             @include_once($pkg);
         }
     }
