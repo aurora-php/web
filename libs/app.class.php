@@ -78,6 +78,15 @@ namespace org\octris\core {
         /**/
         
         /**
+         * Entry page to use if no other page is loaded. To be overwritten by applications' main class.
+         *
+         * @octdoc  v:app/$entry_page
+         * @var     string
+         */
+        protected $entry_page = '';
+        /**/
+
+        /**
          * Constructor is protected to force creation of instance using 'getInstance' method.
          *
          * @octdoc  m:app/__construct
