@@ -106,7 +106,7 @@ namespace org\octris\core {
          * @octdoc  m:app/initialize
          * @abstract
          */
-        abstract public function initialize();
+        abstract protected function initialize();
         /**/
 
         /**
