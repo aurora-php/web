@@ -83,7 +83,7 @@ namespace org\octris\core\app {
         }
 
         /**
-         * Thaw freezed state object.
+         * Thaw frozen state object.
          *
          * @octdoc  m:state/thaw
          * @param   string          $state              State to thaw.
