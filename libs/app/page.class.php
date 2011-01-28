@@ -1,6 +1,8 @@
 <?php
 
 namespace org\octris\core\app {
+    use \org\octris\core\app as app;
+    
     /**
      * Core page controller class.
      *
@@ -120,7 +122,7 @@ namespace org\octris\core\app {
             $next = $this;
 
             if (count($this->errors) == 0) {
-                $action = $this->getAction();
+                $action = app::getInstance()->getAction();
 
                 if (isset($this->next_pages[$action])) {
                     // lookup next page from current page's next_page array
