@@ -126,6 +126,18 @@ namespace org\octris\core {
         /**/
 
         /**
+         * Return application state.
+         *
+         * @octdoc  m:app/getState
+         * @return  \org\octris\core\app\state          State of application.
+         */
+        public function getState()
+        /**/
+        {
+            return $this->state;
+        }
+
+        /**
          * Try to determine the last visited page supplied by the application state. If
          * last visited page can't be determined (eg.: when entering the application),
          * a new instance of the applications' entry page is created.
