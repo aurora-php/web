@@ -146,6 +146,21 @@ namespace org\octris\core {
         }
 
         /**
+         * Make a page the last visited page. This method is called internally by the 'process' method
+         * before aquiring an other application page.
+         *
+         * @octdoc  m:app/setLastPage
+         * @param   \org\octris\core\app\page       $page           Page object to set as last visited page.
+         */
+        protected function setLastPage(\org\octris\core\app\page $page)
+        /**/
+        {
+            $class = get_class($page);
+
+            $this->state['last_page'] = $class;
+        }
+
+        /**
          * Helper method that is registered as error handler to catch non exceptional errors and convert them
          * to real exceptions.
          *
