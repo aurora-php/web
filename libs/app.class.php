@@ -39,38 +39,34 @@ namespace org\octris\core {
         const T_PATH_WORK_TPL       = '%s/work/%s/templates';
         /**/
 
-        /****d* app/T_CONTEXT_UNDEFINED, T_CONTEXT_CLI, T_CONTEXT_WEB, T_CONTEXT_TEST
-         * SYNOPSIS
+        /**
+         * Used to abstract application context types.
+         * 
+         * @octdoc  d:app/T_CONTEXT_UNDEFINED, T_CONTEXT_CLI, T_CONTEXT_WEB, T_CONTEXT_TEST
          */
         const T_CONTEXT_UNDEFINED = 0;
         const T_CONTEXT_CLI       = 1;
         const T_CONTEXT_WEB       = 2;
         const T_CONTEXT_TEST      = 3;
-        /*
-         * FUNCTION
-         *      context the application is running in
-         ****
-         */
-        
-        /****v* app/$instance
-         * SYNOPSIS
+        /**/
+
+        /**
+         * Application instance.
+         *
+         * @octdoc  v:app/$instance
+         * @var     \org\octris\core\app
          */
         private static $instance = null;
-        /*
-         * FUNCTION
-         *      application instance
-         ****
+        /**/
+
+        /**
+         * Context of the application.
+         *
+         * @octdoc  v:app/$context
+         * @var     int
          */
-        
-        /****v* app/$context
-         * SYNOPSIS
-         */
-        protected static $context = self::T_CONTEXT_UNDEFINED;
-        /*
-         * FUNCTION
-         *      application context
-         ****
-         */
+        protected $context = self::T_CONTEXT_UNDEFINED;
+        /**/
         
         /**
          * Application state.
@@ -81,15 +77,13 @@ namespace org\octris\core {
         protected $state = null;
         /**/
         
-        /****m* app/__construct
-         * SYNOPSIS
+        /**
+         * Constructor is protected to force creation of instance using 'getInstance' method.
+         *
+         * @octdoc  m:app/__construct
          */
         protected function __construct()
-        /*
-         * FUNCTION
-         *      constructor
-         ****
-         */
+        /**/
         {
             if (!$_ENV['OCTRIS_APP']->isSet || !$_ENV['OCTRIS_BASE']->isSet) {
                 die("unable to import OCTRIS_APP or OCTRIS_BASE!\n");
@@ -106,65 +100,63 @@ namespace org\octris\core {
             $this->initialize();
         }
 
-        /****m* app/process
-         * SYNOPSIS
+        /**
+         * Abstract method definition. Initialize must be implemented by any subclass.
+         *
+         * @octdoc  m:app/initialize
+         * @abstract
          */
-        abstract protected function initialize();
+        abstract public function initialize();
+        /**/
+
+        /**
+         * Abstract method definition. Process must be implemented by any subclass.
+         *
+         * @octdoc  m:app/process
+         * @abstract
+         */
         abstract public function process();
-        /*
-         * FUNCTION
-         *      methods to be implemented by application controller
-         ****
-         */
+        /**/
         
-        /****m* app/triggerError
-         * SYNOPSIS
+        /**
+         * Helper method that is registered as error handler to catch non exceptional errors and convert them
+         * to real exceptions.
+         *
+         * @octdoc  m:app/triggerError
+         * @param   int             $code               Error code.
+         * @param   string          $msg                The error message.
+         * @param   string          $file               The file the error war raised in.
+         * @param   int             $line               The line number the error was raised in.
+         * @param   array           $context            Array of active symbol table when error was raised.
          */
         public static function triggerError($code, $string, $file, $line, $context)
-        /*
-         * FUNCTION
-         *      catches non OO errors and convert them to real exceptions
-         * INPUTS
-         *      * $code (int) -- error code
-         *      * $string (string) -- the error message
-         *      * $file (string) -- the name of the file the error was raised
-         *      * $line (int) -- the line number in which the error was raised
-         *      * $context (array) -- array of the active symbol table, when error was raised
-         ****
-         */
+        /**/
         {
             // TODO: implementation
         }
-        
-        /****m* app/getContext
-         * SYNOPSIS
+
+        /**
+         * Return context the application is running in.
+         *
+         * @octdoc  m:app/getContext
+         * @return  int                                 Application context.
          */
         public static final function getContext()
-        /*
-         * FUNCTION
-         *      Return context the application is running in.
-         * OUTPUTS
-         *      (int) -- application context
-         ****
-         */
+        /**/
         {
             return static::$context;
         }
-        
-        /****m* config/getPath
-         * SYNOPSIS
+
+        /**
+         * Returns path for specified path type for current application instance.
+         *
+         * @octdoc  m:app/getPath
+         * @param   string          $type               The type of the path to return.
+         * @param   string          $module             Optional name of module to return path for. Default is: current application name.
+         * @return  string                              Existing path or empty string, if path does not exist.
          */
         public static function getPath($type, $module = '')
-        /*
-         * FUNCTION
-         *      returns path for specified type for current application
-         * INPUTS
-         *      * $type (string) -- type of path to return
-         *      * $module (string) -- (optional) name of module to return path for. default is: current application name
-         * OUTPUTS
-         *      (string) -- existing path or empty string, if path does not exist
-         ****
-         */
+        /**/
         {
             $return = sprintf(
                 $type,
@@ -177,17 +169,14 @@ namespace org\octris\core {
             return realpath($return);
         }
 
-        /****m* app/getInstance
-         * SYNOPSIS
+        /**
+         * Return instance of main application class.
+         *
+         * @octdoc  m:app/getInstance
+         * @return  \org\octris\core\app                Instance of main application class.
          */
         public static function getInstance()
-        /*
-         * FUNCTION
-         *      return instance of main application class
-         * OUTPUTS
-         *      (app) -- instance of main application class
-         ****
-         */
+        /**/
         {
             if (is_null(self::$instance)) {
                 self::$instance = new static();
@@ -197,5 +186,6 @@ namespace org\octris\core {
         }
     }
 
+    // register error handler for 'normal' php errors
     set_error_handler(array('\org\octris\core\app', 'triggerError'), E_ALL);
 }
