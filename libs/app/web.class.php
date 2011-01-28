@@ -95,14 +95,14 @@ namespace org\octris\core\app {
             $action = self::getAction();
 
             $last_page = $this->getLastPage();
-            $last_page->validate($this, $action);
+            $last_page->validate($action);
 
-            $next_page = $last_page->getNextPage($this, $this->entry_page);
+            $next_page = $last_page->getNextPage($this->entry_page);
 
             $max = 3;
 
             do {
-                $redirect_page = $next_page->prepareRender($this, $last_page, $action);
+                $redirect_page = $next_page->prepare($last_page, $action);
 
                 if (is_object($redirect_page) && $next_page != $redirect_page) {
                     $next_page = $redirect_page;
@@ -122,9 +122,9 @@ namespace org\octris\core\app {
             // process with page
             $this->setLastPage($next_page);
 
-            $next_page->prepareMessages($this);
-            $next_page->sendHeaders($this->headers);
-            $next_page->render($this);
+            // $next_page->prepareMessages($this);
+            // $next_page->sendHeaders($this->headers);
+            // $next_page->render($this);
         }
         
         /****m* web/addHeader
