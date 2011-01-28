@@ -72,6 +72,15 @@ namespace org\octris\core {
          ****
          */
         
+        /**
+         * Application state.
+         *
+         * @octdoc  v:app/$state
+         * @var     \org\octris\core\app\state
+         */
+        protected $state = null;
+        /**/
+        
         /****m* app/__construct
          * SYNOPSIS
          */
