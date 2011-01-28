@@ -126,7 +126,27 @@ namespace org\octris\core {
          */
         abstract public function process();
         /**/
-        
+
+        /**
+         * Try to determine the last visited page supplied by the application state. If
+         * last visited page can't be determined (eg.: when entering the application),
+         * a new instance of the applications' entry page is created.
+         *
+         * @octdoc  m:app/getLastPage
+         * @return  \org\octris\core\app\page           Returns instance of determined last visit page or instance of entry page.
+         */
+        protected function getLastPage()
+        /**/
+        {
+            $class = (isset($this->state['last_page'])
+                      ? $this->state['last_page']
+                      : $this->entry_page);
+
+            $page = new $class();
+
+            return $page;
+        }
+
         /**
          * Helper method that is registered as error handler to catch non exceptional errors and convert them
          * to real exceptions.
