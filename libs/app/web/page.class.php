@@ -11,7 +11,7 @@ namespace org\octris\core\app\web {
      * @copyright   copyright (c) 2010-2011 by Harald Lapp
      * @author      Harald Lapp <harald@octris.org>
      */
-    class page extends \org\octris\core\app\page
+    abstract class page extends \org\octris\core\app\page
     /**/
     {
         /**
@@ -34,17 +34,6 @@ namespace org\octris\core\app\web {
         {
             return $this->secure;
         }
-
-        /****m* page/prepareRender, render
-         * SYNOPSIS
-         */
-        abstract public function prepareRender(\org\octris\core\app\web\page $last_page, $action);
-        abstract public function render();
-        /*
-         * FUNCTION
-         *      abstract methods must be defined in the application page classes
-         ****
-         */
 
         /****m* page/validate
          * SYNOPSIS
