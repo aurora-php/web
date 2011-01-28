@@ -1,7 +1,7 @@
 <?php
 
 namespace org\octris\core {
-    require_once('app/autoloader.class.php');
+    require_once('org.octris.core/app/autoloader.class.php');
     
     use \org\octris\core\validate as validate;
 
