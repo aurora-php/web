@@ -99,8 +99,6 @@ namespace org\octris\core {
             }
 
             if (!$_ENV->validate('OCTRIS_APP', validate::T_PATTERN, array('pattern' => '/^[a-z0-9.]+$/')) || !$_ENV->validate('OCTRIS_BASE', validate::T_PRINTABLE)) {
-                print_r($_ENV);
-                
                 die("unable to import OCTRIS_APP or OCTRIS_BASE - invalid settings!\n");
             }
     
