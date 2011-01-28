@@ -113,17 +113,16 @@ namespace org\octris\core\app {
          * Gets next page from action and next_pages array of last page
          *
          * @octdoc  m:page/getNextPage
+         * @param   string                          $action         Action to get next page for.
          * @param   string                          $entry_page     Name of the entry page for possible fallback.
          * @return  \org\octris\core\app\page                       Next page.
          */
-        public function getNextPage($entry_page)
+        public function getNextPage($action, $entry_page)
         /**/
         {
             $next = $this;
 
             if (count($this->errors) == 0) {
-                $action = app::getInstance()->getAction();
-
                 if (isset($this->next_pages[$action])) {
                     // lookup next page from current page's next_page array
                     $class = $this->next_pages[$action];
