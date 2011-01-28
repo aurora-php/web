@@ -47,7 +47,11 @@ namespace org\octris\core\app {
         protected function initialize()
         /**/
         {
-            $registry = \org\octris\core\registry::getInstance();
+            if (isset($_REQUEST['state'])) {
+                // $this->state = \org\octris\core\app\state::thaw(...)
+            }
+            
+            // $registry = \org\octris\core\registry::getInstance();
             
             // setup settings
             // $settings = \org\octris\core\settings::getInstance();
