@@ -83,6 +83,37 @@ namespace org\octris\core\app {
         }
 
         /**
+         * Validate frozen state object.
+         *
+         * @octdoc  m:state/validate
+         * @param   string          $state              Frozen state to validate.
+         * @param   string          $secret             Optional secret to use for generating hash to test if state is valid.
+         * @param   string          $decoded            Returns array with checksum and compressed state, ready to thaw.
+         * @return  bool                                Returns true if state is valid, otherwise returns false.
+         */
+        public static function validate($state, $secret = '', array &$decoded = null)
+        /**/
+        {
+            $tmp    = base64_decode($state);
+            $sum    = '';
+            $frozen = '';
+
+            if (($pos = strpos($tmp, '|')) !== false) {
+                $sum    = substr($tmp, 0, $pos);
+                $frozen = substr($tmp, $pos + 1);
+                
+                unset($tmp);
+                
+                $decoded = array(
+                    'checksum'  => $sum,
+                    'state'     => $frozen
+                );
+            }
+
+            return (($test = hash(self::hash_algo, $frozen . $secret)) != $sum);
+        }
+        
+        /**
          * Thaw frozen state object.
          *
          * @octdoc  m:state/thaw
@@ -93,24 +124,14 @@ namespace org\octris\core\app {
         public static function thaw($state, $secret = '')
         /**/
         {
-            $decoded = base64_decode($state);
-            $sum     = '';
-            $frozen  = '';
-
-            if (($pos = strpos($decoded, '|')) !== false) {
-                $sum    = substr($decoded, 0, $pos);
-                $frozen = substr($decoded, $pos + 1);
-                
-                unset($decoded);
-            }
-
-            if (($test = hash(self::hash_algo, $frozen . $secret)) != $sum) {
+            $frozen = array();
+            
+            if (self::validate($state, $secret, $frozen)) {
                 // hash did not match
-                throw new \Exception(sprintf('[%s !=  %s | %s]', $test, $sum, $state));
+                throw new \Exception(sprintf('[%s !=  %s | %s]', $test, $frozen['checksum'], $frozen['state']));
             } else {
-                return new static(unserialize(gzuncompress($frozen)));
+                return new static(unserialize(gzuncompress($frozen['state'])));
             }
         }
-        
     }
 }
