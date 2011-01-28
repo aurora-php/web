@@ -4,107 +4,33 @@ namespace org\octris\core\app\web {
     use \org\octris\core\app\web as app;
     use \org\octris\core\validate as validate;
     
-    /****c* app/page
-     * NAME
-     *      page
-     * FUNCTION
-     *      page controller of the MVC framework
-     * COPYRight
-     *      copyright (c) 2006-2010 by Harald Lapp
-     * AUTHOR
-     *      Harald Lapp <harald@octris.org>
-     ****
+    /**
+     * Page controller for web applications.
+     *
+     * @octdoc      c:web/page
+     * @copyright   copyright (c) 2010-2011 by Harald Lapp
+     * @author      Harald Lapp <harald@octris.org>
      */
-
-    abstract class page {
-        /****v* page/$next_pages
-         * SYNOPSIS
-         */
-        protected $next_pages = array(
-        );
-        /*
-         * FUNCTION
-         *      next valid actions -> pages for current page
-         ****
-         */
-
-        /****v* page/$errors
-         * SYNOPSIS
-         */
-        protected $errors = array();
-        /*
-         * FUNCTION
-         *      stored error messages occured during execution of the current page
-         ****
-         */
-
-        /****v* page/$messages
-         * SYNOPSIS
-         */
-        protected $messages = array();
-        /*
-         * FUNCTION
-         *      stored messages collected during execution of the current page
-         ****
-         */
-
-        /****m* page/$secure
-         * SYNOPSIS
+    class page extends \org\octris\core\app\page
+    /**/
+    {
+        /**
+         * Whether the page should be delivered only through HTTPS.
+         *
+         * @octdoc  v:page/$secure
+         * @var     bool
          */
         protected $secure = false;
-        /*
-         * FUNCTION
-         *      whether the page should be delivered through https or not
-         ****
-         */
+        /**/
 
-        /****v* page/$app
-         * SYNOPSIS
-         */
-        protected $app;
-        /*
-         * FUNCTION
-         *      application instance
-         ****
-         */
-
-        /****m* page/__construct
-         * SYNOPSIS
-         */
-        public function __construct(\org\octris\core\app $app)
-        /*
-         * FUNCTION
-         *      constructor
-         * INPUTS
-         *      * $app (app) application instance
-         ****
-         */
-        {
-            $this->app = $app;
-        }
-
-        /****m* page/__toString
-         * SYNOPSIS
-         */
-        public function __toString()
-        /*
-         * FUNCTION
-         *      magic method __toString returns name of page class
-         ****
-         */
-        {
-            return get_class($this);
-        }
-
-        /****m* page/isSecure
-         * SYNOPSIS
+        /**
+         * Returns whether page should be only delivered secured.
+         *
+         * @octdoc  m:page/isSecure
+         * @return  bool                                    Secured flag.
          */
         public final function isSecure()
-        /*
-         * FUNCTION
-         *      return, whether page has to be secured
-         ****
-         */
+        /**/
         {
             return $this->secure;
         }
