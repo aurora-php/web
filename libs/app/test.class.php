@@ -1,6 +1,8 @@
 <?php
 
 namespace org\octris\core\app {
+    use \org\octris\core\validate as validate;
+    
     require_once('PHPUnit/Framework.php');
     
     /****c* app/test
