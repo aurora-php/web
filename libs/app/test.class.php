@@ -3,16 +3,13 @@
 namespace org\octris\core\app {
     use \org\octris\core\validate as validate;
     
-    require_once('PHPUnit/Framework.php');
-    
     /****c* app/test
      * NAME
      *      test
      * FUNCTION
      *      Test base class. The main purpose of this class is to include the
-     *      OCTRiS autoloader and to include the base class of the PHPUnit 
-     *      framework. Additionally the class provides some helper methods 
-     *      useful for writing test cases.
+     *      OCTRiS autoloader and to provide some helper methods useful for
+     *      writing test cases.
      * COPYRIGHT
      *      copyright (c) 2010 by Harald Lapp
      * AUTHOR
