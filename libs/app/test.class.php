@@ -3,57 +3,46 @@
 namespace org\octris\core\app {
     use \org\octris\core\validate as validate;
     
-    /****c* app/test
-     * NAME
-     *      test
-     * FUNCTION
-     *      Test base class. The main purpose of this class is to include the
-     *      OCTRiS autoloader and to provide some helper methods useful for
-     *      writing test cases.
-     * COPYRIGHT
-     *      copyright (c) 2010 by Harald Lapp
-     * AUTHOR
-     *      Harald Lapp <harald@octris.org>
-     ****
+    /**
+     * Test base class. The main purpose of this class is to include the
+     * OCTRiS autoloader and to provide some helper methods useful for
+     * writing test cases.
+     *
+     * @octdoc      c:app/test
+     * @copyright   copyright (c) 2010-2011 by Harald Lapp
+     * @author      Harald Lapp <harald@octris.org>
      */
-
-    class test {
-        /****m* test/autoload
-         * SYNOPSIS
+    class test
+    /**/
+    {
+        /**
+         * Class autoloader.
+         *
+         * @octdoc  m:test/autoload
+         * @param   string          $classpath          Class to autoload.
          */
         public static function autoload($classpath)
-        /*
-         * FUNCTION
-         *      class autoloader
-         * INPUTS
-         *      * $classpath (string) -- path of class to load
-         ****
-         */
+        /**/
         {
             $class = substr($classpath, strrpos($classpath, '\\') + 1);
             $pkg   = preg_replace('|\\\\|', '/', preg_replace('|\\\\|', '.', ltrim($classpath, '\\\\'), 2)) . '.class.php';
             
             require_once($pkg);
         }
-        
-        /****m* test/getMethod
-         * SYNOPSIS
+
+        /**
+         * This is a helper method to unit tests to enable access to
+         * a method which is protected / private and make it possible
+         * to write a testcase for it.
+         *
+         * @octdoc  m:test/getMethod
+         * @param   mixed           $class              Name or instance of class
+         *                                              the method is located in.
+         * @param   string          $name               Name of method to enable access to.
+         * @return  ReflectionMethod                    Method object.
          */
         public static function getMethod($class, $name)
-        /*
-         * FUNCTION
-         *      This is a helper method to unit tests to enable access to
-         *      a method which is protected / private and make it possible
-         *      to write a testcase for it.
-         * INPUTS
-         *      * $class (mixed) -- name or instance of class the method is located in
-         *      * $name (string) -- name of method to enable access to
-         * OUTPUTS
-         *      (ReflectionMethod) -- method object
-         * REFERENCE
-         *      http://stackoverflow.com/questions/249664/best-practices-to-test-protected-methods-with-phpunit/2798203#2798203
-         ****
-         */
+        /**/
         {
             $class = new \ReflectionClass($class);
             $method = $class->getMethod($name);
@@ -62,20 +51,17 @@ namespace org\octris\core\app {
             return $method;
         }
         
-        /****m* test/getProperty
-         * SYNOPSIS
+        /**
+         * Implements the same as ~getMethod~ for object properties.
+         *
+         * @octdoc  m:test/getProperty
+         * @param   mixed           $class              Name or instance of class
+         *                                              the property is located in.
+         * @param   string          $name               Name of property to enable access to.
+         * @return  ReflectionProperty                  Property object.
          */
         public static function getProperty($class, $name)
-        /*
-         * FUNCTION
-         *      Implements the same as ~getMethod~ for object properties.
-         * INPUTS
-         *      * $class (mixed) -- name or instance of class the property is located in
-         *      * $name (string) -- name of property to enable access to
-         * OUTPUTS
-         *      (ReflectionProperty) -- property object
-         ****
-         */
+        /**/
         {
             $class = new \ReflectionClass($class);
             $property = $class->getProperty($name);
