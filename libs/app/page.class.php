@@ -96,14 +96,6 @@ namespace org\octris\core\app {
         public function addValidator($action, \org\octris\core\wrapper $wrapper, array $schema, $mode = \org\octris\core\validate\schema::T_STRICT)
         /**/
         {
-            $schema = (!isset($schema['default']) && isset($schema['type'])
-                       ? array('default' => $schema)
-                       : $schema);
-            
-            if (!isset($schema['default']['type']) || $schema['default']['type'] != \org\octris\core\validate::T_OBJECT || !isset($schema['default']['properties'])) {
-                throw new \Exception('invalid validation schema');
-            }
-            
             self::$validators[get_class($this) . ':' . $action] = array(
                 'wrapper' => $wrapper,
                 'schema'  => $schema,
