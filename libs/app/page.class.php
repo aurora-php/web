@@ -113,37 +113,26 @@ namespace org\octris\core\app {
         public function validate($action)
         /**/
         {
-            $key = get_class($this) . ':' . $action;
-            $ret = true;
+            $key      = get_class($this) . ':' . $action;
+            $is_valid = true;
 
             if (isset(self::$validators[$key])) {
-                $validator  =& self::$validators[$key]['default'];
-                $properties =& self::$validator['properties'];
-                $wrapper    = $ruleset['wrapper'];
+                $validator =& self::$validators[$key];
                 
-                if (isset($validator['keyrename'])) {
-                    $wrapper->keyrename($validator['keyrename']);
-                }
-             
-                print_r($wrapper);
-                die;
+                $instance = new \org\octris\core\validate\schema(
+                    $validator['schema'],
+                    $validator['mode']
+                );
                 
-                foreach ($properties as $name => $schema) {
-                    if (!isset($wrapper[$name])) {
-                        if (isset($schema['required'])) {
-                            $this->addError($schema['required']);
-                        }
-                    } elseif (!$wrapper[$name]->validate($schema)) {
-                        $ret = false;
-                        
-                        if (isset($schema['invalid'])) {
-                            $this->addError($schema['invalid']);
-                        }
-                    }
+                if (!($is_valid = $instance->validate($validator['wrapper']))) {
+                    $this->errors = array_merge(
+                        $this->errors, 
+                        $instance->getErrors()
+                    );
                 }
             }
 
-            return $ret;
+            return $is_valid;
         }
 
         /**
