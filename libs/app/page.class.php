@@ -104,6 +104,23 @@ namespace org\octris\core\app {
         }
 
         /**
+         * Return a validator for specified action.
+         *
+         * @octdoc  m:page/getValidator
+         * @param   string          $action         Action to return validator for.
+         * @return  array                           Validator.
+         */
+        public function getValidator($action)
+        /**/
+        {
+            $key = get_class($this) . ':' . $action;
+            
+            return (isset(self::$validators[$key])
+                    ? self::$validators[$key]
+                    : false);
+        }
+
+        /**
          * Apply validation ruleset.
          *
          * @octdoc  m:page/validate
