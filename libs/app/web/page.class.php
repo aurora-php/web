@@ -89,6 +89,53 @@ namespace org\octris\core\app\web {
             return $next;
         }
 
+        /****m* page/getAction
+         * SYNOPSIS
+         */
+        public function getAction()
+        /*
+         * FUNCTION
+         *      determine the action the page called with
+         * OUTPUTS
+         *      (string) -- name of action
+         ****
+         */
+        {
+            static $action = '';
+
+            if ($action != '') {
+                return $action;
+            }
+
+            $method = app::getRequestMethod();
+
+            if ($method == 'POST' || $method == 'GET') {
+                // try to determine action from a request parameter named ACTION
+                $method = ($method == 'POST' ? $_POST : $_GET);
+            
+                if ($method->validate('ACTION', validate::T_ALPHANUM)) {
+                    $action = $method['ACTION']->value;
+                }
+
+                if ($action == '') {
+                    // try to determine action from a request parameter named ACTION_...
+                    foreach ($method as $k => $v) {
+                        if (preg_match('/^ACTION_([a-zA-Z]+)$/', $k, $match)) {
+                            $action = $match[1];
+
+                            return $action;
+                        }
+                    }
+                }
+            }
+
+            if ($action == '') {
+                $action = 'default';
+            }
+
+            return $action;
+        }
+
         /****m* page/getValidationRuleset
          * SYNOPSIS
          */
