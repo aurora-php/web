@@ -94,15 +94,19 @@ namespace org\octris\core {
         protected function __construct()
         /**/
         {
-            if (!$_ENV['OCTRIS_APP']->isSet || !$_ENV['OCTRIS_BASE']->isSet) {
+            if (!isset($_ENV['OCTRIS_APP']) || !isset($_ENV['OCTRIS_BASE'])) {
                 die("unable to import OCTRIS_APP or OCTRIS_BASE!\n");
             }
 
-            if (!$_ENV->validate('OCTRIS_APP', validate::T_PATTERN, array('pattern' => '/^[a-z0-9.]+$/')) || !$_ENV->validate('OCTRIS_BASE', validate::T_PRINTABLE)) {
+            if (!$_ENV['OCTRIS_APP']->validate(array('type' => validate::T_PROJECT)) || !$_ENV['OCTRIS_BASE']->validate(array('type' => validate::T_PRINTABLE))) {
                 die("unable to import OCTRIS_APP or OCTRIS_BASE - invalid settings!\n");
             }
-    
-            $_ENV['OCTRIS_DEVEL']->value = ($_ENV->validate('OCTRIS_DEVEL', validate::T_BOOL) && $_ENV['OCTRIS_DEVEL']->value);
+
+            $_ENV->set('OCTRIS_DEVEL', (
+                isset($_ENV['OCTRIS_DEVEL']) && 
+                $_ENV['OCTRIS_DEVEL']->validate(array('type' => validate::T_BOOL)) && 
+                !!$_ENV['OCTRIS_DEVEL']->value
+            ), array('type' => validate::T_BOOL));
             
             $this->initialize();
         }
