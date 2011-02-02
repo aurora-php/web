@@ -121,17 +121,17 @@ namespace org\octris\core\app {
         }
 
         /**
-         * Apply validation ruleset.
+         * Apply a configured validator.
          *
-         * @octdoc  m:page/validate
-         * @param   string                          $action         Action to select ruleset for.
-         * @return  bool                                            Returns true if validation suceeded, otherwise false.
+         * @octdoc  m:page/applyValidator
+         * @param   string          $action         Action to apply validator for.
+         * @return  mixed                           Returns true, if valid otherwise an array with error messages.
          */
-        public function validate($action)
+        public function applyValidator($action)
         /**/
         {
-            $key      = get_class($this) . ':' . $action;
-            $is_valid = true;
+            $key    = get_class($this) . ':' . $action;
+            $return = true;
 
             if (isset(self::$validators[$key])) {
                 $validator =& self::$validators[$key];
@@ -141,15 +141,25 @@ namespace org\octris\core\app {
                     $validator['mode']
                 );
                 
-                if (!($is_valid = $instance->validate($validator['wrapper']))) {
-                    $this->errors = array_merge(
-                        $this->errors, 
-                        $instance->getErrors()
-                    );
+                if (!($return = $instance->validate($validator['wrapper']))) {
+                    $return = $instance->getErrors();
                 }
             }
 
-            return $is_valid;
+            return $return;
+        }
+
+        /**
+         * Apply validation ruleset.
+         *
+         * @octdoc  m:page/validate
+         * @param   string                          $action         Action to select ruleset for.
+         * @return  bool                                            Returns true if validation suceeded, otherwise false.
+         */
+        public function validate($action)
+        /**/
+        {
+            return ($this->applyValidator($action) === true);
         }
 
         /**
