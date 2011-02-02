@@ -100,66 +100,52 @@ namespace org\octris\core\app {
                        ? array('default' => $schema)
                        : $schema);
             
-            if (!isset($schema['default']['type']) || $schema['default']['type'] != \org\octris\core\validate::T_OBJECT || !isset($schema['default']['type']['properties'])) {
-                throw new \Exception('invalid validation scheme');
+            if (!isset($schema['default']['type']) || $schema['default']['type'] != \org\octris\core\validate::T_OBJECT || !isset($schema['default']['properties'])) {
+                throw new \Exception('invalid validation schema');
             }
             
             self::$validators[get_class($this) . ':' . $action] = array(
                 'wrapper' => $wrapper,
-                'schema'  => $$schema,
+                'schema'  => $schema,
                 'mode'    => $mode
             );
         }
 
         /**
-         * Abstract method definition.
-         *
-         * @octdoc  m:page/prepare
-         * @param   \org\octris\core\app\page       $last_page      Instance of last called page.
-         * @param   string                          $action         Action that led to current page.
-         * @return  mixed                                           Returns either page to redirect to or null.
-         * @abstract   
-         */
-        abstract public function prepare(\org\octris\core\app\page $last_page, $action);
-        /**/
-
-        /**
-         * Abstract method definition
-         *
-         * @octdoc  m:page/render
-         * @abstract   
-         */
-        abstract public function render();
-        /**/
-
-        /**
          * Apply validation ruleset.
          *
          * @octdoc  m:page/validate
-         * @param   \org\octris\core\app\page       $last_page      Instance of last called page.
          * @param   string                          $action         Action to select ruleset for.
          * @return  bool                                            Returns true if validation suceeded, otherwise false.
          */
-        public function validate(\org\octris\core\app\page $last_page, $action)
+        public function validate($action)
         /**/
         {
             $key = get_class($this) . ':' . $action;
             $ret = true;
 
             if (isset(self::$validators[$key])) {
-                $properties =& self::$validators[$key]['default']['properties'];
+                $validator  =& self::$validators[$key]['default'];
+                $properties =& self::$validator['properties'];
                 $wrapper    = $ruleset['wrapper'];
+                
+                if (isset($validator['keyrename'])) {
+                    $wrapper->keyrename($validator['keyrename']);
+                }
+             
+                print_r($wrapper);
+                die;
                 
                 foreach ($properties as $name => $schema) {
                     if (!isset($wrapper[$name])) {
                         if (isset($schema['required'])) {
-                            $last_page->addError($schema['required']);
+                            $this->addError($schema['required']);
                         }
                     } elseif (!$wrapper[$name]->validate($schema)) {
                         $ret = false;
                         
                         if (isset($schema['invalid'])) {
-                            $last_page->addError($schema['invalid']);
+                            $this->addError($schema['invalid']);
                         }
                     }
                 }
