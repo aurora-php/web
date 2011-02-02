@@ -93,7 +93,7 @@ namespace org\octris\core\app {
          * @param   array                           $schema         Validation schema.
          * @param   int                             $mode           Validation mode.
          */
-        public function addValidator($action, \org\octris\core\wrapper $wrapper, array $schema, $mode = \org\octris\core\validate\schema::T_STRICT)
+        protected function addValidator($action, \org\octris\core\wrapper $wrapper, array $schema, $mode = \org\octris\core\validate\schema::T_STRICT)
         /**/
         {
             self::$validators[get_class($this) . ':' . $action] = array(
@@ -110,7 +110,7 @@ namespace org\octris\core\app {
          * @param   string          $action         Action to return validator for.
          * @return  array                           Validator.
          */
-        public function getValidator($action)
+        protected function getValidator($action)
         /**/
         {
             $key = get_class($this) . ':' . $action;
@@ -127,7 +127,7 @@ namespace org\octris\core\app {
          * @param   string          $action         Action to apply validator for.
          * @return  mixed                           Returns true, if valid otherwise an array with error messages.
          */
-        public function applyValidator($action)
+        protected function applyValidator($action)
         /**/
         {
             $key    = get_class($this) . ':' . $action;
