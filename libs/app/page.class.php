@@ -106,7 +106,7 @@ namespace org\octris\core\app {
         public function validate($action)
         /**/
         {
-            // return validate::getInstance()->validate($this, $action);
+            return app\validate::getInstance()->validate($this, $action);
         }
 
         /**
