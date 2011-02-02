@@ -39,16 +39,15 @@ namespace org\octris\core\app {
          */
         protected $messages = array();
         /**/
-        
+
         /**
-         * Constructor.
+         * Registered validators.
          *
-         * @octdoc  m:page/__construct
+         * @octdoc  v:page/$validators
+         * @var     array
          */
-        public function __construct()
+        protected static $validators = array();
         /**/
-        {
-        }
 
         /**
          * Added magic getter to provide readonly access to protected properties.
@@ -76,6 +75,33 @@ namespace org\octris\core\app {
         }
 
         /**
+         * Add a validator for the page.
+         *
+         * @octdoc  m:page/addValidator
+         * @param   string                          $action         Action that triggers the validator.
+         * @param   \org\octris\core\wrapper        $wrapper        Wrapper that should be validated.
+         * @param   array                           $schema         Validation schema.
+         * @param   int                             $mode           Validation mode.
+         */
+        public function addValidator($action, \org\octris\core\wrapper $wrapper, array $schema, $mode = \org\octris\core\validate\schema::T_STRICT)
+        /**/
+        {
+            $schema = (!isset($schema['default']) && isset($schema['type'])
+                       ? array('default' => $schema)
+                       : $schema);
+            
+            if (!isset($schema['default']['type']) || $schema['default']['type'] != \org\octris\core\validate::T_OBJECT || !isset($schema['default']['type']['properties'])) {
+                throw new \Exception('invalid validation scheme');
+            }
+            
+            self::$validators[get_class($this) . ':' . $action] = array(
+                'wrapper' => $wrapper,
+                'schema'  => $$schema,
+                'mode'    => $mode
+            );
+        }
+
+        /**
          * Abstract method definition.
          *
          * @octdoc  m:page/prepare
@@ -100,13 +126,36 @@ namespace org\octris\core\app {
          * Apply validation ruleset.
          *
          * @octdoc  m:page/validate
+         * @param   \org\octris\core\app\page       $last_page      Instance of last called page.
          * @param   string                          $action         Action to select ruleset for.
          * @return  bool                                            Returns true if validation suceeded, otherwise false.
          */
-        public function validate($action)
+        public function validate(\org\octris\core\app\page $last_page, $action)
         /**/
         {
-            return app\validate::getInstance()->validate($this, $action);
+            $key = get_class($this) . ':' . $action;
+            $ret = true;
+
+            if (isset(self::$validators[$key])) {
+                $properties =& self::$validators[$key]['default']['properties'];
+                $wrapper    = $ruleset['wrapper'];
+                
+                foreach ($properties as $name => $schema) {
+                    if (!isset($wrapper[$name])) {
+                        if (isset($schema['required'])) {
+                            $last_page->addError($schema['required']);
+                        }
+                    } elseif (!$wrapper[$name]->validate($schema)) {
+                        $ret = false;
+                        
+                        if (isset($schema['invalid'])) {
+                            $last_page->addError($schema['invalid']);
+                        }
+                    }
+                }
+            }
+
+            return $ret;
         }
 
         /**
