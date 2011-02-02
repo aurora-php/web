@@ -50,6 +50,16 @@ namespace org\octris\core\app {
         /**/
 
         /**
+         * Constructor.
+         *
+         * @octdoc  m:page/__construct
+         */
+        public function __construct()
+        /**/
+        {
+        }
+
+        /**
          * Added magic getter to provide readonly access to protected properties.
          *
          * @octdoc  m:page/__get
