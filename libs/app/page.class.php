@@ -209,5 +209,26 @@ namespace org\octris\core\app {
         {
             $this->messages[] = $msg;
         }
+        
+        /**
+         * Abstract method definition.
+         *
+         * @octdoc  m:page/prepare
+         * @param   \org\octris\core\app\page       $last_page      Instance of last called page.
+         * @param   string                          $action         Action that led to current page.
+         * @return  mixed                                           Returns either page to redirect to or null.
+         * @abstract   
+         */
+        abstract public function prepare(\org\octris\core\app\page $last_page, $action);
+        /**/
+
+        /**
+         * Abstract method definition
+         *
+         * @octdoc  m:page/render
+         * @abstract   
+         */
+        abstract public function render();
+        /**/
     }
 }
