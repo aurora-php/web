@@ -98,15 +98,15 @@ namespace org\octris\core {
                 die("unable to import OCTRIS_APP or OCTRIS_BASE!\n");
             }
 
-            if (!$_ENV['OCTRIS_APP']->validate(array('type' => validate::T_PROJECT)) || !$_ENV['OCTRIS_BASE']->validate(array('type' => validate::T_PRINTABLE))) {
+            if (!$_ENV['OCTRIS_APP']->validate(validate::T_PROJECT) || !$_ENV['OCTRIS_BASE']->validate(validate::T_PRINTABLE)) {
                 die("unable to import OCTRIS_APP or OCTRIS_BASE - invalid settings!\n");
             }
 
             $_ENV->set('OCTRIS_DEVEL', (
                 isset($_ENV['OCTRIS_DEVEL']) && 
-                $_ENV['OCTRIS_DEVEL']->validate(array('type' => validate::T_BOOL)) && 
+                $_ENV['OCTRIS_DEVEL']->validate(validate::T_BOOL) && 
                 !!$_ENV['OCTRIS_DEVEL']->value
-            ), array('type' => validate::T_BOOL));
+            ), validate::T_BOOL);
             
             $this->initialize();
         }
