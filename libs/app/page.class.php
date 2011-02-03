@@ -207,6 +207,18 @@ namespace org\octris\core\app {
         }
 
         /**
+         * Add multiple errors for current page.
+         *
+         * @octdoc  m:page/addErrors
+         * @param   array           $err                        Array of error messages.
+         */
+        public function addErrors(array $err)
+        /**/
+        {
+            $this->errors = array_merge($this->errors, $err);
+        }
+
+        /**
          * Add message for current page.
          *
          * @octdoc  m:page/addMessage
@@ -216,6 +228,18 @@ namespace org\octris\core\app {
         /**/
         {
             $this->messages[] = $msg;
+        }
+
+        /**
+         * Add multiple messages for current page.
+         *
+         * @octdoc  m:page/addMessages
+         * @param   array           $msg                        Array of messages.
+         */
+        public function addMessages(array $msg)
+        /**/
+        {
+            $this->messages = array_merge($this->messages, $msg);
         }
         
         /**
