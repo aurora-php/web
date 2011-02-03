@@ -93,11 +93,11 @@ namespace org\octris\core\app {
          * @param   array                           $schema         Validation schema.
          * @param   int                             $mode           Validation mode.
          */
-        protected function addValidator($action, \org\octris\core\wrapper $wrapper, array $schema, $mode = \org\octris\core\validate\schema::T_IGNORE)
+        protected function addValidator($action, \org\octris\core\wrapper &$wrapper, array $schema, $mode = \org\octris\core\validate\schema::T_IGNORE)
         /**/
         {
             self::$validators[get_class($this) . ':' . $action] = array(
-                'wrapper' => $wrapper,
+                'wrapper' => &$wrapper,
                 'schema'  => $schema,
                 'mode'    => $mode
             );
