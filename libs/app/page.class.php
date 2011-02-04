@@ -2,6 +2,7 @@
 
 namespace org\octris\core\app {
     use \org\octris\core\app as app;
+    use \org\octris\core\provider as provider;
     
     /**
      * Core page controller class.
@@ -38,15 +39,6 @@ namespace org\octris\core\app {
          * @var     array
          */
         protected $messages = array();
-        /**/
-
-        /**
-         * Registered validators.
-         *
-         * @octdoc  v:page/$validators
-         * @var     array
-         */
-        protected static $validators = array();
         /**/
 
         /**
@@ -93,31 +85,10 @@ namespace org\octris\core\app {
          * @param   array                           $schema         Validation schema.
          * @param   int                             $mode           Validation mode.
          */
-        protected function addValidator($action, \org\octris\core\wrapper &$wrapper, array $schema, $mode = \org\octris\core\validate\schema::T_IGNORE)
+        protected function addValidator($type, $action, array $schema, $mode = \org\octris\core\validate\schema::T_IGNORE)
         /**/
         {
-            self::$validators[get_class($this) . ':' . $action] = array(
-                'wrapper' => &$wrapper,
-                'schema'  => $schema,
-                'mode'    => $mode
-            );
-        }
-
-        /**
-         * Return a validator for specified action.
-         *
-         * @octdoc  m:page/getValidator
-         * @param   string          $action         Action to return validator for.
-         * @return  array                           Validator.
-         */
-        protected function getValidator($action)
-        /**/
-        {
-            $key = get_class($this) . ':' . $action;
-            
-            return (isset(self::$validators[$key])
-                    ? self::$validators[$key]
-                    : false);
+            provider::access($type)->addValidator((string)$this . ':' . $action, $schema);
         }
 
         /**
@@ -130,23 +101,7 @@ namespace org\octris\core\app {
         protected function applyValidator($action)
         /**/
         {
-            $key    = get_class($this) . ':' . $action;
-            $return = true;
-
-            if (isset(self::$validators[$key])) {
-                $validator =& self::$validators[$key];
-                
-                $instance = new \org\octris\core\validate\schema(
-                    $validator['schema'],
-                    $validator['mode']
-                );
-                
-                if (!($return = $instance->validate($validator['wrapper']))) {
-                    $return = $instance->getErrors();
-                }
-            }
-
-            return $return;
+            return provider::access($type)->applyValidator((string)$this . ':' . $action);
         }
 
         /**
@@ -159,7 +114,11 @@ namespace org\octris\core\app {
         public function validate($action)
         /**/
         {
-            return ($this->applyValidator($action) === true);
+            list($is_valid, , $errors) = $this->applyValidator($action);
+            
+            $this->addErrors($errors);
+            
+            return $is_valid;
         }
 
         /**
