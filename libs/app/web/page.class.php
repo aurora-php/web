@@ -114,8 +114,8 @@ namespace org\octris\core\app\web {
                 $request = provider::access($method);
             }
             
-            if (($_action = $request->getValue('ACTION', validate::T_ALPHANUM)) !== false) {
-                $action = $_action;
+            if (($tmp = $request->getValue('ACTION', validate::T_ALPHANUM)) !== false) {
+                $action = $tmp;
             } else {
                 // try to determine action from a request parameter named ACTION_...
                 foreach ($request->getPrefixed('ACTION_', validate::T_ALPHANUM) as $k => $v) {
@@ -129,6 +129,50 @@ namespace org\octris\core\app\web {
             }
 
             return $action;
+        }
+
+        /**
+         * Determine requested module with specified action. If a module was determined but the action is not
+         * valid, this method will return default application module. The module must be reachable from inside
+         * the application.         
+         *
+         * @octdoc  m:page/getModule
+         * @return  string                                      Name of module
+         */
+        public function getModule()
+        /**/
+        {
+            static $module = '';
+            
+            if ($module != '') {
+                return $module;
+            }
+            
+            $method  = request::getRequestMethod();
+            
+            if ($method == request::T_POST || $method == request::T_GET) {
+                $method = ($method == request::T_POST
+                            ? 'post'
+                            : 'get');
+                
+                $request = provider::access($method);
+            }
+            
+            if (($tmp = $request->getValue('MODULE', validate::T_ALPHANUM)) !== false) {
+                $module = $tmp;
+            } else {
+                // try to determine module from a request parameter named MODULE_...
+                foreach ($request->getPrefixed('MODULE_', validate::T_ALPHANUM) as $k => $v) {
+                    $module = substr($k, 7);
+                    break;
+                }
+            }
+
+            if (!$module) {
+                $module = 'default';
+            }
+
+            return $module;
         }
 
         /****m* page/getValidationRuleset
