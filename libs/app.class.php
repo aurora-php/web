@@ -4,6 +4,7 @@ namespace org\octris\core {
     require_once('org.octris.core/app/autoloader.class.php');
     
     use \org\octris\core\validate as validate;
+    use \org\octris\core\provider as provider;
 
     /**
      * Core application class.
@@ -94,20 +95,16 @@ namespace org\octris\core {
         protected function __construct()
         /**/
         {
-            if (!isset($_ENV['OCTRIS_APP']) || !isset($_ENV['OCTRIS_BASE'])) {
+            $env = provider::access('env');
+
+            if (!$env->isExist('OCTRIS_APP') || !$env->isExist('OCTRIS_BASE')) {
                 die("unable to import OCTRIS_APP or OCTRIS_BASE!\n");
             }
 
-            if (!$_ENV['OCTRIS_APP']->validate(validate::T_PROJECT) || !$_ENV['OCTRIS_BASE']->validate(validate::T_PRINTABLE)) {
+            if (!$env->isValid('OCTRIS_APP', validate::T_PROJECT) || !$env->isValid('OCTRIS_BASE', validate::T_PRINTABLE)) {
                 die("unable to import OCTRIS_APP or OCTRIS_BASE - invalid settings!\n");
             }
 
-            $_ENV->set('OCTRIS_DEVEL', (
-                isset($_ENV['OCTRIS_DEVEL']) && 
-                $_ENV['OCTRIS_DEVEL']->validate(validate::T_BOOL) && 
-                !!$_ENV['OCTRIS_DEVEL']->value
-            ), validate::T_BOOL);
-            
             $this->initialize();
         }
 
@@ -216,12 +213,14 @@ namespace org\octris\core {
         public static function getPath($type, $module = '')
         /**/
         {
+            $env = provider::access('env');
+            
             $return = sprintf(
                 $type,
-                $_ENV['OCTRIS_BASE']->value,
+                $env->getValue('OCTRIS_BASE', validate::T_PATH),
                 ($module 
                     ? $module 
-                    : $_ENV['OCTRIS_APP']->value)
+                    : $env->getValue('OCTRIS_APP', validate::T_PROJECT))
             );
 
             return realpath($return);
