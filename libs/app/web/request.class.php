@@ -2,51 +2,46 @@
 
 namespace org\octris\core\app\web {
     use \org\octris\core\validate as validate;
+    use \org\octris\core\provider as provider;
 
-    /****c* web/request
-     * NAME
-     *      web
-     * FUNCTION
-     *      request helper functions
-     * COPYRIGHT
-     *      copyright (c) 2010 by Harald Lapp
-     * AUTHOR
-     *      Harald Lapp <harald@octris.org>
-     ****
+    /**
+     * Request helper functions
+     *
+     * @octdoc      c:web/request
+     * @copyright   copyright (c) 2010-2011 by Harald Lapp
+     * @author      Harald Lapp <harald@octris.org>
      */
+    class request
+    /**/
+    {
+        /**
+         * Request types.
+         * 
+         * @octdoc  d:request/T_POST, T_GET
+         */
+        const T_POST = 'post';
+        const T_GET  = 'get';
+        /**/
 
-    class request {
-        /****d* request/T_POST, T_GET
-         * SYNOPSIS
+        /**
+         * Determine and return method of the request.
+         *
+         * @octdoc  m:request/getRequestMehot
+         * @return  string                                  Type of request. 
          */
-        const T_POST = 'POST';
-        const T_GET  = 'GET';
-        /*
-         * FUNCTION
-         *      request methods
-         ****
-         */
-        
-        /****m* request/getRequestMethod
-         * SYNOPSIS
-         */
-        public static function getRequestMethod()
-        /*
-         * FUNCTION
-         *      determine request method
-         * INPUTS
-         *      (string) -- type of request method
-         ****
-         */
+        public static function getRequestMehot()
+        /**/
         {
-            static $method = NULL;
+            static $method = null;
 
             if (is_null($method)) {
-                if ($_SERVER['REQUEST_METHOD']->isSet) {
-                    $method = strtoupper($_SERVER->validate('REQUEST_METHOD', validate::T_PRINT)->value);
+                $server = provider::access('server');
+                
+                if ($server->isExist('REQUEST_METHOD')) {
+                    $method = strtolower($server->getValue('REQUEST_METHOD', validate::T_PRINT));
 
-                    if ($method != 'POST' && $method != 'GET') {
-                        $method = 'GET';
+                    if ($method != self::T_POST && $method != self::T_GET) {
+                        $method = self::T_GET;
                     }
                 }
             }
@@ -54,225 +49,203 @@ namespace org\octris\core\app\web {
             return $method;
         }
 
-        /****m* request/isSSL
-         * SYNOPSIS
+        /**
+         * Determine whether request is SSL secured.
+         *
+         * @octdoc  m:request/isSSL
+         * @return  bool                                    Returns true if request is SSL secured.
          */
         public static function isSSL()
-        /*
-         * FUNCTION
-         *      determine whether request uses https or not
-         * OUTPUTS
-         *      (bool) -- returns true, if request is SSL secured
-         ****
-         */
+        /**/
         {
-            static $isSSL = NULL;
+            static $isSSL = null;
 
             if (is_null($isSSL)) {
-                $isSSL = ($_SERVER['HTTP_HOST']->isSet && $_SERVER->validate('HTTPS', validate::T_PATTERN, array('pattern' => '/on/i')));
+                $server = provider::access('server');
+                
+                $isSSL = ($server->isExist('HTTP_HOST') && $server->isValid('HTTPS', validate::T_PATTERN, array('pattern' => '/on/i')));
             }
 
             return $isSSL;
         }
 
-        /****m* request/getHostname
-         * SYNOPSIS
+        /**
+         * Return hostname of current request.
+         *
+         * @octdoc  m:request/getHostname
+         * @param   string                                  Hostname.
          */
         public static function getHostname()
-        /*
-         * FUNCTION
-         *      return hostname of current request
-         * OUTPUTS
-         *      (string) -- hostname
-         ****
-         */
+        /**/
         {
-            $host = '';
-            
-            if ($_SERVER['HTTP_HOST']->isSet && $_SERVER->validate('HTTP_HOST', validate::T_PRINT)) {
-                $host = $_SERVER['HTTP_HOST']->value;
+            static $host = false;
+
+            if ($host === false) {
+                $server = provider::access('server');
+                
+                if ($server->isExist('HTTP_HOST')) {
+                    $host = $server->getValue('HTTP_HOST', validate::T_PRINT);
+                }
+
+                if ($host === false) {
+                    $host = '';
+                }
             }
             
             return $host;
         }
         
-        /****m* request/getHost
-         * SYNOPSIS
+        /**
+         * Return host of request.
+         *
+         * @octdoc  m:request/getHost
+         * @param   string                                  Host.
          */
-        public static function getHost()
-        /*
-         * FUNCTION
-         *      return host of request
-         * OUTPUTS
-         *      (string) -- host
-         ****
-         */
+        public function getHost()
+        /**/
         {
             $host = static::getHostname();
             
             return sprintf('http%s://%s', (static::isSSL() ? 's' : ''), $host);
-            
         }
-        
-        /****m* request/getSSLHost
-         * SYNOPSIS
+
+        /**
+         * Return current host forced to https.
+         *
+         * @octdoc  m:request/getSSLHost
+         * @param   string                                  SSL secured host.
          */
         public static function getSSLHost()
-        /*
-         * FUNCTION
-         *      return current host forced to https
-         * OUTPUTS
-         *      (string) -- application host
-         ****
-         */
+        /**/
         {
             return preg_replace('|^http://|i', 'https://', static::getHost());
         }
 
-        /****m* request/getNonSSLHost
-         * SYNOPSIS
+        /**
+         * Return current host forced to http (withoud 's').
+         *
+         * @octdoc  m:request/getNonSSLHost
+         * @param   string                                  non-SSL secured host.
          */
         public static function getNonSSLHost()
-        /*
-         * FUNCTION
-         *      return current host forced to http
-         * OUTPUTS
-         *      (string) -- application host
-         ****
-         */
+        /**/
         {
             return preg_replace('|^https://|i', 'http://', static::getHost());
         }
-        
-        /****m* request/getUrl
-         * SYNOPSIS
+
+        /**
+         * Determine current URL of application and return it.
+         *
+         * @octdoc  m:request/getUrl
+         * @todo    This method is not fully tested with all webservers, but it works for apache, lighttpd, nginx and IIS.
+         * @return  string                                  URL.
          */
         public static function getUrl()
-        /*
-         * FUNCTION
-         *      determine current URL of application and return it.
-         * OUTPUTS
-         *      returns current application URL
-         * TODO
-         *      this method is not fully tested with all webservers, but it 
-         *      seems to work for apache and lighttpd
-         ****
-         */
+        /**/
         {
             $uri = static::getHost();
 
-            if ($_SERVER['PHP_SELF']->isSet && $_SERVER['REQUEST_URI']->isSet) {
-                if ($_SERVER->validate('REQUEST_URI', validate::T_PRINT)) {
-                    $uri .= $_SERVER['REQUEST_URI']->value;
+            $server = provider::access('server');
+
+            if ($server->isExist('PHP_SELF') && $server->isExist('REQUEST_URI')) {
+                // for 'good' servers
+                if (($tmp = $server->getValue('REQUEST_URI', validate::T_PRINT)) !== false) {
+                    $uri .= $tmp;
                 }
             } else {
                 // for IIS
-                if ($_SERVER->validate('SCRIPT_NAME', validate::T_PRINT)) {
-                    $uri .= $_SERVER['SCRIPT_NAME']->value;
+                if (($tmp = $server->getValue('SCRIPT_NAME', validate::T_PRINT)) !== false) {
+                    $uri .= $tmp;
                 }
 
-                if ($_SERVER->validate('QUERY_STRING', validate::T_PRINT) && $_SERVER['QUERY_STRING']->value != '') {
-                    $uri .= '?' . $_SERVER['QUERY_STRING']->value;
+                if (($tmp = $server->getValue('QUERY_STRING', validate::T_PRINT)) !== '') {
+                    $uri .= '?' . $tmp;
                 }
             }
 
             return $uri;
         }
-        
-        /****m* request/getSSLUrl
-         * SYNOPSIS
+
+        /**
+         * Return current URL forced to https.
+         *
+         * @octdoc  m:request/getSSLUrl
+         * @return  string                                  SSL secured URL.
          */
         public static function getSSLUrl()
-        /*
-         * FUNCTION
-         *      return current URL forced to https
-         * OUTPUTS
-         *      (string) -- SSL secured URL
-         ****
-         */
+        /**/
         {
             return preg_replace('|^http://|i', 'https://', static::getUrl());
         }
 
-        /****m* request/getNonSSLHost
-         * SYNOPSIS
+        /**
+         * Return current URL non-SSL secured.
+         *
+         * @octdoc  m:request/getNonSSLHost
+         * @return  string                                  Non-SSL secured URL.
          */
         public static function getNonSSLHost()
-        /*
-         * FUNCTION
-         *      return current URL forced to http
-         * OUTPUTS
-         *      (string) -- unsecured URL
-         ****
-         */
+        /**/
         {
             return preg_replace('|^https://|i', 'http://', static::getUrl());
         }
-        
-        /****m* web/negotiateLanguage
-         * SYNOPSIS
+
+        /**
+         * Uses HTTP's "Accept-Language" header to negotiate accepted language.
+         *
+         * @octdoc  m:request/negotiateLanguage
+         * @param   array           $supported              Optional supported languages.
+         * @param   string          $default                Optional default language to use if no accepted language matches.
+         * @return  string                                  Determined language.
          */
-        public function negotiateLanguage($supported, $default) 
-        /*
-         * FUNCTION
-         *      uses HTTP_ACCEPT_LANGUAGE to negotiate accepted language
-         * INPUTS
-         *      * $supported (array) -- array of supported languages
-         *      * $default (string) -- default language to use (fallback if no accepted language matches)
-         * OUTPUTS
-         *      (string) -- language
-         ****
-         */
+        public static function negotiateLanguage(array $supported = array(), $default = '')
+        /**/
         {
-            // generate language array
-            $lc_supported = explode(',', $supported);
-
-            $keys = explode(',', str_replace('_', '-', strtolower($supported)));
-            $lc_supported = array_combine($keys, $lc_supported);
-
-            $short = explode(',', preg_replace('/_[A-Z0-9]+/', '', $supported));
-            $lc_supported = array_merge(
-                $lc_supported, 
-                array_flip(array_combine(array_reverse($lc_supported), $short))
-            );
-
-            // parse HTTP_ACCEPT_LANGUAGE
-            $http_accept_language = $_SERVER->import('HTTP_ACCEPT_LANGUAGE', new lima_validate_print());
-
-            $langs = ($http_accept_language->isSet && $http_accept_language->isValid 
-                      ? explode(',', $http_accept_language->value) 
-                      : array());
-
-            $lc_accepted = array();
-
-            foreach ($langs as $lang) if (preg_match('/([a-z]{1,2})(-([a-z0-9]+))?(;q=([0-9\.]+))?/', $lang, $match)) {
-                $code = $match[1];
-                $morecode = (array_key_exists(3, $match) ? $match[3] : '');
-                $fullcode = ($morecode ? $code . '-' . $morecode : $code);
-
-                $coef = sprintf('%3.1f', (array_key_exists(5, $match) && $match[5] ? $match[5] : '1'));
-
-                $key = $coef . '-' . $code;
-
-                $lc_accepted[$key] = array(
-                    'code' => $code,
-                    'coef' => $coef,
-                    'morecode' => $morecode,
-                    'fullcode' => $fullcode
-                );
+            $server = provider::access('server');
+            
+            if (!$server->isExist('HTTP_ACCEPT_LANGUAGE') || !($accepted = $server->getValue('HTTP_ACCEPT_LANGUAGE', validate::T_PRINTABLE))) {
+                return $default;
             }
 
-            krsort($lc_accepted);
+            // generate language array
+            $supported = array_combine(array_map(function($v) {
+                return str_replace('_', '-', $v);
+            }, $supported), $supported);
+
+            // parse "Accept-Language" header
+            $languages = explode(',', $accepted);
+            $accepted  = array();
+
+            foreach ($languages as $l) {
+                if (preg_match('/([a-z]{1,2})(-([a-z0-9]+))?(;q=([0-9\.]+))?/', $l, $match)) {
+                    $code = $match[1];
+                    $morecode = (array_key_exists(3, $match) ? $match[3] : '');
+                    $fullcode = ($morecode ? $code . '-' . $morecode : $code);
+
+                    $coef = sprintf('%3.1f', (array_key_exists(5, $match) && $match[5] ? $match[5] : '1'));
+
+                    $key = $coef . '-' . $code;
+
+                    $accepted[$key] = array(
+                        'code'     => $code,
+                        'coef'     => $coef,
+                        'morecode' => $morecode,
+                        'fullcode' => $fullcode
+                    );
+                }
+            }
+
+            krsort($accepted);
 
             // negotiate language
-            $lc_specified = $default;
+            $determined = $default;
 
-            foreach ($lc_accepted as $q => $lc) {
-                if (array_key_exists($lc['fullcode'], $lc_supported)) {
-                    $lc_specified = $lc_supported[$lc['fullcode']];
+            foreach ($accepted as $q => $lc) {
+                if (array_key_exists($lc['fullcode'], $supported)) {
+                    $determined = $supported[$lc['fullcode']];
                     break;
-                } elseif (array_key_exists($lc['code'], $lc_supported)) {
-                    $lc_specified = $lc_supported[$lc['code']];                    
+                } elseif (array_key_exists($lc['code'], $supported)) {
+                    $determined = $supported[$lc['code']];                    
                     break;
                 }
             }
