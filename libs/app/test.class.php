@@ -62,15 +62,18 @@ namespace org\octris\core\app {
         // enable validation for superglobals
         define('OCTRIS_WRAPPER', true);
 
-        $_COOKIE  = new test\wrapper($_COOKIE);
-        $_GET     = new test\wrapper($_GET);
-        $_POST    = new test\wrapper($_POST);
-        $_SERVER  = new test\wrapper($_SERVER);
-        $_ENV     = new test\wrapper($_ENV);
-        $_REQUEST = new test\wrapper($_REQUEST);
-        $_FILES   = new test\wrapper($_FILES);
+        $_ENV['OCTRIS_DEVEL'] = (isset($_ENV['OCTRIS_DEVEL']) && !!$_ENV['OCTRIS_DEVEL']);
         
-        if (!$_ENV->validate('OCTRIS_BASE', validate::T_PATH)) {
+        provider::set('server',  $_SERVER,  provider::T_READONLY);
+        provider::set('env',     $_ENV,     provider::T_READONLY);
+        provider::set('request', $_REQUEST, provider::T_READONLY);
+        provider::set('post',    $_POST,    provider::T_READONLY);
+        provider::set('get',     $_GET,     provider::T_READONLY);
+        provider::set('cookie',  $_COOKIE,  provider::T_READONLY);
+        provider::set('session', $_SESSION, provider::T_READONLY);
+        provider::set('files',   $_FILES,   provider::T_READONLY);
+        
+        if (!provider::access('env')->isValid('OCTRIS_BASE', validate::T_PATH)) {
             die("OCTRIS_BASE is not set\n");
         }
     }
