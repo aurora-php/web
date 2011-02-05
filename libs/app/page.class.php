@@ -202,6 +202,15 @@ namespace org\octris\core\app {
         }
         
         /**
+         * Determine the action of the request.
+         *
+         * @octdoc  m:page/getAction
+         * @return  string                                      Name of action
+         */
+        abstract public function getAction();
+        /**/
+        
+        /**
          * Abstract method definition.
          *
          * @octdoc  m:page/prepare
