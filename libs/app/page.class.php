@@ -73,7 +73,7 @@ namespace org\octris\core\app {
         public final function __toString()
         /**/
         {
-            return get_called_class($this);
+            return get_called_class();
         }
 
         /**
