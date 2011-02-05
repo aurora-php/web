@@ -24,6 +24,17 @@ namespace org\octris\core\app\web {
         /**/
 
         /**
+         * Constructor.
+         *
+         * @octdoc  m:page/__construct
+         */
+        public function __construct()
+        /**/
+        {
+            parent::__construct();
+        }
+        
+        /**
          * Returns whether page should be only delivered secured.
          *
          * @octdoc  m:page/isSecure
