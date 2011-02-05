@@ -95,10 +95,11 @@ namespace org\octris\core\app {
          * Apply a configured validator.
          *
          * @octdoc  m:page/applyValidator
-         * @param   string          $action         Action to apply validator for.
+         * @param   string                          $type           Name of data to access through data provider.
+         * @param   string                          $action         Action to apply validator for.
          * @return  mixed                           Returns true, if valid otherwise an array with error messages.
          */
-        protected function applyValidator($action)
+        protected function applyValidator($type, $action)
         /**/
         {
             return provider::access($type)->applyValidator((string)$this . ':' . $action);
