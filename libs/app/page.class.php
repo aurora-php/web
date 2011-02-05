@@ -80,8 +80,8 @@ namespace org\octris\core\app {
          * Add a validator for the page.
          *
          * @octdoc  m:page/addValidator
+         * @param   string                          $type           Name of data to access through data provider.
          * @param   string                          $action         Action that triggers the validator.
-         * @param   \org\octris\core\wrapper        $wrapper        Wrapper that should be validated.
          * @param   array                           $schema         Validation schema.
          * @param   int                             $mode           Validation mode.
          */
