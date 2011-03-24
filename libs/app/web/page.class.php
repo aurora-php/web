@@ -1,7 +1,7 @@
 <?php
 
 namespace org\octris\core\app\web {
-    use \org\octris\core\app\web as app;
+    use \org\octris\core\provider as provider;
     use \org\octris\core\validate as validate;
     
     /**
