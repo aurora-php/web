@@ -49,10 +49,10 @@ namespace org\octris\core\app {
         public function process()
         /**/
         {
-            $module = self::getModule();
-            $action = self::getAction();
-
             $last_page = $this->getLastPage();
+            $action    = $last_page->getAction();
+            // $module = self::getModule();
+
             $last_page->validate($action);
 
             $next_page = $last_page->getNextPage($this->entry_page);
