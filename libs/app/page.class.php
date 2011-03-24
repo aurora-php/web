@@ -115,9 +115,15 @@ namespace org\octris\core\app {
         public function validate($action)
         /**/
         {
-            list($is_valid, , $errors) = $this->applyValidator($action);
+            $is_valid = true;
             
-            $this->addErrors($errors);
+            if ($action != '') {
+                $method = \org\octris\core\app\web\request::getRequestMethod();
+            
+                list($is_valid, , $errors) = $this->applyValidator($method, $action);
+            
+                $this->addErrors($errors);
+            }
             
             return $is_valid;
         }
