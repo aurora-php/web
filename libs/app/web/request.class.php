@@ -29,7 +29,7 @@ namespace org\octris\core\app\web {
          * @octdoc  m:request/getRequestMehot
          * @return  string                                  Type of request. 
          */
-        public static function getRequestMehot()
+        public static function getRequestMethod()
         /**/
         {
             static $method = null;
@@ -38,7 +38,7 @@ namespace org\octris\core\app\web {
                 $server = provider::access('server');
                 
                 if ($server->isExist('REQUEST_METHOD')) {
-                    $method = strtolower($server->getValue('REQUEST_METHOD', validate::T_PRINT));
+                    $method = strtolower($server->getValue('REQUEST_METHOD', validate::T_PRINTABLE));
 
                     if ($method != self::T_POST && $method != self::T_GET) {
                         $method = self::T_GET;
@@ -84,7 +84,7 @@ namespace org\octris\core\app\web {
                 $server = provider::access('server');
                 
                 if ($server->isExist('HTTP_HOST')) {
-                    $host = $server->getValue('HTTP_HOST', validate::T_PRINT);
+                    $host = $server->getValue('HTTP_HOST', validate::T_PRINTABLE);
                 }
 
                 if ($host === false) {
@@ -122,18 +122,6 @@ namespace org\octris\core\app\web {
         }
 
         /**
-         * Return current host forced to http (withoud 's').
-         *
-         * @octdoc  m:request/getNonSSLHost
-         * @param   string                                  non-SSL secured host.
-         */
-        public static function getNonSSLHost()
-        /**/
-        {
-            return preg_replace('|^https://|i', 'http://', static::getHost());
-        }
-
-        /**
          * Determine current URL of application and return it.
          *
          * @octdoc  m:request/getUrl
@@ -149,16 +137,16 @@ namespace org\octris\core\app\web {
 
             if ($server->isExist('PHP_SELF') && $server->isExist('REQUEST_URI')) {
                 // for 'good' servers
-                if (($tmp = $server->getValue('REQUEST_URI', validate::T_PRINT)) !== false) {
+                if (($tmp = $server->getValue('REQUEST_URI', validate::T_PRINTABLE)) !== false) {
                     $uri .= $tmp;
                 }
             } else {
                 // for IIS
-                if (($tmp = $server->getValue('SCRIPT_NAME', validate::T_PRINT)) !== false) {
+                if (($tmp = $server->getValue('SCRIPT_NAME', validate::T_PRINTABLE)) !== false) {
                     $uri .= $tmp;
                 }
 
-                if (($tmp = $server->getValue('QUERY_STRING', validate::T_PRINT)) !== '') {
+                if (($tmp = $server->getValue('QUERY_STRING', validate::T_PRINTABLE)) !== '') {
                     $uri .= '?' . $tmp;
                 }
             }
