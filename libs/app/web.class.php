@@ -108,7 +108,9 @@ namespace org\octris\core\app {
         public function getTemplate()
         /**/
         {
-            $tpl = new \org\octris\core\tpl(\org\octris\core\tpl::T_WEB);
+            $tpl = new \org\octris\core\tpl();
+            
+            $tpl->
             
             return $tpl;
         }
