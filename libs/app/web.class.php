@@ -56,7 +56,7 @@ namespace org\octris\core\app {
 
             $last_page->validate($action);
 
-            $next_page = $last_page->getNextPage($this->entry_page);
+            $next_page = $last_page->getNextPage($action, $this->entry_page);
 
             $max = 3;
 
