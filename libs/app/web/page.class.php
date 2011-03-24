@@ -55,9 +55,9 @@ namespace org\octris\core\app\web {
         public function getAction()
         /**/
         {
-            static $action = '';
+            static $action = null;
             
-            if ($action != '') {
+            if (!is_null($action) != '') {
                 return $action;
             }
             
@@ -81,8 +81,8 @@ namespace org\octris\core\app\web {
                 }
             }
 
-            if (!$action) {
-                $action = 'default';
+            if (is_null($action)) {
+                $action = '';
             }
 
             return $action;
