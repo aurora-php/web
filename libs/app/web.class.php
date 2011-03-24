@@ -1,6 +1,7 @@
 <?php
 
 namespace org\octris\core\app {
+    use \org\octris\core\app\web\request as request;
     use \org\octris\core\validate as validate;
     use \org\octris\core\provider as provider;
     
