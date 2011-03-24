@@ -72,9 +72,9 @@ namespace org\octris\core\app {
 
             // fix security context
             $secure = $next_page->isSecure();
-
-            if ($secure != $this->isSSL() && $this->getRequestMethod() == 'GET') {
-                $this->redirectHttp(($secure ? $this->getSSLUrl() : $this->getNonSSLUrl()));
+            
+            if ($secure != request::isSSL() && request::getRequestMethod() == 'GET') {
+                $this->redirectHttp(($secure ? request::getSSLUrl() : request::getNonSSLUrl()));
                 exit;
             }
 
