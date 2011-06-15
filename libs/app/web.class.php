@@ -110,8 +110,6 @@ namespace org\octris\core\app {
         {
             $tpl = new \org\octris\core\tpl();
             
-            $tpl->
-            
             return $tpl;
         }
     }
