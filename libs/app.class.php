@@ -105,6 +105,7 @@ namespace org\octris\core {
                 die("unable to import OCTRIS_APP or OCTRIS_BASE - invalid settings!\n");
             }
 
+            // perform initialization
             $this->initialize();
         }
 
