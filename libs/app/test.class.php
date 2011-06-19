@@ -71,7 +71,6 @@ namespace org\octris\core\app {
         provider::set('post',    $_POST,    provider::T_READONLY);
         provider::set('get',     $_GET,     provider::T_READONLY);
         provider::set('cookie',  $_COOKIE,  provider::T_READONLY);
-        provider::set('session', $_SESSION, provider::T_READONLY);
         provider::set('files',   $_FILES,   provider::T_READONLY);
         
         if (!provider::access('env')->isValid('OCTRIS_BASE', validate::T_PATH)) {
