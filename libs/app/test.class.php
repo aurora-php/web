@@ -4,6 +4,7 @@ namespace org\octris\core\app {
     require_once('org.octris.core/app/autoloader.class.php');
     
     use \org\octris\core\validate as validate;
+    use \org\octris\core\provider as provider;
     
     /**
      * Test base class. The main purpose of this class is to include the
