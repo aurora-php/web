@@ -128,6 +128,31 @@ namespace org\octris\core {
         /**/
 
         /**
+         * Invoke the page of an application without using the process workflow.
+         *
+         * @octdoc  m:app/invoke
+         * @param   \org\octris\core\app\page       $next_page          Application page to invoke.
+         * @param   string                          $action             Optional action to invoke page with.
+         */
+        public function invoke(\org\octris\core\app\page $next_page, $action = '')
+        /**/
+        {
+            $max = 3;
+
+            do {
+                $redirect_page = $next_page->prepare($last_page, $action);
+
+                if (is_object($redirect_page) && $next_page != $redirect_page) {
+                    $next_page = $redirect_page;
+                } else {
+                    break;
+                }
+            } while (--$max);
+
+            $next_page->render();
+        }
+
+        /**
          * Return application state.
          *
          * @octdoc  m:app/getState

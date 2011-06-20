@@ -83,7 +83,7 @@ namespace org\octris\core\app {
 
             // $next_page->prepareMessages($this);
             // $next_page->sendHeaders($this->headers);
-            $next_page->render($this);
+            $next_page->render();
         }
 
         /**
