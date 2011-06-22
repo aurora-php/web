@@ -75,7 +75,7 @@ namespace org\octris\core\app {
         public function freeze($secret = '')
         /**/
         {
-            $frozen = gzcompress(serialize($this)); 
+            $frozen = gzcompress(serialize((array)$this)); 
             $sum    = hash(self::hash_algo, $frozen . $secret);
             $return = base64_encode($sum . '|' . $frozen);
         
