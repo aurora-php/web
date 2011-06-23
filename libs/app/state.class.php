@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the 'org.octris.core' package.
+ *
+ * (c) Harald Lapp <harald@octris.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace org\octris\core\app {
     /**
      * The state class is used to transfer page/action specific data between two or more requests. The state is essencial for
