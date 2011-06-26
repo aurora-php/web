@@ -11,6 +11,8 @@
 
 namespace org\octris\core {
     require_once('org.octris.core/app/autoloader.class.php');
+    require_once('org.octris.core/type/collection.inc.php');
+    require_once('org.octris.core/type/string.inc.php');
     
     use \org\octris\core\validate as validate;
     use \org\octris\core\provider as provider;
