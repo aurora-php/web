@@ -126,8 +126,10 @@ namespace org\octris\core {
          * @octdoc  m:app/initialize
          * @abstract
          */
-        abstract protected function initialize();
+        protected function initialize()
         /**/
+        {
+        }
 
         /**
          * Abstract method definition. Process must be implemented by any subclass.
