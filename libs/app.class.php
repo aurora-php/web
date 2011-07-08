@@ -115,9 +115,6 @@ namespace org\octris\core {
             if (!$env->isValid('OCTRIS_APP', validate::T_PROJECT) || !$env->isValid('OCTRIS_BASE', validate::T_PRINTABLE)) {
                 die("unable to import OCTRIS_APP or OCTRIS_BASE - invalid settings!\n");
             }
-
-            // perform initialization
-            $this->initialize();
         }
 
         /**
@@ -150,6 +147,8 @@ namespace org\octris\core {
         public function invoke(\org\octris\core\app\page $next_page, $action = '')
         /**/
         {
+            $this->initialize();
+
             $max = 3;
 
             do {

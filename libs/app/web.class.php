@@ -59,6 +59,10 @@ namespace org\octris\core\app {
         public function process()
         /**/
         {
+            // perform initialization
+            $this->initialize();
+
+            // page flow control
             $last_page = $this->getLastPage();
             $action    = $last_page->getAction();
             // $module = self::getModule();
