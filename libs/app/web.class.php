@@ -141,10 +141,14 @@ namespace org\octris\core\app {
             $self = $this;
             
             $tpl->registerMethod('getHtmlState', function() use ($self) {
-                return sprintf(
-                    '<input type="hidden" name="state" value="%s" />',
-                    $self->getState()->freeze()
-                );
+                static $state = '';
+                
+                return ($state != ''
+                        ? $state
+                        : ($state = sprintf(
+                                        '<input type="hidden" name="state" value="%s" />',
+                                        $self->getState()->freeze()
+                                    )));
             }, array('min' => 0, 'max' => 0));
             
             return $tpl;
