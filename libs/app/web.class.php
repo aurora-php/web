@@ -121,7 +121,18 @@ namespace org\octris\core\app {
         public function getTemplate()
         /**/
         {
+            $path_cache = \org\octris\core\app::getPath(\org\octris\core\app::T_PATH_CACHE);
+            $path_host  = \org\octris\core\app::getPath(\org\octris\core\app::T_PATH_HOST);
+            $path_work  = \org\octris\core\app::getPath(\org\octris\core\app::T_PATH_WORK);
+            
             $tpl = new \org\octris\core\tpl();
+            $tpl->setL10n(\org\octris\core\l10n::getInstance());
+            $tpl->setOutputPath('tpl', $path_cache . '/templates_c/');
+            $tpl->setOutputPath('css', $path_host . '/styles/');
+            $tpl->setOutputPath('js',  $path_host . '/libsjs/');
+            $tpl->setResourcePath('css', $path_work);
+            $tpl->setResourcePath('js',  $path_work);
+            $tpl->addSearchPath(\org\octris\core\app::getPath(\org\octris\core\app::T_PATH_WORK_TPL));
             
             return $tpl;
         }
