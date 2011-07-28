@@ -111,7 +111,12 @@ namespace org\octris\core\app {
         protected function applyValidator($type, $action)
         /**/
         {
-            return provider::access($type)->applyValidator((string)$this . ':' . $action);
+            $provider = provider::access($type);
+            $key      = (string)$this . ':' . $action;
+            
+            return ($provider->hasValidator($key)
+                    ? $provider->applyValidator($key)
+                    : array(true, null, array()));
         }
 
         /**

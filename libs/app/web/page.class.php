@@ -24,6 +24,15 @@ namespace org\octris\core\app\web {
     /**/
     {
         /**
+         * Template instance.
+         *
+         * @octdoc  v:page/$template
+         * @var     \org\octris\core\tpl
+         */
+        private $template = null;
+        /**/
+        
+        /**
          * Whether the page should be delivered only through HTTPS.
          *
          * @octdoc  v:page/$secure
@@ -139,6 +148,22 @@ namespace org\octris\core\app\web {
             }
 
             return $module;
+        }
+        
+        /**
+         * Return instance of template for current page.
+         *
+         * @octdoc  m:page/getTemplate
+         * @return  \org\octris\core\tpl                Instance of template engine.
+         */
+        public function getTemplate()
+        /**/
+        {
+            if (is_null($this->template)) {
+                $this->template = \org\octris\core\app::getInstance()->getTemplate();
+            }
+            
+            return $this->template;
         }
     }
 }
