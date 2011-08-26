@@ -12,7 +12,7 @@
 namespace org\octris\core\app {
     use \org\octris\core\app as app;
     use \org\octris\core\provider as provider;
-    
+
     /**
      * Core page controller class.
      *
@@ -113,7 +113,7 @@ namespace org\octris\core\app {
         {
             $provider = provider::access($type);
             $key      = (string)$this . ':' . $action;
-            
+
             return ($provider->hasValidator($key)
                     ? $provider->applyValidator($key)
                     : array(true, null, array()));
@@ -130,15 +130,15 @@ namespace org\octris\core\app {
         /**/
         {
             $is_valid = true;
-            
+
             if ($action != '') {
                 $method = \org\octris\core\app\web\request::getRequestMethod();
-            
+
                 list($is_valid, , $errors) = $this->applyValidator($method, $action);
-            
+
                 $this->addErrors($errors);
             }
-            
+
             return $is_valid;
         }
 
@@ -221,7 +221,7 @@ namespace org\octris\core\app {
         {
             $this->messages = array_merge($this->messages, $msg);
         }
-        
+
         /**
          * Determine the action of the request.
          *
@@ -230,7 +230,7 @@ namespace org\octris\core\app {
          */
         abstract public function getAction();
         /**/
-        
+
         /**
          * Abstract method definition.
          *
@@ -238,16 +238,16 @@ namespace org\octris\core\app {
          * @param   \org\octris\core\app\page       $last_page      Instance of last called page.
          * @param   string                          $action         Action that led to current page.
          * @return  mixed                                           Returns either page to redirect to or null.
-         * @abstract   
+         * @abstract
          */
         abstract public function prepare(\org\octris\core\app\page $last_page, $action);
         /**/
 
         /**
-         * Abstract method definition
+         * Abstract method definition.
          *
          * @octdoc  m:page/render
-         * @abstract   
+         * @abstract
          */
         abstract public function render();
         /**/
