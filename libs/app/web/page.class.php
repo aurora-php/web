@@ -42,6 +42,15 @@ namespace org\octris\core\app\web {
         /**/
 
         /**
+         * Breadcrumb for current page.
+         *
+         * @octdoc  v:page/$breadcrumb
+         * @var     array
+         */
+        protected $breadcrumb = array();
+        /**/
+
+        /**
          * Constructor.
          *
          * @octdoc  m:page/__construct
@@ -62,6 +71,22 @@ namespace org\octris\core\app\web {
         /**/
         {
             return $this->secure;
+        }
+
+        /**
+         * Add an item to the breadcrumb
+         *
+         * @octdoc  m:page/addBreadcrumbItem
+         * @param   string          $name                   Name of item.
+         * @param   string          $url                    URL for item.
+         */
+        public function addBreadcrumbItem($name, $url)
+        /**/
+        {
+            $this->breadcrumb[] = array(
+                'name'  => $name,
+                'url'   => $url
+            );
         }
 
         /**
@@ -161,6 +186,13 @@ namespace org\octris\core\app\web {
         {
             if (is_null($this->template)) {
                 $this->template = \org\octris\core\app::getInstance()->getTemplate();
+                
+                // TODO: PHP5.4
+                $breadcrumb =& $this->breadcrumb;
+                
+                $this->template->registerMethod('getBreadcrumb', function() use (&$breadcrumb) {
+                    return $breadcrumb;
+                });
             }
             
             return $this->template;
