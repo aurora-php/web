@@ -71,8 +71,12 @@ namespace org\octris\core\app\web {
 
             if (is_null($isSSL)) {
                 $server = provider::access('server');
-                
-                $isSSL = ($server->isExist('HTTP_HOST') && $server->isValid('HTTPS', validate::T_PATTERN, array('pattern' => '/on/i')));
+
+                $isSSL = (
+                    $server->isExist('HTTP_HOST') &&
+                    $server->isExist('HTTPS') &&
+                    $server->isValid('HTTPS', validate::T_PATTERN, array('pattern' => '/on/i'))
+                );
             }
 
             return $isSSL;
