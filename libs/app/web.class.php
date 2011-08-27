@@ -144,15 +144,8 @@ namespace org\octris\core\app {
             // register common template methods
             $self = $this;
 
-            $tpl->registerMethod('getHtmlState', function() use ($self) {
-                static $state = '';
-
-                return ($state != ''
-                        ? $state
-                        : ($state = sprintf(
-                                        '<input type="hidden" name="state" value="%s" />',
-                                        $self->getState()->freeze()
-                                    )));
+            $tpl->registerMethod('getState', function() use ($self) {
+                return $self->getState()->freeze();
             }, array('min' => 0, 'max' => 0));
 
             return $tpl;
