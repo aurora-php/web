@@ -11,7 +11,6 @@
 
 namespace org\octris\core {
     require_once('org.octris.core/app/autoloader.class.php');
-    require_once('org.octris.core/app/errorhandler.class.php');
 
     use \org\octris\core\validate as validate;
     use \org\octris\core\provider as provider;
@@ -262,4 +261,9 @@ namespace org\octris\core {
             return self::$instance;
         }
     }
+
+    // register error handler for 'normal' php errors
+    set_error_handler(function($code, $msg, $file, $line) {
+        throw new \ErrorException($msg, $code, 0, $file, $line);
+    }, E_ALL);
 }
