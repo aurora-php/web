@@ -85,7 +85,7 @@ namespace org\octris\core\app\web\page {
         {
             $this->identifier = base64_encode(uniqid(gethostname() . '.', true));
 
-            îf (!is_null($this->logger)) {
+            if (!is_null($this->logger)) {
                 $this->logger->log(
                     \org\octris\core\logger::T_CRITICAL,
                     'unhandled exception',
@@ -93,7 +93,7 @@ namespace org\octris\core\app\web\page {
                     array(
                         '_identifier' => $this->identifier
                     )
-                )
+                );
             }
         }
 
@@ -105,7 +105,7 @@ namespace org\octris\core\app\web\page {
          * @param   string                          $action         Action that led to current page.
          * @return  mixed                                           Returns either page to redirect to or null.
          */
-        public function prepare(\org\octris\core\app\page $last_page, $action);
+        public function prepare(\org\octris\core\app\page $last_page, $action)
         /**/
         {
         }
@@ -115,7 +115,7 @@ namespace org\octris\core\app\web\page {
          *
          * @octdoc  m:critical/render
          */
-        public function render();
+        public function render()
         /**/
         {
             $tpl = $this->getTemplate();
