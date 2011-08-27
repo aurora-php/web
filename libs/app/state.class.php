@@ -25,7 +25,7 @@ namespace org\octris\core\app {
     {
         /**
          * Hash algorithm to use to generate the checksum of the state.
-         * 
+         *
          * @octdoc  d:state/hash_algo
          */
         const hash_algo = 'sha256';
@@ -43,7 +43,7 @@ namespace org\octris\core\app {
         {
             parent::offsetSet($name, $value);
         }
-        
+
         /**
          * Magic getter.
          *
@@ -56,7 +56,7 @@ namespace org\octris\core\app {
         {
             return parent::offsetGet($name);
         }
-        
+
         /**
          * Return value of a stored state variable and remove the variable from the state.
          *
@@ -68,9 +68,9 @@ namespace org\octris\core\app {
         /**/
         {
             $return = parent::offsetGet($name);
-            
+
             parent::offsetUnset($name);
-            
+
             return $return;
         }
 
@@ -79,15 +79,15 @@ namespace org\octris\core\app {
          *
          * @octdoc  m:state/freeze
          * @param   string          $secret             Secret to use for generating hash and prevent the state from manipulation.
-         * @return  string                              Serialized and base64 encoded object secured by a hash.
+         * @return  string                              Serialized and base64 for URLs encoded object secured by a hash.
          */
         public function freeze($secret = '')
         /**/
         {
-            $frozen = gzcompress(serialize((array)$this)); 
+            $frozen = gzcompress(serialize((array)$this));
             $sum    = hash(self::hash_algo, $frozen . $secret);
-            $return = base64_encode($sum . '|' . $frozen);
-        
+            $return = \org\octris\core\app\web\request::base64UrlEncode($sum . '|' . $frozen);
+
             return $return;
         }
 
@@ -103,16 +103,16 @@ namespace org\octris\core\app {
         public static function validate($state, $secret = '', array &$decoded = null)
         /**/
         {
-            $tmp    = base64_decode($state);
+            $tmp    = \org\octris\core\app\web\request::base64UrlDecode($state);
             $sum    = '';
             $frozen = '';
 
             if (($pos = strpos($tmp, '|')) !== false) {
                 $sum    = substr($tmp, 0, $pos);
                 $frozen = substr($tmp, $pos + 1);
-                
+
                 unset($tmp);
-                
+
                 $decoded = array(
                     'checksum'  => $sum,
                     'state'     => $frozen
@@ -121,7 +121,7 @@ namespace org\octris\core\app {
 
             return (($test = hash(self::hash_algo, $frozen . $secret)) != $sum);
         }
-        
+
         /**
          * Thaw frozen state object.
          *
@@ -134,7 +134,7 @@ namespace org\octris\core\app {
         /**/
         {
             $frozen = array();
-            
+
             if (self::validate($state, $secret, $frozen)) {
                 // hash did not match
                 throw new \Exception(sprintf('[%s !=  %s | %s]', $test, $frozen['checksum'], $frozen['state']));
