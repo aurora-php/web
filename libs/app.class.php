@@ -11,7 +11,8 @@
 
 namespace org\octris\core {
     require_once('org.octris.core/app/autoloader.class.php');
-    
+    require_once('org.octris.core/app/errorhandler.class.php');
+
     use \org\octris\core\validate as validate;
     use \org\octris\core\provider as provider;
 
@@ -27,7 +28,7 @@ namespace org\octris\core {
     {
         /**
          * Used in combination with app/getPath to determine path.
-         * 
+         *
          * @octdoc  d:config/T_PATH_CACHE, T_PATH_DATA, T_PATH_ETC, T_PATH_HOST, T_PATH_LIBS, T_PATH_LIBSJS, T_PATH_LOCALE, T_PATH_RESOURCES, T_PATH_STYLES, T_PATH_LOG, T_PATH_WORK, T_PATH_WORK_LIBSJS, T_PATH_WORK_RESOURCES, T_PATH_WORK_STYLES, T_PATH_WORK_TPL
          */
         const T_PATH_CACHE          = '%s/cache/%s';
@@ -51,7 +52,7 @@ namespace org\octris\core {
 
         /**
          * Used to abstract application context types.
-         * 
+         *
          * @octdoc  d:app/T_CONTEXT_UNDEFINED, T_CONTEXT_CLI, T_CONTEXT_WEB, T_CONTEXT_TEST
          */
         const T_CONTEXT_UNDEFINED = 0;
@@ -77,7 +78,7 @@ namespace org\octris\core {
          */
         protected $context = self::T_CONTEXT_UNDEFINED;
         /**/
-        
+
         /**
          * Application state.
          *
@@ -86,7 +87,7 @@ namespace org\octris\core {
          */
         protected $state = null;
         /**/
-        
+
         /**
          * Entry page to use if no other page is loaded. To be overwritten by applications' main class.
          *
@@ -210,23 +211,6 @@ namespace org\octris\core {
         }
 
         /**
-         * Helper method that is registered as error handler to catch non exceptional errors and convert them
-         * to real exceptions.
-         *
-         * @octdoc  m:app/triggerError
-         * @param   int             $code               Error code.
-         * @param   string          $msg                The error message.
-         * @param   string          $file               The file the error war raised in.
-         * @param   int             $line               The line number the error was raised in.
-         * @param   array           $context            Array of active symbol table when error was raised.
-         */
-        public static function triggerError($code, $string, $file, $line, $context)
-        /**/
-        {
-            // TODO: implementation
-        }
-
-        /**
          * Return context the application is running in.
          *
          * @octdoc  m:app/getContext
@@ -250,12 +234,12 @@ namespace org\octris\core {
         /**/
         {
             $env = provider::access('env');
-            
+
             $return = sprintf(
                 $type,
                 $env->getValue('OCTRIS_BASE', validate::T_PATH),
-                ($module 
-                    ? $module 
+                ($module
+                    ? $module
                     : $env->getValue('OCTRIS_APP', validate::T_PROJECT))
             );
 
@@ -274,11 +258,8 @@ namespace org\octris\core {
             if (is_null(self::$instance)) {
                 self::$instance = new static();
             }
-            
+
             return self::$instance;
         }
     }
-
-    // register error handler for 'normal' php errors
-    set_error_handler(array('\org\octris\core\app', 'triggerError'), E_ALL);
 }
