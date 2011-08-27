@@ -88,7 +88,6 @@ namespace org\octris\core\app\web\page {
             if (!is_null($this->logger)) {
                 $this->logger->log(
                     \org\octris\core\logger::T_CRITICAL,
-                    $exception->getMessage(),
                     $exception,
                     array(
                         '_identifier' => $this->identifier
