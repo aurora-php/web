@@ -13,8 +13,9 @@ namespace org\octris\core\app {
     use \org\octris\core\app\web\request as request;
     use \org\octris\core\validate as validate;
     use \org\octris\core\provider as provider;
-    
+
     require_once('org.octris.core/app.class.php');
+    require_once('org.octris.core/app/web/session.class.php');
 
     /**
      * Core class for Web applications.
@@ -35,16 +36,16 @@ namespace org\octris\core\app {
         /**/
         {
             $request = provider::access('request');
-            
+
             if ($request->isExist('state') && $request->isValid('state', validate::T_BASE64)) {
                 $this->state = state::thaw($request->getValue('state', validate::T_BASE64));
             }
-            
+
             if (!is_object($this->state)) {
                 $this->state = new state();
             }
         }
-        
+
         /**
          * Main application processor. This is the only method that needs to be called to
          * invoke an application. Internally this method determines the last visited page
@@ -89,7 +90,7 @@ namespace org\octris\core\app {
 
             // fix security context
             $secure = $next_page->isSecure();
-            
+
             if ($secure != request::isSSL() && request::getRequestMethod() == 'GET') {
                 $this->redirectHttp(($secure ? request::getSSLUrl() : request::getNonSSLUrl()));
                 exit;
@@ -128,9 +129,9 @@ namespace org\octris\core\app {
             $path_cache = \org\octris\core\app::getPath(\org\octris\core\app::T_PATH_CACHE);
             $path_host  = \org\octris\core\app::getPath(\org\octris\core\app::T_PATH_HOST);
             $path_work  = \org\octris\core\app::getPath(\org\octris\core\app::T_PATH_WORK);
-            
+
             $tpl = new \org\octris\core\tpl();
-            
+
             // setup template engine environment
             $tpl->setL10n(\org\octris\core\l10n::getInstance());
             $tpl->setOutputPath('tpl', $path_cache . '/templates_c/');
@@ -139,13 +140,13 @@ namespace org\octris\core\app {
             $tpl->setResourcePath('css', $path_work);
             $tpl->setResourcePath('js',  $path_work);
             $tpl->addSearchPath(\org\octris\core\app::getPath(\org\octris\core\app::T_PATH_WORK_TPL));
-            
+
             // register common template methods
             $self = $this;
-            
+
             $tpl->registerMethod('getHtmlState', function() use ($self) {
                 static $state = '';
-                
+
                 return ($state != ''
                         ? $state
                         : ($state = sprintf(
@@ -153,7 +154,7 @@ namespace org\octris\core\app {
                                         $self->getState()->freeze()
                                     )));
             }, array('min' => 0, 'max' => 0));
-            
+
             return $tpl;
         }
     }
@@ -163,7 +164,7 @@ namespace org\octris\core\app {
         define('OCTRIS_WRAPPER', true);
 
         $_ENV['OCTRIS_DEVEL'] = (isset($_ENV['OCTRIS_DEVEL']) && !!$_ENV['OCTRIS_DEVEL']);
-        
+
         provider::set('server',  $_SERVER,  provider::T_READONLY);
         provider::set('env',     $_ENV,     provider::T_READONLY);
         provider::set('request', $_REQUEST, provider::T_READONLY);
@@ -172,7 +173,7 @@ namespace org\octris\core\app {
         provider::set('cookie',  $_COOKIE,  provider::T_READONLY);
         provider::set('session', $_SESSION, provider::T_READONLY);
         provider::set('files',   $_FILES,   provider::T_READONLY);
-        
+
         unset($_SERVER);
         unset($_ENV);
         unset($_REQUEST);
@@ -181,7 +182,7 @@ namespace org\octris\core\app {
         unset($_COOKIE);
         unset($_SESSION);
         unset($_FILES);
-        
+
         if (!provider::access('env')->isValid('OCTRIS_BASE', validate::T_PATH)) {
             die("OCTRIS_BASE is not set\n");
         }
