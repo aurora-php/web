@@ -33,6 +33,39 @@ namespace org\octris\core\app\web {
         /**/
 
         /**
+         * Base64 for URLs encoding.
+         *
+         * @octdoc  m:request/base64UrlEncode
+         * @param   string          $data                   Data to encode.
+         * @return  string                                  Encoded data.
+         */
+        public static function base64UrlEncode($data)
+        /**/
+        {
+            return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+        }
+
+        /**
+         * Base64 for URLs decoding.
+         *
+         * @octdoc  m:request/base64UrlDecode
+         * @param   string          $data                   Data to decode.
+         * @param   string                                  Decoded data.
+         */
+        public static function base64UrlDecode($data)
+        /**/
+        {
+            return base64_decode(
+                str_pad(
+                    strtr($data, '-_', '+/'),
+                    strlen($data) % 4,
+                    '=',
+                    STR_PAD_RIGHT
+                )
+            );
+        }
+
+        /**
          * Determine and return method of the request.
          *
          * @octdoc  m:request/getRequestMehot
