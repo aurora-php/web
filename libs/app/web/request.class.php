@@ -25,7 +25,7 @@ namespace org\octris\core\app\web {
     {
         /**
          * Request types.
-         * 
+         *
          * @octdoc  d:request/T_POST, T_GET
          */
         const T_POST = 'post';
@@ -36,7 +36,7 @@ namespace org\octris\core\app\web {
          * Determine and return method of the request.
          *
          * @octdoc  m:request/getRequestMehot
-         * @return  string                                  Type of request. 
+         * @return  string                                  Type of request.
          */
         public static function getRequestMethod()
         /**/
@@ -45,7 +45,7 @@ namespace org\octris\core\app\web {
 
             if (is_null($method)) {
                 $server = provider::access('server');
-                
+
                 if ($server->isExist('REQUEST_METHOD')) {
                     $method = strtolower($server->getValue('REQUEST_METHOD', validate::T_PRINTABLE));
 
@@ -95,7 +95,7 @@ namespace org\octris\core\app\web {
 
             if ($host === false) {
                 $server = provider::access('server');
-                
+
                 if ($server->isExist('HTTP_HOST')) {
                     $host = $server->getValue('HTTP_HOST', validate::T_PRINTABLE);
                 }
@@ -104,10 +104,10 @@ namespace org\octris\core\app\web {
                     $host = '';
                 }
             }
-            
+
             return $host;
         }
-        
+
         /**
          * Return host of request.
          *
@@ -118,7 +118,7 @@ namespace org\octris\core\app\web {
         /**/
         {
             $host = static::getHostname();
-            
+
             return sprintf('http%s://%s', (static::isSSL() ? 's' : ''), $host);
         }
 
@@ -203,7 +203,7 @@ namespace org\octris\core\app\web {
         /**/
         {
             $server = provider::access('server');
-            
+
             if (!$server->isExist('HTTP_ACCEPT_LANGUAGE') || !($accepted = $server->getValue('HTTP_ACCEPT_LANGUAGE', validate::T_PRINTABLE))) {
                 return $default;
             }
@@ -246,7 +246,7 @@ namespace org\octris\core\app\web {
                     $determined = $supported[$lc['fullcode']];
                     break;
                 } elseif (array_key_exists($lc['code'], $supported)) {
-                    $determined = $supported[$lc['code']];                    
+                    $determined = $supported[$lc['code']];
                     break;
                 }
             }
