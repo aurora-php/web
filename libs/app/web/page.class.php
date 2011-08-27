@@ -194,7 +194,7 @@ namespace org\octris\core\app\web {
                 
                 $this->template->registerMethod('getBreadcrumb', function() use (&$breadcrumb) {
                     return $breadcrumb;
-                });
+                }, array('max' => 0));
             }
             
             return $this->template;
