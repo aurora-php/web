@@ -12,7 +12,7 @@
 namespace org\octris\core\app\web {
     use \org\octris\core\provider as provider;
     use \org\octris\core\validate as validate;
-    
+
     /**
      * Page controller for web applications.
      *
@@ -31,7 +31,7 @@ namespace org\octris\core\app\web {
          */
         private $template = null;
         /**/
-        
+
         /**
          * Whether the page should be delivered only through HTTPS.
          *
@@ -60,7 +60,7 @@ namespace org\octris\core\app\web {
         {
             parent::__construct();
         }
-        
+
         /**
          * Returns whether page should be only delivered secured.
          *
@@ -99,18 +99,18 @@ namespace org\octris\core\app\web {
         /**/
         {
             static $action = null;
-            
+
             if (!is_null($action) != '') {
                 return $action;
             }
-            
+
             $method  = request::getRequestMethod();
-            
+
             if ($method == request::T_POST || $method == request::T_GET) {
                 $method = ($method == request::T_POST
                             ? 'post'
                             : 'get');
-                
+
                 $request = provider::access($method);
             }
 
@@ -136,7 +136,7 @@ namespace org\octris\core\app\web {
         /**
          * Determine requested module with specified action. If a module was determined but the action is not
          * valid, this method will return default application module. The module must be reachable from inside
-         * the application.         
+         * the application.
          *
          * @octdoc  m:page/getModule
          * @return  string                                      Name of module
@@ -145,21 +145,21 @@ namespace org\octris\core\app\web {
         /**/
         {
             static $module = '';
-            
+
             if ($module != '') {
                 return $module;
             }
-            
+
             $method  = request::getRequestMethod();
-            
+
             if ($method == request::T_POST || $method == request::T_GET) {
                 $method = ($method == request::T_POST
                             ? 'post'
                             : 'get');
-                
+
                 $request = provider::access($method);
             }
-            
+
             if (($tmp = $request->getValue('MODULE', validate::T_ALPHANUM)) !== false) {
                 $module = $tmp;
             } else {
@@ -176,7 +176,7 @@ namespace org\octris\core\app\web {
 
             return $module;
         }
-        
+
         /**
          * Return instance of template for current page.
          *
@@ -188,15 +188,15 @@ namespace org\octris\core\app\web {
         {
             if (is_null($this->template)) {
                 $this->template = \org\octris\core\app::getInstance()->getTemplate();
-                
+
                 // TODO: PHP5.4
                 $breadcrumb =& $this->breadcrumb;
-                
+
                 $this->template->registerMethod('getBreadcrumb', function() use (&$breadcrumb) {
                     return $breadcrumb;
                 }, array('max' => 0));
             }
-            
+
             return $this->template;
         }
     }
