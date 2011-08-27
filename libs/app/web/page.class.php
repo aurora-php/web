@@ -113,9 +113,11 @@ namespace org\octris\core\app\web {
                 
                 $request = provider::access($method);
             }
-            
-            if (($tmp = $request->getValue('ACTION', validate::T_ALPHANUM)) !== false) {
-                $action = $tmp;
+
+            if ($request->isExist('ACTION')) {
+                if (($tmp = $request->getValue('ACTION', validate::T_ALPHANUM)) !== false) {
+                    $action = $tmp;
+                }
             } else {
                 // try to determine action from a request parameter named ACTION_...
                 foreach ($request->getPrefixed('ACTION_', validate::T_ALPHANUM) as $k => $v) {
