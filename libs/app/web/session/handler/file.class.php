@@ -17,7 +17,7 @@ namespace org\octris\core\app\web\session\handler {
      * @copyright   copyright (c) 2011 by Harald Lapp
      * @author      Harald Lapp <harald@octris.org>
      */
-    class file extends \org\octris\core\app\web\session\handler
+    class file implements \org\octris\core\app\web\session\handler_if
     /**/
     {
         /**

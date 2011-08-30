@@ -20,7 +20,7 @@ namespace org\octris\core\app\web\session\handler {
      * @copyright   copyright (c) 2011 by Harald Lapp
      * @author      Harald Lapp <harald@octris.org>
      */
-    class request extends \org\octris\core\app\web\session\handler
+    class request implements \org\octris\core\app\web\session\handler_if
     /**/
     {
         /**
