@@ -213,6 +213,18 @@ namespace org\octris\core\app\web {
         }
 
         /**
+         * Unset a value stored in session.
+         *
+         * @octdoc  m:session/unsetValue
+         * @param   string          $name               Name of property to unset.
+         */
+        public function unsetValue($name)
+        /**/
+        {
+            unset(self::$data[$name]);
+        }
+
+        /**
          * Test if a stored property exists.
          *
          * @octdoc  m:session/isExist
