@@ -48,6 +48,15 @@ namespace org\octris\core\app\web {
         /**/
 
         /**
+         * Session data.
+         *
+         * @octdoc  v:session/$data
+         * @var     array
+         */
+        private static $data = array();
+        /**/
+
+        /**
          * Session lifetime. See php.ini: session.gc_maxlifetime.
          *
          * @octdoc  v:session/$lifetime
@@ -100,7 +109,7 @@ namespace org\octris\core\app\web {
                                 ? self::$options['domain']
                                 : null);
 
-            $this->lifetime = (int)(array_key_exists(self::$options['lifetime'])
+            $this->lifetime = (int)(array_key_exists('lifetime', self::$options)
                                 ? self::$options['lifetime']
                                 : ini_get('session.gc_maxlifetime'));
         }
@@ -122,8 +131,7 @@ namespace org\octris\core\app\web {
         }
 
         /**
-         * Set session handler. Note, that this method can only be called as long as the session was not
-         * been instantiated using 'getInstance' method.
+         * Set session handler.
          *
          * @octdoc  m:session/setHandler
          * @param   \org\octris\core\app\web\session\handler    $handler        Instance of session handler.
@@ -132,20 +140,20 @@ namespace org\octris\core\app\web {
         public static function setHandler(\org\octris\core\app\web\session\handler $handler, array $options = array())
         /**/
         {
-            if (!is_null(self::$instance)) {
-                throw new \Exception('Unable to reconfigure session handler after session was instantiated');
-            }
+            $data =& self::$data;
 
             session_set_save_handler(
                 array($handler, 'open'),
                 array($handler, 'close'),
-                array($handler, 'readData'),
-                array($handler, 'writeData'),
+                function($id) use ($handler, &$data) {
+                    $data = $handler->read($id);
+                },
+                function($id, $_data) use ($handler, &$data) {
+                    $handler->write($id, $data);
+                },
                 array($handler, 'destroy'),
                 array($handler, 'gc')
             );
-
-            $handler->initialize();
 
             self::$handler = $handler;
             self::$options = $options;
@@ -164,18 +172,16 @@ namespace org\octris\core\app\web {
         }
 
         /**
-         * Return instance of session handler backend. Note, that this function will throw an exception,
-         * if the method 'setHandler' never has been called before.
+         * Return instance of session handler backend.
          *
          * @octdoc  m:session/getInstance
          */
         public static function getInstance()
         /**/
         {
-            if (is_null(self::$handler)) {
-                throw new Exception('There is no session handler configured');
-            } elseif (is_null(self::$instance)) {
+            if (is_null(self::$instance)) {
                 self::$instance = new static();
+                self::$instance->start();
             }
 
             return self::$instance;
@@ -191,7 +197,7 @@ namespace org\octris\core\app\web {
         public function setValue($name, $value)
         /**/
         {
-            self::$handler->setValue($name, $value);
+            self::$data[$name] = $value;
         }
 
         /**
@@ -203,7 +209,7 @@ namespace org\octris\core\app\web {
         public function getValue($name)
         /**/
         {
-            return self::$handler->getValue($name);
+            return self::$data[$name];
         }
 
         /**
@@ -215,7 +221,7 @@ namespace org\octris\core\app\web {
         public function isExist($name)
         /**/
         {
-            return self::$handler->isExist($name);
+            return (array_key_exists($name, self::$data));
         }
 
         /**
@@ -275,7 +281,7 @@ namespace org\octris\core\app\web {
         {
             session_name($this->name);
 
-            $cookie    = provider::access('cookie');
+            $cookie    = \org\octris\core\provider::access('cookie');
             $cookie_id = ($cookie->isExist($this->name)
                             ? $cookie->getValue($this->name, \org\octris\core\validate::T_PRINTABLE)
                             : false);
@@ -323,4 +329,7 @@ namespace org\octris\core\app\web {
             $this->id = session_id();
         }
     }
+
+    // set default session handler
+    session::setHandler(new \org\octris\core\app\web\session\handler\request());
 }
