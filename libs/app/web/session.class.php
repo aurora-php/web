@@ -193,11 +193,14 @@ namespace org\octris\core\app\web {
          * @octdoc  m:session/setValue
          * @param   string          $name               Name of property to set.
          * @param   mixed           $value              Value to store in session.
+         * @param   string          $namespace          Optional namespace.
          */
-        public function setValue($name, $value)
+        public function setValue($name, $value, $namespace = 'default')
         /**/
         {
-            self::$data[$name] = $value;
+            if (!isset(self::$data[$namespace])) self::$data[$namespace] = array();
+
+            self::$data[$namespace][$name] = $value;
         }
 
         /**
@@ -205,11 +208,12 @@ namespace org\octris\core\app\web {
          *
          * @octdoc  m:session/getValue
          * @param   string          $name               Name of property to return value of.
+         * @param   string          $namespace          Optional namespace.
          */
-        public function getValue($name)
+        public function getValue($name, $namespace = 'default')
         /**/
         {
-            return self::$data[$name];
+            return self::$data[$namespace][$name];
         }
 
         /**
@@ -217,11 +221,12 @@ namespace org\octris\core\app\web {
          *
          * @octdoc  m:session/unsetValue
          * @param   string          $name               Name of property to unset.
+         * @param   string          $namespace          Optional namespace.
          */
-        public function unsetValue($name)
+        public function unsetValue($name, $namespace = 'default')
         /**/
         {
-            unset(self::$data[$name]);
+            unset(self::$data[$namespace][$name]);
         }
 
         /**
@@ -229,11 +234,12 @@ namespace org\octris\core\app\web {
          *
          * @octdoc  m:session/isExist
          * @param   string          $name               Name of property to test.
+         * @param   string          $namespace          Optional namespace.
          */
-        public function isExist($name)
+        public function isExist($name, $namespace = 'default')
         /**/
         {
-            return (array_key_exists($name, self::$data));
+            return (isset(self::$data[$namespace]) && array_key_exists($name, self::$data));
         }
 
         /**
