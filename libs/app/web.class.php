@@ -64,6 +64,8 @@ namespace org\octris\core\app {
         public function process()
         /**/
         {
+            ob_start();
+
             // perform initialization
             $this->initialize();
 
@@ -102,6 +104,8 @@ namespace org\octris\core\app {
             // $next_page->prepareMessages($this);
             // $next_page->sendHeaders($this->headers);
             $next_page->render();
+
+            ob_end_flush();
         }
 
         /**
