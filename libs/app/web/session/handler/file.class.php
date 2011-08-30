@@ -41,6 +41,10 @@ namespace org\octris\core\app\web\session\handler {
         {
             $this->session_path = rtrim($path, '/');
 
+            if (!is_dir($this->session_path) || !is_writable($this->session_path)) {
+                throw new \Exception(sprintf('Session path "%s/" is not writeable', $this->session_path));
+            }
+
             return true;
         }
 
