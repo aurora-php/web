@@ -239,7 +239,7 @@ namespace org\octris\core\app\web {
         public function isExist($name, $namespace = 'default')
         /**/
         {
-            return (isset(self::$data[$namespace]) && array_key_exists($name, self::$data));
+            return (isset(self::$data[$namespace]) && array_key_exists($name, self::$data[$namespace]));
         }
 
         /**
