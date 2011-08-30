@@ -11,89 +11,68 @@
 
 namespace org\octris\core\app\web\session {
     /**
-     * Session handler base class.
+     * Interface for implementing session handlers.
      *
-     * @octdoc      c:session/handler
+     * @octdoc      i:session/handler_if
      * @copyright   copyright (c) 2011 by Harald Lapp
      * @author      Harald Lapp <harald@octris.org>
      */
-    abstract class handler
+    interface handler_if
     /**/
     {
         /**
-         * Constructor.
-         *
-         * @octdoc  m:handler/__construct
-         */
-        public function __construct()
-        /**/
-        {
-        }
-
-        /*
-         * prevent cloning
-         */
-        private function __clone() {}
-
-        /**
          * Open session.
          *
-         * @octdoc  m:handler/open
+         * @octdoc  m:handler_if/open
          * @param   string          $path               Session starage path.
          * @param   string          $name               Session name.
-         * @abstract
          */
-        public abstract function open($path, $name);
+        public function open($path, $name);
         /**/
 
         /**
          * Close session.
          *
-         * @octdoc  m:handler/close
-         * @abstract
+         * @octdoc  m:handler_if/close
          */
-        public abstract function close();
+        public function close();
         /**/
 
         /**
          * Read session.
          *
-         * @octdoc  m:handler/read
+         * @octdoc  m:handler_if/read
          * @param   string      $id                     Id of session to read.
-         * @abstract
          */
-        public abstract function read($id);
+        public function read($id);
         /**/
 
         /**
          * Write session.
          *
-         * @octdoc  m:handler/write
+         * @octdoc  m:handler_if/write
          * @param   string      $id                     Id of session to write.
          * @param   array       $data                   Session data to write.
-         * @abstract
          */
-        public abstract function write($id, array $data);
+        public function write($id, array $data);
         /**/
 
         /**
          * Destroy session.
          *
-         * @octdoc  m:handler/destroy
+         * @octdoc  m:handler_if/destroy
          * @param   string      $id                     Id of session to destroy.
-         * @abstract
          */
-        public abstract function destroy($id);
+        public function destroy($id);
         /**/
 
         /**
          * Garbage collect a session.
          *
-         * @octdoc  m:handler/gc
+         * @octdoc  m:handler_if/gc
          * @param   int         $lifetime               Maximum lifetime of session.
-         * @abstract
          */
-        public abstract function gc($lifetime);
+        public function gc($lifetime);
         /**/
     }
 }
