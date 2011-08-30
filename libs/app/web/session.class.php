@@ -134,10 +134,10 @@ namespace org\octris\core\app\web {
          * Set session handler.
          *
          * @octdoc  m:session/setHandler
-         * @param   \org\octris\core\app\web\session\handler    $handler        Instance of session handler.
-         * @param   array                                       $options        Optional options overwrite settings from php.ini.
+         * @param   \org\octris\core\app\web\session\handler_if     $handler        Instance of session handler.
+         * @param   array                                           $options        Optional options overwrite settings from php.ini.
          */
-        public static function setHandler(\org\octris\core\app\web\session\handler $handler, array $options = array())
+        public static function setHandler(\org\octris\core\app\web\session\handler_if $handler, array $options = array())
         /**/
         {
             $data =& self::$data;
