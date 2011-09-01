@@ -150,7 +150,7 @@ namespace org\octris\core {
             $max = 3;
 
             do {
-                $redirect_page = $next_page->prepare($last_page, $action);
+                $redirect_page = $next_page->prepare($next_page, $action);
 
                 if (is_object($redirect_page) && $next_page != $redirect_page) {
                     $next_page = $redirect_page;
