@@ -1,7 +1,5 @@
 <?php
 
-<?php
-
 /*
  * This file is part of the 'org.octris.core' package.
  *
@@ -12,7 +10,16 @@
  */
 
 namespace org\octris\core\app\web\page {
-    trait pager {
+    /**
+     * Implements functionality to generate pagers.
+     *
+     * @octdoc      t:page/pager
+     * @copyright   copyright (c) 2011 by Harald Lapp
+     * @author      Harald Lapp <harald@octris.org>
+     */
+    trait pager
+    /**/
+    {
         /**
          * Current page number.
          *
