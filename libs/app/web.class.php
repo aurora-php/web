@@ -105,6 +105,8 @@ namespace org\octris\core\app {
             // $next_page->sendHeaders($this->headers);
             $next_page->render();
 
+            header('Content-Type: text/html; charset="UTF-8"');
+
             ob_end_flush();
         }
 
