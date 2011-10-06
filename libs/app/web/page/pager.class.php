@@ -95,12 +95,12 @@ namespace org\octris\core\app\web\page {
         {
             static $page = null;
 
-            if (is_null($pagee)) {
+            if (is_null($page)) {
                 // either import or use default on first call
                 $request = provider::access('request');
 
                 if ($request->isExist('page')) {
-                    $page = $request->getValue('page', ...);
+                    $page = $request->getValue('page', validate::T_DIGIT);
                     $this->page = $page;
                 } else {
                     $page = $this->page;
@@ -119,21 +119,21 @@ namespace org\octris\core\app\web\page {
         public function getItemsPerPage()
         /**/
         {
-            static $page = null;
+            static $ipp = null;
 
-            if (is_null($pagee)) {
+            if (is_null($ipp)) {
                 // either import or use default on first call
                 $request = provider::access('request');
 
-                if ($request->isExist('page')) {
-                    $page = $request->getValue('page', ...);
-                    $this->page = $page;
+                if ($request->isExist('ipp')) {
+                    $ipp = $request->getValue('ipp', validate::T_DIGIT);
+                    $this->items_per_page;
                 } else {
-                    $page = $this->page;
+                    $ipp = $this->items_per_page;
                 }
             }
 
-            return $page;
+            return $ipp;
         }
 
         /**
@@ -145,7 +145,10 @@ namespace org\octris\core\app\web\page {
         public function getPager()
         /**/
         {
-            $this->total_pages = ceil($this->total_items / $this->items_per_page);
+            $page = $this->getPage();
+            $ipp  = $this->getItemsPerPage();
+            
+            $this->total_pages = ceil($this->total_items / $ipp);
 
             $pages = array();
 
@@ -155,7 +158,7 @@ namespace org\octris\core\app\web\page {
                 }
             } else {
                 for ($i = 1; $i <= $this->pager_positions; ++$i) {
-                    if ($this->page < ceil($this->pager_positions / 2)) {
+                    if ($page < ceil($this->pager_positions / 2)) {
                         if ($i == $this->pager_positions - 1) {
                             $pages[$i - 1] = $this->filler_char;
                         } elseif ($i == $this->pager_positions) {
@@ -163,7 +166,7 @@ namespace org\octris\core\app\web\page {
                         } else {
                             $pages[$i - 1] = $i;
                         }
-                    } elseif ($this->page > ($this->total_pages - ($this->pager_positions / 2)) + 2) {
+                    } elseif ($page > ($this->total_pages - ($this->pager_positions / 2)) + 2) {
                         if ($i == 1) {
                             $pages[$i - 1] = '1';
                         } elseif ($i == $this->filler_position) {
@@ -179,26 +182,26 @@ namespace org\octris\core\app\web\page {
                         } elseif ($i == $this->filler_position || $i == $this->pager_positions - 1) {
                             $pages[$i - 1] = $this->filler_char;
                         } else {
-                            $pages[$i - 1] = ceil($this->page - $this->pager_positions / 2 + $i - 1);
+                            $pages[$i - 1] = ceil($page - $this->pager_positions / 2 + $i - 1);
                         }
                     }
                 }
             }
 
-            $offset = (($this->page - 1) * $this->items_per_page) + 1;
+            $offset = (($page - 1) * $ipp) + 1;
 
             return array(
                 'pages'         => $pages,
-                'page'          => $this->page,
+                'page'          => $page,
                 'total_pages'   => $this->total_pages,
                 'total_items'   => $this->total_items,
-                'items'         => $this->items_per_page,
-                'is_first_page' => ($this->page == 1),
-                'is_last_page'  => ($this->page >= $this->total_pages),
-                'prev_page'     => $this->page - 1,
-                'next_page'     => $this->page + 1,
+                'items'         => $ipp,
+                'is_first_page' => ($page == 1),
+                'is_last_page'  => ($page >= $this->total_pages),
+                'prev_page'     => $page - 1,
+                'next_page'     => $page + 1,
                 'offset'        => $offset,
-                'offset_end'    => $offset + ($this->items_per_page - 1)
+                'offset_end'    => $offset + ($ipp - 1)
             );
         }
     }
