@@ -120,7 +120,7 @@ namespace org\octris\core\app\web {
                 }
             } else {
                 // try to determine action from a request parameter named ACTION_...
-                foreach ($request->getPrefixed('ACTION_', validate::T_ALPHANUM) as $k => $v) {
+                foreach ($request->getPrefixed('ACTION_', validate::T_PRINTABLE) as $k => $v) {
                     $action = substr($k, 7);
                     break;
                 }
