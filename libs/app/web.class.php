@@ -151,6 +151,9 @@ namespace org\octris\core\app {
             $tpl->registerMethod('getState', function() use ($self) {
                 return $self->getState()->freeze();
             }, array('min' => 0, 'max' => 0));
+            $tpl->registerMethod('isAuthenticated', function() {
+                return \org\octris\core\auth::getInstance()->isAuthenticated();
+            }, array('min' => 0, 'max' => 0));
 
             return $tpl;
         }
