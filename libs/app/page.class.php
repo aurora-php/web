@@ -33,6 +33,15 @@ namespace org\octris\core\app {
         /**/
 
         /**
+         * Values to set for page.
+         *
+         * @octdoc  v:page/$values
+         * @var     array
+         */
+        protected $values = array();
+        /**/
+
+        /**
          * Stored error Messages occured during execution of the current page.
          *
          * @octdoc  v:page/$errors
