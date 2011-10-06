@@ -195,6 +195,11 @@ namespace org\octris\core\app\web {
                 $this->template->registerMethod('getBreadcrumb', function() use (&$breadcrumb) {
                     return $breadcrumb;
                 }, array('max' => 0));
+                
+                // values
+                $this->template->setValues($this->values);
+                $this->template->setValue('errors',   $this->errors);
+                $this->template->setValue('messages', $this->messages);
             }
 
             return $this->template;
