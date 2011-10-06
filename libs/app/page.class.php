@@ -143,7 +143,9 @@ namespace org\octris\core\app {
             if ($action != '') {
                 $method = \org\octris\core\app\web\request::getRequestMethod();
 
-                list($is_valid, , $errors) = $this->applyValidator($method, $action);
+                list($is_valid, , $errors, $validator) = $this->applyValidator($method, $action);
+
+                if (!is_null($validator)) $this->values = array_merge($this->values, $validator->getData());
 
                 $this->addErrors($errors);
             }
