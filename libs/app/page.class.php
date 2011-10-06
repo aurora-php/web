@@ -116,7 +116,7 @@ namespace org\octris\core\app {
 
             return ($provider->hasValidator($key)
                     ? $provider->applyValidator($key)
-                    : array(true, null, array()));
+                    : array(true, null, array(), null));
         }
 
         /**
