@@ -17,7 +17,7 @@ namespace org\octris\core\app\web\page {
      * @copyright   copyright (c) 2011 by Harald Lapp
      * @author      Harald Lapp <harald@octris.org>
      */
-    trait pager
+    trait pager_tr
     /**/
     {
         /**
@@ -147,7 +147,7 @@ namespace org\octris\core\app\web\page {
         {
             $page = $this->getPage();
             $ipp  = $this->getItemsPerPage();
-            
+
             $this->total_pages = ceil($this->total_items / $ipp);
 
             $pages = array();

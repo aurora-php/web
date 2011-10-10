@@ -17,7 +17,7 @@ namespace org\octris\core\app\web\page {
      * @copyright   copyright (c) 2011 by Harald Lapp
      * @author      Harald Lapp <harald@octris.org>
      */
-    trait panes
+    trait panes_tr
     /**/
     {
     }
