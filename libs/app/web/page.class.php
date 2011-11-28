@@ -117,14 +117,16 @@ namespace org\octris\core\app\web {
 
             if ($request instanceof provider) {
                 if ($request->isExist('ACTION')) {
-                    if (($tmp = $request->getValue('ACTION', validate::T_ALPHANUM)) !== false) {
-                        $action = $tmp;
+                    if ($request->isValid('ACTION', validate::T_ALPHANUM)) {
+                        $action = $request->getValue('ACTION');
                     }
                 } else {
                     // try to determine action from a request parameter named ACTION_...
-                    foreach ($request->getPrefixed('ACTION_', validate::T_PRINTABLE) as $k => $v) {
-                        $action = substr($k, 7);
-                        break;
+                    foreach ($request->filter('ACTION_') as $k) {
+                        if ($request->isValid($k, validate::T_PRINTABLE)) {
+                            $action = substr($k, 7);
+                            break;
+                        }
                     }
                 }
             }
