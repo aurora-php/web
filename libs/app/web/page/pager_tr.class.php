@@ -23,7 +23,7 @@ namespace org\octris\core\app\web\page {
         /**
          * Current page number.
          *
-         * @octdoc  v:pager/$page
+         * @octdoc  p:pager/$page
          * @var     int
          */
         protected $page = 1;
@@ -32,7 +32,7 @@ namespace org\octris\core\app\web\page {
         /**
          * Total number of "items" the pager should create pages for.
          *
-         * @octdoc  v:pager/$total_items
+         * @octdoc  p:pager/$total_items
          * @var     int
          */
         protected $total_items = 0;
@@ -41,7 +41,7 @@ namespace org\octris\core\app\web\page {
         /**
          * Number of "items" the application should display per page.
          *
-         * @octdoc  v:pager/$items_per_page
+         * @octdoc  p:pager/$items_per_page
          * @var     int
          */
         protected $items_per_page = 20;
@@ -50,7 +50,7 @@ namespace org\octris\core\app\web\page {
         /**
          * Total number of pages.
          *
-         * @octdoc  v:pager/$total_pages
+         * @octdoc  p:pager/$total_pages
          * @var     int
          */
         protected $total_pages = 1;
@@ -59,7 +59,7 @@ namespace org\octris\core\app\web\page {
         /**
          * Number of "positions" the the pager contains.
          *
-         * @octdoc  v:int/$pager_positions
+         * @octdoc  p:int/$pager_positions
          * @var     int
          */
         protected $pager_positions = 9;
@@ -69,7 +69,7 @@ namespace org\octris\core\app\web\page {
          * Where to insert a filler, if the number of pages are more than the pager has
          * positions to show buttons for them.
          *
-         * @octdoc  v:pager/$filler_position
+         * @octdoc  p:pager/$filler_position
          * @var     int
          */
         protected $filler_position = 2;
@@ -78,7 +78,7 @@ namespace org\octris\core\app\web\page {
         /**
          * Character to use as filler.
          *
-         * @octdoc  v:pager/$filler_char
+         * @octdoc  p:pager/$filler_char
          * @var     string
          */
         protected $filler_char = '...';

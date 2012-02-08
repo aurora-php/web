@@ -26,7 +26,7 @@ namespace org\octris\core\app {
         /**
          * Next valid actions and their view pages.
          *
-         * @octdoc  v:page/$next_pages
+         * @octdoc  p:page/$next_pages
          * @var     array
          */
         protected $next_pages = array();
@@ -35,7 +35,7 @@ namespace org\octris\core\app {
         /**
          * Values to set for page.
          *
-         * @octdoc  v:page/$values
+         * @octdoc  p:page/$values
          * @var     array
          */
         protected $values = array();
@@ -44,7 +44,7 @@ namespace org\octris\core\app {
         /**
          * Stored error Messages occured during execution of the current page.
          *
-         * @octdoc  v:page/$errors
+         * @octdoc  p:page/$errors
          * @var     array
          */
         protected $errors = array();
@@ -53,7 +53,7 @@ namespace org\octris\core\app {
         /**
          * Stored notification messages collected during execution of the current page.
          *
-         * @octdoc  v:page/$messages
+         * @octdoc  p:page/$messages
          * @var     array
          */
         protected $messages = array();
