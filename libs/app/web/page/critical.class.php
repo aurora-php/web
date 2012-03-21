@@ -85,14 +85,19 @@ namespace org\octris\core\app\web\page {
         {
             $this->identifier = base64_encode(uniqid(gethostname() . '.', true));
 
+            throw $exception;
+
             if (!is_null($this->logger)) {
-                $this->logger->log(
-                    \org\octris\core\logger::T_CRITICAL,
-                    $exception,
-                    array(
-                        '_identifier' => $this->identifier
-                    )
-                );
+                try {
+                    $this->logger->log(
+                        \org\octris\core\logger::T_CRITICAL,
+                        $exception,
+                        array(
+                            '_identifier' => $this->identifier
+                        )
+                    );
+                } catch(\Exception $e) {
+                }
             }
         }
 

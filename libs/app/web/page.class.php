@@ -105,6 +105,7 @@ namespace org\octris\core\app\web {
             }
 
             $method  = request::getRequestMethod();
+            $request = null;
 
             if ($method == request::T_POST || $method == request::T_GET) {
                 $method = ($method == request::T_POST
@@ -114,15 +115,17 @@ namespace org\octris\core\app\web {
                 $request = provider::access($method);
             }
 
-            if ($request->isExist('ACTION')) {
-                if (($tmp = $request->getValue('ACTION', validate::T_ALPHANUM)) !== false) {
-                    $action = $tmp;
-                }
-            } else {
-                // try to determine action from a request parameter named ACTION_...
-                foreach ($request->getPrefixed('ACTION_', validate::T_PRINTABLE) as $k => $v) {
-                    $action = substr($k, 7);
-                    break;
+            if ($request instanceof provider) {
+                if ($request->isExist('ACTION')) {
+                    if (($tmp = $request->getValue('ACTION', validate::T_ALPHANUM)) !== false) {
+                        $action = $tmp;
+                    }
+                } else {
+                    // try to determine action from a request parameter named ACTION_...
+                    foreach ($request->getPrefixed('ACTION_', validate::T_PRINTABLE) as $k => $v) {
+                        $action = substr($k, 7);
+                        break;
+                    }
                 }
             }
 
