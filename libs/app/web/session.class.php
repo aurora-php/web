@@ -23,7 +23,7 @@ namespace org\octris\core\app\web {
         /**
          * Instance of session class.
          *
-         * @octdoc  v:session/$instance
+         * @octdoc  p:session/$instance
          * @var     \org\octris\core\app\web\session
          */
         private static $instance = null;
@@ -32,7 +32,7 @@ namespace org\octris\core\app\web {
         /**
          * Instance of session handler.
          *
-         * @octdoc  v:session/$handler
+         * @octdoc  p:session/$handler
          * @var     \org\octris\core\app\web\session\handler
          */
         private static $handler = null;
@@ -41,7 +41,7 @@ namespace org\octris\core\app\web {
         /**
          * Options configured through 'setHandler'.
          *
-         * @octdoc  v:session/$options
+         * @octdoc  p:session/$options
          * @var     array
          */
         private static $options = array();
@@ -50,7 +50,7 @@ namespace org\octris\core\app\web {
         /**
          * Session data.
          *
-         * @octdoc  v:session/$data
+         * @octdoc  p:session/$data
          * @var     array
          */
         private static $data = array();
@@ -59,7 +59,7 @@ namespace org\octris\core\app\web {
         /**
          * Session lifetime. See php.ini: session.gc_maxlifetime.
          *
-         * @octdoc  v:session/$lifetime
+         * @octdoc  p:session/$lifetime
          * @var     int
          */
         protected $lifetime = 0;
@@ -68,7 +68,7 @@ namespace org\octris\core\app\web {
         /**
          * The domain, the session is valid for.
          *
-         * @octdoc  v:session/$domain
+         * @octdoc  p:session/$domain
          * @var     string
          */
         protected $domain = '';
@@ -77,7 +77,7 @@ namespace org\octris\core\app\web {
         /**
          * Session name. See php.ini: session.name.
          *
-         * @octdoc  v:session/$name
+         * @octdoc  p:session/$name
          * @var     string
          */
         protected $name = '';
@@ -86,7 +86,7 @@ namespace org\octris\core\app\web {
         /**
          * Stores Id of current session.
          *
-         * @octdoc  v:session/$id
+         * @octdoc  p:session/$id
          * @var     string
          */
         protected $id = '';
