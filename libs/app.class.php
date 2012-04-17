@@ -238,10 +238,10 @@ namespace org\octris\core {
 
             $return = sprintf(
                 $type,
-                $env->getValue('OCTRIS_BASE', validate::T_PATH),
+                $env->getValue('OCTRIS_BASE'),
                 ($module
                     ? $module
-                    : $env->getValue('OCTRIS_APP', validate::T_PROJECT))
+                    : $env->getValue('OCTRIS_APP'))
             );
 
             return realpath($return);
