@@ -148,10 +148,8 @@ namespace org\octris\core\app {
             $tpl->addSearchPath(\org\octris\core\app::getPath(\org\octris\core\app::T_PATH_WORK_TPL));
 
             // register common template methods
-            $self = $this;
-
-            $tpl->registerMethod('getState', function() use ($self) {
-                return $self->getState()->freeze();
+            $tpl->registerMethod('getState', function() {
+                return $this->getState()->freeze();
             }, array('min' => 0, 'max' => 0));
             $tpl->registerMethod('isAuthenticated', function() {
                 return \org\octris\core\auth::getInstance()->isAuthenticated();
