@@ -28,8 +28,9 @@ namespace org\octris\core {
         /**
          * Used in combination with app/getPath to determine path.
          *
-         * @octdoc  d:config/T_PATH_CACHE, T_PATH_DATA, T_PATH_ETC, T_PATH_HOST, T_PATH_LIBS, T_PATH_LIBSJS, T_PATH_LOCALE, T_PATH_RESOURCES, T_PATH_STYLES, T_PATH_LOG, T_PATH_WORK, T_PATH_WORK_LIBSJS, T_PATH_WORK_RESOURCES, T_PATH_WORK_STYLES, T_PATH_WORK_TPL
+         * @octdoc  d:config/T_PATH_BASE, T_PATH_CACHE, T_PATH_DATA, T_PATH_ETC, T_PATH_HOST, T_PATH_LIBS, T_PATH_LIBSJS, T_PATH_LOCALE, T_PATH_RESOURCES, T_PATH_STYLES, T_PATH_LOG, T_PATH_WORK, T_PATH_WORK_LIBSJS, T_PATH_WORK_RESOURCES, T_PATH_WORK_STYLES, T_PATH_WORK_TPL
          */
+        const T_PATH_BASE           = '%s';
         const T_PATH_CACHE          = '%s/cache/%s';
         const T_PATH_CACHE_DATA     = '%s/cache/%s/data';
         const T_PATH_CACHE_TPL      = '%s/cache/%s/templates_c';
