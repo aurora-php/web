@@ -300,8 +300,8 @@ namespace org\octris\core\app\web {
             session_name($this->name);
 
             $cookie    = \org\octris\core\provider::access('cookie');
-            $cookie_id = ($cookie->isExist($this->name)
-                            ? $cookie->getValue($this->name, \org\octris\core\validate::T_PRINTABLE)
+            $cookie_id = ($cookie->isExist($this->name) && $cookie->isValid($this->name, \org\octris\core\validate::T_PRINTABLE)
+                            ? $cookie->getValue($this->name)
                             : false);
 
             if ($cookie_id !== false) {
