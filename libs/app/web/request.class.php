@@ -79,8 +79,8 @@ namespace org\octris\core\app\web {
             if (is_null($method)) {
                 $server = provider::access('server');
 
-                if ($server->isExist('REQUEST_METHOD')) {
-                    $method = strtolower($server->getValue('REQUEST_METHOD', validate::T_PRINTABLE));
+                if ($server->isExist('REQUEST_METHOD') && $server->isValid('REQUEST_METHOD', validate::T_PRINTABLE)) {
+                    $method = strtolower($server->getValue('REQUEST_METHOD'));
 
                     if ($method != self::T_POST && $method != self::T_GET) {
                         $method = self::T_GET;
