@@ -33,15 +33,6 @@ namespace org\octris\core\app {
         /**/
 
         /**
-         * Values to set for page.
-         *
-         * @octdoc  p:page/$values
-         * @var     array
-         */
-        protected $values = array();
-        /**/
-
-        /**
          * Stored error Messages occured during execution of the current page.
          *
          * @octdoc  p:page/$errors
@@ -144,8 +135,6 @@ namespace org\octris\core\app {
                 $method = \org\octris\core\app\web\request::getRequestMethod();
 
                 list($is_valid, , $errors, $validator) = $this->applyValidator($method, $action);
-
-                if (!is_null($validator)) $this->values = array_merge($this->values, $validator->getData());
 
                 $this->addErrors($errors);
             }
