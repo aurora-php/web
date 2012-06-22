@@ -1,334 +1,213 @@
 <?php
 
+/*
+ * This file is part of the 'org.octris.core' package.
+ *
+ * (c) Harald Lapp <harald@octris.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace org\octris\core\app\web {
-    use \org\octris\core\app\web as app;
+    use \org\octris\core\provider as provider;
     use \org\octris\core\validate as validate;
-    
-    /****c* app/page
-     * NAME
-     *      page
-     * FUNCTION
-     *      page controller of the MVC framework
-     * COPYRight
-     *      copyright (c) 2006-2010 by Harald Lapp
-     * AUTHOR
-     *      Harald Lapp <harald@octris.org>
-     ****
+
+    /**
+     * Page controller for web applications.
+     *
+     * @octdoc      c:web/page
+     * @copyright   copyright (c) 2010-2011 by Harald Lapp
+     * @author      Harald Lapp <harald@octris.org>
      */
+    abstract class page extends \org\octris\core\app\page
+    /**/
+    {
+        /**
+         * Template instance.
+         *
+         * @octdoc  p:page/$template
+         * @var     \org\octris\core\tpl
+         */
+        private $template = null;
+        /**/
 
-    abstract class page {
-        /****v* page/$next_pages
-         * SYNOPSIS
-         */
-        protected $next_pages = array(
-        );
-        /*
-         * FUNCTION
-         *      next valid actions -> pages for current page
-         ****
-         */
-
-        /****v* page/$errors
-         * SYNOPSIS
-         */
-        protected $errors = array();
-        /*
-         * FUNCTION
-         *      stored error messages occured during execution of the current page
-         ****
-         */
-
-        /****v* page/$messages
-         * SYNOPSIS
-         */
-        protected $messages = array();
-        /*
-         * FUNCTION
-         *      stored messages collected during execution of the current page
-         ****
-         */
-
-        /****m* page/$secure
-         * SYNOPSIS
+        /**
+         * Whether the page should be delivered only through HTTPS.
+         *
+         * @octdoc  p:page/$secure
+         * @var     bool
          */
         protected $secure = false;
-        /*
-         * FUNCTION
-         *      whether the page should be delivered through https or not
-         ****
-         */
+        /**/
 
-        /****m* page/__construct
-         * SYNOPSIS
+        /**
+         * Breadcrumb for current page.
+         *
+         * @octdoc  p:page/$breadcrumb
+         * @var     array
+         */
+        protected $breadcrumb = array();
+        /**/
+
+        /**
+         * Constructor.
+         *
+         * @octdoc  m:page/__construct
          */
         public function __construct()
-        /*
-         * FUNCTION
-         *      constructor
-         ****
-         */
+        /**/
         {
+            parent::__construct();
         }
 
-        /****m* page/__toString
-         * SYNOPSIS
-         */
-        public function __toString()
-        /*
-         * FUNCTION
-         *      magic method __toString returns name of page class
-         ****
-         */
-        {
-            return get_class($this);
-        }
-
-        /****m* page/isSecure
-         * SYNOPSIS
+        /**
+         * Returns whether page should be only delivered secured.
+         *
+         * @octdoc  m:page/isSecure
+         * @return  bool                                    Secured flag.
          */
         public final function isSecure()
-        /*
-         * FUNCTION
-         *      return, whether page has to be secured
-         ****
-         */
+        /**/
         {
             return $this->secure;
         }
 
-        /****m* page/prepareRender, render
-         * SYNOPSIS
+        /**
+         * Add an item to the breadcrumb
+         *
+         * @octdoc  m:page/addBreadcrumbItem
+         * @param   string          $name                   Name of item.
+         * @param   string          $url                    URL for item.
          */
-        abstract public function prepareRender(\org\octris\core\app $app, lima_page $last_page, $action);
-        abstract public function render(\org\octris\core\app $app);
-        /*
-         * FUNCTION
-         *      abstract methods must be defined in the application page classes
-         ****
-         */
-
-        /****m* page/validate
-         * SYNOPSIS
-         */
-        public function validate(\org\octris\core\app $app, $action)
-        /*
-         * FUNCTION
-         *      apply a validation ruleset
-         * INPUTS
-         *      * $app (object) -- application object
-         *      * $action (string) -- action
-         * OUTPUTS
-         *      (bool) -- returns false, if validation failed, otherwise true
-         ****
-         */
+        public function addBreadcrumbItem($name, $url)
+        /**/
         {
-            return validate::getInstance()->validate($this, $action);
+            $this->breadcrumb[] = array(
+                'name'  => $name,
+                'url'   => $url
+            );
         }
 
-        /****m* page/getNextPage
-         * SYNOPSIS
+        /**
+         * Determine the action of the request.
+         *
+         * @octdoc  m:page/getAction
+         * @return  string                                      Name of action
          */
-        public function getNextPage(\org\octris\core\app $app)
-        /*
-         * FUNCTION
-         *      get's next page from action and next_pages array of last page
-         * INPUTS
-         *      * $app (object) -- application object
-         * OUTPUTS
-         *      (object) -- instance of next page
-         ****
-         */
+        public function getAction()
+        /**/
         {
-            $next = $this;
+            static $action = null;
 
-            if (count($this->errors) <= 0) {
-                $action = $this->getAction();
+            if (!is_null($action) != '') {
+                return $action;
+            }
 
-                if (is_array($this->next_pages) && isset($this->next_pages[$action])) {
-                    // lookup next page from current page's next_page array
-                    $class = $this->next_pages[$action];
-                    $next  = new $class($app);
+            $method  = request::getRequestMethod();
+            $request = null;
+
+            if ($method == request::T_POST || $method == request::T_GET) {
+                $method = ($method == request::T_POST
+                            ? 'post'
+                            : 'get');
+
+                $request = provider::access($method);
+            }
+
+            if ($request instanceof provider) {
+                if ($request->isExist('ACTION')) {
+                    if ($request->isValid('ACTION', validate::T_ALPHANUM)) {
+                        $action = $request->getValue('ACTION');
+                    }
                 } else {
-                    // lookup next page from entry page's next_page array
-                    $entry = new $entry_page($app);
-
-                    if (is_array($entry->next_pages) && isset($entry->next_pages[$action])) {
-                        $class = $entry->next_pages[$action];
-                        $next  = new $class($app);
+                    // try to determine action from a request parameter named ACTION_...
+                    foreach ($request->filter('ACTION_') as $k) {
+                        if ($request->isValid($k, validate::T_PRINTABLE)) {
+                            $action = substr($k, 7);
+                            break;
+                        }
                     }
                 }
             }
 
-            return $next;
-        }
-
-        /****m* page/getValidationRuleset
-         * SYNOPSIS
-         */
-        public function getValidationRuleset($action)
-        /*
-         * FUNCTION
-         *      returns a validation ruleset for specified action
-         * INPUTS
-         *      * $action (string) -- name of action to return ruleset for
-         * OUTPUTS
-         *      (mixed) -- array of rules for specified action, returns false, if no ruleset is specified for action
-         ****
-         */
-        {
-            $return = false;
-
-            if (isset($this->validate[$action])) {
-                $return = $this->validate[$action];
+            if (is_null($action)) {
+                $action = '';
             }
 
-            return $return;
+            return $action;
         }
 
-        /****m* page/addError
-         * SYNOPSIS
+        /**
+         * Determine requested module with specified action. If a module was determined but the action is not
+         * valid, this method will return default application module. The module must be reachable from inside
+         * the application.
+         *
+         * @octdoc  m:page/getModule
+         * @return  string                                      Name of module
          */
-        public function addError($err)
-        /*
-         * FUNCTION
-         *      add error message for current page
-         * INPUTS
-         *      * $err (string) -- error message
-         ****
-         */
+        public function getModule()
+        /**/
         {
-            $this->errors[] = $err;
-        }
+            static $module = '';
 
-        /****m* page/addMessage
-         * SYNOPSIS
-         */
-        public function addMessage($msg)
-        /*
-         * FUNCTION
-         *      add message for current page
-         * INPUTS
-         *      * $msg (string) -- message
-         ****
-         */
-        {
-            $this->messages[] = $msg;
-        }
-
-        /****m* page/countErrors
-         * SYNOPSIS
-         */
-        public function countErrors()
-        /*
-         * FUNCTION
-         *      return number of errors for current page
-         ****
-         */
-        {
-            return count($this->errors);
-        }
-
-        /****m* page/countMessages
-         * SYNOPSIS
-         */
-        public function countMessages()
-        /*
-         * FUNCTION
-         *      return number of messages for current page
-         ****
-         */
-        {
-            return count($this->messages);
-        }
-
-        /****m* page/getErrors
-         * SYNOPSIS
-         */
-        public function getErrors()
-        /*
-         * FUNCTION
-         *      return all errors
-         ****
-         */
-        {
-            return $this->errors;
-        }
-
-        /****m* page/getMessages
-         * SYNOPSIS
-         */
-        public function getMessages()
-        /*
-         * FUNCTION
-         *      return all messages
-         ****
-         */
-        {
-            return $this->messages;
-        }
-
-        /****m* page/addErrors
-         * SYNOPSIS
-         */
-        public function addErrors(array $errors)
-        /*
-         * FUNCTION
-         *      method to add multiple errors for page
-         * INPUTS
-         *      * $errors (array) -- array of error messages
-         ****
-         */
-        {
-            $this->errors = array_merge($this->errors, $errors);
-        }
-
-        /****m* page/addMessages
-         * SYNOPSIS
-         */
-        public function addMessages(array $messages)
-        /*
-         * FUNCTION
-         *      method to add multiple messages for page
-         * INPUTS
-         *      * $messages (array) -- array of messages 
-         ****
-         */
-        {
-            $this->messages = array_merge($this->messages, $messages);
-        }
-
-        /****m* page/getValidateRulesets
-         * SYNOPSIS
-         */
-        public function getValidateRulesets()
-        /*
-         * FUNCTION
-         *      return validate rulesets
-         ****
-         */
-        {
-            return lima_validate::getInstance()->export($this);
-        }
-
-        /****m* page/prepareMessages
-         * SYNOPSIS
-         */
-        public function prepareMessages(\org\octris\core\app $app)
-        /*
-         * FUNCTION
-         *      prepare messages for output page (eg error- or status messages)
-         * INPUTS
-         *      * $app (object) -- application object
-         ****
-         */
-        {
-            if (count($this->errors) > 0) {
-                $app->setErrors($this->errors);
+            if ($module != '') {
+                return $module;
             }
 
-            if (count($this->messages) > 0) {
-                $app->setMessages($this->messages);
+            $method  = request::getRequestMethod();
+
+            if ($method == request::T_POST || $method == request::T_GET) {
+                $method = ($method == request::T_POST
+                            ? 'post'
+                            : 'get');
+
+                $request = provider::access($method);
             }
+
+            if (($tmp = $request->getValue('MODULE', validate::T_ALPHANUM)) !== false) {
+                $module = $tmp;
+            } else {
+                // try to determine module from a request parameter named MODULE_...
+                foreach ($request->getPrefixed('MODULE_', validate::T_ALPHANUM) as $k => $v) {
+                    $module = substr($k, 7);
+                    break;
+                }
+            }
+
+            if (!$module) {
+                $module = 'default';
+            }
+
+            return $module;
+        }
+
+        /**
+         * Return instance of template for current page.
+         *
+         * @octdoc  m:page/getTemplate
+         * @return  \org\octris\core\tpl                Instance of template engine.
+         */
+        public function getTemplate()
+        /**/
+        {
+            if (is_null($this->template)) {
+                $this->template = \org\octris\core\app::getInstance()->getTemplate();
+
+                // TODO: PHP5.4
+                $breadcrumb =& $this->breadcrumb;
+
+                $this->template->registerMethod('getBreadcrumb', function() use (&$breadcrumb) {
+                    return $breadcrumb;
+                }, array('max' => 0));
+                
+                // values
+                $this->template->setValues($this->values);
+                $this->template->setValue('errors',   $this->errors);
+                $this->template->setValue('messages', $this->messages);
+            }
+
+            return $this->template;
         }
     }
 }

@@ -1,142 +1,297 @@
 <?php
 
+/*
+ * This file is part of the 'org.octris.core' package.
+ *
+ * (c) Harald Lapp <harald@octris.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace org\octris\core {
-    require_once('app/autoloader.class.php');
-    
+    require_once('org.octris.core/app/autoloader.class.php');
+
     use \org\octris\core\validate as validate;
+    use \org\octris\core\provider as provider;
 
-    /****c* core/app
-     * NAME
-     *      app
-     * FUNCTION
-     *      Core application class. This class needs to be the first
-     *      one included in an application, because it set's up a function
-     *      which will try to automatically load all required classes.
-     * COPYRIGHT
-     *      copyright (c) 2010 by Harald Lapp
-     * AUTHOR
-     *      Harald Lapp <harald@octris.org>
-     ****
+    /**
+     * Core application class.
+     *
+     * @octdoc      c:core/app
+     * @copyright   copyright (c) 2010-2011 by Harald Lapp
+     * @author      Harald Lapp <harald@octris.org>
      */
+    abstract class app
+    /**/
+    {
+        /**
+         * Used in combination with app/getPath to determine path.
+         *
+         * @octdoc  d:config/T_PATH_BASE, T_PATH_CACHE, T_PATH_DATA, T_PATH_ETC, T_PATH_HOST, T_PATH_LIBS, T_PATH_LIBSJS, T_PATH_LOCALE, T_PATH_RESOURCES, T_PATH_STYLES, T_PATH_LOG, T_PATH_WORK, T_PATH_WORK_LIBSJS, T_PATH_WORK_RESOURCES, T_PATH_WORK_STYLES, T_PATH_WORK_TPL
+         */
+        const T_PATH_BASE           = '%s';
+        const T_PATH_CACHE          = '%s/cache/%s';
+        const T_PATH_CACHE_DATA     = '%s/cache/%s/data';
+        const T_PATH_CACHE_TPL      = '%s/cache/%s/templates_c';
+        const T_PATH_DATA           = '%s/data/%s';
+        const T_PATH_ETC            = '%s/etc/%s';
+        const T_PATH_HOST           = '%s/host/%s';
+        const T_PATH_LIBS           = '%s/libs/%s';
+        const T_PATH_LIBSJS         = '%s/host/%s/libsjs';
+        const T_PATH_LOCALE         = '%s/locale/%s';
+        const T_PATH_LOG            = '%s/log/%s';
+        const T_PATH_RESOURCES      = '%s/host/%s/resources';
+        const T_PATH_STYLES         = '%s/host/%s/styles';
+        const T_PATH_TOOLS          = '%s/tools/%s';
+        const T_PATH_WORK           = '%s/work/%s';
+        const T_PATH_WORK_LIBS      = '%s/work/%s/libs';
+        const T_PATH_WORK_LIBSJS    = '%s/work/%s/libsjs';
+        const T_PATH_WORK_RESOURCES = '%s/work/%s/resources';
+        const T_PATH_WORK_STYLES    = '%s/work/%s/styles';
+        const T_PATH_WORK_TPL       = '%s/work/%s/templates';
+        /**/
 
-    abstract class app {
-        /****d* app/T_CONTEXT_UNDEFINED, T_CONTEXT_CLI, T_CONTEXT_WEB, T_CONTEXT_TEST
-         * SYNOPSIS
+        /**
+         * Used to abstract application context types.
+         *
+         * @octdoc  d:app/T_CONTEXT_UNDEFINED, T_CONTEXT_CLI, T_CONTEXT_WEB, T_CONTEXT_TEST
          */
         const T_CONTEXT_UNDEFINED = 0;
         const T_CONTEXT_CLI       = 1;
         const T_CONTEXT_WEB       = 2;
         const T_CONTEXT_TEST      = 3;
-        /*
-         * FUNCTION
-         *      context the application is running in
-         ****
-         */
-        
-        /****v* app/$instance
-         * SYNOPSIS
+        /**/
+
+        /**
+         * Application instance.
+         *
+         * @octdoc  p:app/$instance
+         * @var     \org\octris\core\app
          */
         private static $instance = null;
-        /*
-         * FUNCTION
-         *      application instance
-         ****
+        /**/
+
+        /**
+         * Context of the application.
+         *
+         * @octdoc  p:app/$context
+         * @var     int
          */
-        
-        /****v* app/$context
-         * SYNOPSIS
+        protected $context = self::T_CONTEXT_UNDEFINED;
+        /**/
+
+        /**
+         * Application state.
+         *
+         * @octdoc  p:app/$state
+         * @var     \org\octris\core\app\state
          */
-        protected static $context = self::T_CONTEXT_UNDEFINED;
-        /*
-         * FUNCTION
-         *      application context
-         ****
+        protected $state = null;
+        /**/
+
+        /**
+         * Entry page to use if no other page is loaded. To be overwritten by applications' main class.
+         *
+         * @octdoc  p:app/$entry_page
+         * @var     string
          */
-        
-        /****m* app/__construct
-         * SYNOPSIS
+        protected $entry_page = '';
+        /**/
+
+        /**
+         * Constructor is protected to force creation of instance using 'getInstance' method.
+         *
+         * @octdoc  m:app/__construct
          */
         protected function __construct()
-        /*
-         * FUNCTION
-         *      constructor
-         ****
-         */
+        /**/
         {
-            if (!$_ENV['OCTRIS_APP']->isSet || !$_ENV['OCTRIS_BASE']->isSet) {
+            $env = provider::access('env');
+
+            if (!$env->isExist('OCTRIS_APP') || !$env->isExist('OCTRIS_BASE')) {
                 die("unable to import OCTRIS_APP or OCTRIS_BASE!\n");
             }
 
-            if (!$_ENV->validate('OCTRIS_APP', validate::T_ALPHANUM) || !$_ENV->validate('OCTRIS_BASE', validate::T_PRINT)) {
+            if (!$env->isValid('OCTRIS_APP', validate::T_PROJECT) || !$env->isValid('OCTRIS_BASE', validate::T_PRINTABLE)) {
                 die("unable to import OCTRIS_APP or OCTRIS_BASE - invalid settings!\n");
             }
-    
-            $_ENV['OCTRIS_DEVEL']->value = ($_ENV->validate('OCTRIS_DEVEL', validate::T_BOOL) && $_ENV['OCTRIS_DEVEL']->value);
         }
 
-        /****m* app/process
-         * SYNOPSIS
+        /**
+         * Abstract method definition. Initialize must be implemented by any subclass.
+         *
+         * @octdoc  m:app/initialize
+         * @abstract
+         */
+        protected function initialize()
+        /**/
+        {
+        }
+
+        /**
+         * Abstract method definition. Process must be implemented by any subclass.
+         *
+         * @octdoc  m:app/process
+         * @abstract
          */
         abstract public function process();
-        /*
-         * FUNCTION
-         *      methods to be implemented by application controller
-         ****
+        /**/
+
+        /**
+         * Invoke the page of an application without using the process workflow.
+         *
+         * @octdoc  m:app/invoke
+         * @param   \org\octris\core\app\page       $next_page          Application page to invoke.
+         * @param   string                          $action             Optional action to invoke page with.
          */
-        
-        /****m* app/triggerError
-         * SYNOPSIS
-         */
-        public static function triggerError($code, $string, $file, $line, $context)
-        /*
-         * FUNCTION
-         *      catches non OO errors and convert them to real exceptions
-         * INPUTS
-         *      * $code (int) -- error code
-         *      * $string (string) -- the error message
-         *      * $file (string) -- the name of the file the error was raised
-         *      * $line (int) -- the line number in which the error was raised
-         *      * $context (array) -- array of the active symbol table, when error was raised
-         ****
-         */
+        public function invoke(\org\octris\core\app\page $next_page, $action = '')
+        /**/
         {
-            // TODO: implementation
+            $this->initialize();
+
+            $max = 3;
+
+            $last_page = $next_page;
+
+            do {
+                $redirect_page = $next_page->prepare($last_page, $action);
+
+                if (is_object($redirect_page) && $next_page != $redirect_page) {
+                    $next_page = $redirect_page;
+                } else {
+                    break;
+                }
+            } while (--$max);
+
+            $next_page->render();
         }
-        
-        /****m* app/getContext
-         * SYNOPSIS
+
+        /**
+         * Return application state.
+         *
+         * @octdoc  m:app/getState
+         * @return  \org\octris\core\app\state          State of application.
+         */
+        public function getState()
+        /**/
+        {
+            return $this->state;
+        }
+
+        /**
+         * Try to determine the last visited page supplied by the application state. If
+         * last visited page can't be determined (eg.: when entering the application),
+         * a new instance of the applications' entry page is created.
+         *
+         * @octdoc  m:app/getLastPage
+         * @return  \org\octris\core\app\page           Returns instance of determined last visit page or instance of entry page.
+         */
+        protected function getLastPage()
+        /**/
+        {
+            $class = (isset($this->state['last_page'])
+                      ? $this->state['last_page']
+                      : $this->entry_page);
+
+            $page = new $class();
+
+            return $page;
+        }
+
+        /**
+         * Make a page the last visited page. This method is called internally by the 'process' method
+         * before aquiring an other application page.
+         *
+         * @octdoc  m:app/setLastPage
+         * @param   \org\octris\core\app\page       $page           Page object to set as last visited page.
+         */
+        protected function setLastPage(\org\octris\core\app\page $page)
+        /**/
+        {
+            $class = get_class($page);
+
+            $this->state['last_page'] = $class;
+        }
+
+        /**
+         * Return context the application is running in.
+         *
+         * @octdoc  m:app/getContext
+         * @return  int                                 Application context.
          */
         public static final function getContext()
-        /*
-         * FUNCTION
-         *      Return context the application is running in.
-         * OUTPUTS
-         *      (int) -- application context
-         ****
-         */
+        /**/
         {
             return static::$context;
         }
-        
-        /****m* app/getInstance
-         * SYNOPSIS
+
+        /**
+         * Returns path for specified path type for current application instance.
+         *
+         * @octdoc  m:app/getPath
+         * @param   string          $type               The type of the path to return.
+         * @param   string          $module             Optional name of module to return path for. Default is: current application name.
+         * @return  string                              Existing path or empty string, if path does not exist.
+         */
+        public static function getPath($type, $module = '')
+        /**/
+        {
+            $env = provider::access('env');
+
+            $return = sprintf(
+                $type,
+                $env->getValue('OCTRIS_BASE'),
+                ($module
+                    ? $module
+                    : $env->getValue('OCTRIS_APP'))
+            );
+
+            return realpath($return);
+        }
+
+        /**
+         * Return instance of main application class.
+         *
+         * @octdoc  m:app/getInstance
+         * @return  \org\octris\core\app                Instance of main application class.
          */
         public static function getInstance()
-        /*
-         * FUNCTION
-         *      return instance of main application class
-         * OUTPUTS
-         *      (app) -- instance of main application class
-         ****
-         */
+        /**/
         {
             if (is_null(self::$instance)) {
                 self::$instance = new static();
             }
-            
+
             return self::$instance;
         }
     }
 
-    set_error_handler(array('\org\octris\core\app', 'triggerError'), E_ALL);
+    // register error handler for 'normal' php errors
+    set_error_handler(function($code, $msg, $file, $line) {
+        throw new \ErrorException($msg, $code, 0, $file, $line);
+    }, E_ALL);
+}
+
+
+/*
+ * put translate function into global namespace
+ */
+namespace {
+    /**
+     * Global translate function.
+     *
+     * @octdoc  m:l10n/__
+     * @param   string      $msg            Message to translate.
+     * @param   mixed       $arg, ...       Optional additional arguments.
+     * @return  string                      Localized text.
+     */
+    function __($msg)
+    /**/
+    {
+        $args = func_get_args();
+        array_shift($args);
+
+        return \org\octris\core\l10n::getInstance()->translate($msg, $args);
+    }
 }

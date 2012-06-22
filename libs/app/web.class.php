@@ -1,77 +1,87 @@
 <?php
 
+/*
+ * This file is part of the 'org.octris.core' package.
+ *
+ * (c) Harald Lapp <harald@octris.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace org\octris\core\app {
+    use \org\octris\core\app\web\request as request;
     use \org\octris\core\validate as validate;
-    
+    use \org\octris\core\provider as provider;
+
     require_once('org.octris.core/app.class.php');
+    require_once('org.octris.core/app/web/session.class.php');
 
-    /****c* app/web
-     * NAME
-     *      web
-     * FUNCTION
-     *      core class for web applications
-     * COPYRIGHT
-     *      copyright (c) 2010 by Harald Lapp
-     * AUTHOR
-     *      Harald Lapp <harald@octris.org>
-     ****
+    /**
+     * Core class for Web applications.
+     *
+     * @octdoc      c:app/web
+     * @copyright   copyright (c) 2011 by Harald Lapp
+     * @author      Harald Lapp <harald@octris.org>
      */
+    abstract class web extends \org\octris\core\app
+    /**/
+    {
+        /**
+         * Initialization of web application.
+         *
+         * @octdoc  m:web/initialize
+         */
+        protected function initialize()
+        /**/
+        {
+            $request = provider::access('request');
 
-    abstract class web extends \org\octris\core\app {
-        /****d* web/T_REQ_POST, T_REQ_GET
-         * SYNOPSIS
-         */
-        const T_REQ_POST = 'POST';
-        const T_REQ_GET  = 'GET';
-        /*
-         * FUNCTION
-         *      restuest methods
-         ****
-         */
-        
-        /****v* web/$headers
-         * SYNOPSIS
-         */
-        protected $headers = array();
-        /*
-         * FUNCTION
-         *      headers to push out when rendering website
-         ****
-         */
+            if ($request->isExist('state') && $request->isValid('state', validate::T_BASE64)) {
+                $this->state = state::thaw($request->getValue('state', validate::T_BASE64));
+            }
 
-        /****m* web/process
-         * SYNOPSIS
+            if (!is_object($this->state)) {
+                $this->state = new state();
+            }
+        }
+
+        /**
+         * Main application processor. This is the only method that needs to be called to
+         * invoke an application. Internally this method determines the last visited page
+         * and handles everything required to determine the next page to display.
+         *
+         * The following example shows how to invoke an application, assuming that 'test'
+         * implements an application based on \org\octris\core\app.
+         *
+         * <code>
+         * $app = test::getInstance();
+         * $app->process();
+         * </code>
+         *
+         * @octdoc  m:cli/process
          */
         public function process()
-        /*
-         * FUNCTION
-         *      Main application processor. This is the only method that needs to
-         *      be called to invoke an application. Internally this method determines
-         *      the last visited page and handles everything required to determine
-         *      the next page to display.
-         * EXAMPLE
-         *      simple example to invoke an application, assuming that "test" implements
-         *      an application base on lima_apps
-         *
-         *      ..  source: php
-         *
-         *          $app = new test();
-         *          $app->process();
-         ****
-         */
+        /**/
         {
-            $module = self::getModule();
-            $action = self::getAction();
+            ob_start();
 
+            // perform initialization
+            $this->initialize();
+
+            // page flow control
             $last_page = $this->getLastPage();
-            $last_page->validate($this, $action);
+            $action    = $last_page->getAction();
+            // $module = self::getModule();
 
-            $next_page = $last_page->getNextPage($this, $this->entry_page);
+            $last_page->validate($action);
+
+            $next_page = $last_page->getNextPage($action, $this->entry_page);
 
             $max = 3;
 
             do {
-                $redirect_page = $next_page->prepareRender($this, $last_page, $action);
+                $redirect_page = $next_page->prepare($last_page, $action);
 
                 if (is_object($redirect_page) && $next_page != $redirect_page) {
                     $next_page = $redirect_page;
@@ -83,241 +93,68 @@ namespace org\octris\core\app {
             // fix security context
             $secure = $next_page->isSecure();
 
-            if ($secure != $this->isSSL() && $this->getRequestMethod() == 'GET') {
-                $this->redirectHttp(($secure ? $this->getSSLUrl() : $this->getNonSSLUrl()));
+            if ($secure != request::isSSL() && request::getRequestMethod() == 'GET') {
+                $this->redirectHttp(($secure ? request::getSSLUrl() : request::getNonSSLUrl()));
                 exit;
             }
 
             // process with page
             $this->setLastPage($next_page);
 
-            $next_page->prepareMessages($this);
-            $next_page->sendHeaders($this->headers);
-            $next_page->render($this);
-        }
-        
-        /****m* web/negotiateLanguage
-         * SYNOPSIS
-         */
-        public function negotiateLanguage($supported, $default) 
-        /*
-         * FUNCTION
-         *      uses HTTP_ACCEPT_LANGUAGE to negotiate accepted language
-         * INPUTS
-         *      * $supported (array) -- array of supported languages
-         *      * $default (string) -- default language to use (fallback if no accepted language matches)
-         * OUTPUTS
-         *      (string) -- language
-         ****
-         */
-        {
-            // generate language array
-            $lc_supported = explode(',', $supported);
+            // $next_page->prepareMessages($this);
+            // $next_page->sendHeaders($this->headers);
+            $next_page->render();
 
-            $keys = explode(',', str_replace('_', '-', strtolower($supported)));
-            $lc_supported = array_combine($keys, $lc_supported);
+            header('Content-Type: text/html; charset="UTF-8"');
 
-            $short = explode(',', preg_replace('/_[A-Z0-9]+/', '', $supported));
-            $lc_supported = array_merge(
-                $lc_supported, 
-                array_flip(array_combine(array_reverse($lc_supported), $short))
-            );
-
-            // parse HTTP_ACCEPT_LANGUAGE
-            $http_accept_language = $_SERVER->import('HTTP_ACCEPT_LANGUAGE', new lima_validate_print());
-
-            $langs = ($http_accept_language->isSet && $http_accept_language->isValid 
-                      ? explode(',', $http_accept_language->value) 
-                      : array());
-
-            $lc_accepted = array();
-
-            foreach ($langs as $lang) if (preg_match('/([a-z]{1,2})(-([a-z0-9]+))?(;q=([0-9\.]+))?/', $lang, $match)) {
-                $code = $match[1];
-                $morecode = (array_key_exists(3, $match) ? $match[3] : '');
-                $fullcode = ($morecode ? $code . '-' . $morecode : $code);
-
-                $coef = sprintf('%3.1f', (array_key_exists(5, $match) && $match[5] ? $match[5] : '1'));
-
-                $key = $coef . '-' . $code;
-
-                $lc_accepted[$key] = array(
-                    'code' => $code,
-                    'coef' => $coef,
-                    'morecode' => $morecode,
-                    'fullcode' => $fullcode
-                );
-            }
-
-            krsort($lc_accepted);
-
-            // negotiate language
-            $lc_specified = $default;
-
-            foreach ($lc_accepted as $q => $lc) {
-                if (array_key_exists($lc['fullcode'], $lc_supported)) {
-                    $lc_specified = $lc_supported[$lc['fullcode']];
-                    break;
-                } elseif (array_key_exists($lc['code'], $lc_supported)) {
-                    $lc_specified = $lc_supported[$lc['code']];                    
-                    break;
-                }
-            }
-
-            return $lc_specified;
+            ob_end_flush();
         }
 
-        /****m* web/addHeader
-         * SYNOPSIS
+        /**
+         * Adds header to output when rendering web site.
+         *
+         * @octdoc  m:web/addHeader
+         * @param   string          $name               Name of header to add.
+         * @param   string          $value              Value to set for header.
          */
         public function addHeader($name, $value)
-        /*
-         * FUNCTION
-         *      Adds header to output when rendering website
-         * INPUTS
-         *      * $name (string) -- name of header to add
-         *      * $value (string) -- value to set for header
-         ****
-         */
+        /**/
         {
             $this->headers[$name] = $value;
         }
-        
-        /****m* page/getModule
-         * SYNOPSIS
-         */
-        public static function getModule($action)
-        /*
-         * FUNCTION
-         *      Determine requested module with specified action. If a module was determined but the action is not
-         *      valid, this method will return default application module. The module must be reachable from inside
-         *      the application.
-         * OUTPUTS
-         *      (string) -- name of module requested
-         ****
-         */
-        {
-            static $module = '';
-            
-            if ($module != '') {
-                return $module;
-            }
 
-            $method = app::getRequestMethod();
-
-            if ($method == 'POST' || $method == 'GET') {
-                // try to determine action from a request parameter named ACTION
-                $method = ($method == 'POST' ? $_POST : $_GET);
-            
-                if ($method->validate('MODULE', validate::T_ALPHANUM)) {
-                    $module = $method['MODULE']->value;
-                }
-
-                if ($module == '') {
-                    // try to determine action from a request parameter named ACTION_...
-                    foreach ($method as $k => $v) {
-                        if (preg_match('/^MODULE_([a-zA-Z]+)$/', $k, $match)) {
-                            $module = $match[1];
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if ($module == '') {
-                $module = 'default';
-            } elseif (isset(self::$modules[$module])) {
-                $class = self::$modules[$module];
-                $class::entry
-            }
-
-            return $action;
-        }
-
-        /****m* page/getAction
-         * SYNOPSIS
-         */
-        public static function getAction()
-        /*
-         * FUNCTION
-         *      determine the action the page called with
-         * OUTPUTS
-         *      (string) -- name of action
-         ****
-         */
-        {
-            static $action = '';
-
-            if ($action != '') {
-                return $action;
-            }
-
-            $method = app::getRequestMethod();
-
-            if ($method == 'POST' || $method == 'GET') {
-                // try to determine action from a request parameter named ACTION
-                $method = ($method == 'POST' ? $_POST : $_GET);
-            
-                if ($method->validate('ACTION', validate::T_ALPHANUM)) {
-                    $action = $method['ACTION']->value;
-                }
-
-                if ($action == '') {
-                    // try to determine action from a request parameter named ACTION_...
-                    foreach ($method as $k => $v) {
-                        if (preg_match('/^ACTION_([a-zA-Z]+)$/', $k, $match)) {
-                            $action = $match[1];
-
-                            return $action;
-                        }
-                    }
-                }
-            }
-
-            if ($action == '') {
-                $action = 'default';
-            }
-
-            return $action;
-        }
-
-        /****m* web/getRequestMethod
-         * SYNOPSIS
-         */
-        public static function getRequestMethod()
-        /*
-         * FUNCTION
-         *      determine the method of the current request
-         * INPUTS
-         *      
-         * OUTPUTS
-         *      (int) -- type of request method
-         ****
-         */
-        {
-            static $method = '';
-            
-            if ($method == '' && $_SERVER->validate('REQUEST_METHOD', validate::T_ALPHA)) {
-                $method = strtoupper($_SERVER['REQUEST_METHOD']->value);
-            }
-
-            return $method;
-        }
-        
-        /****m* web/getTemplate
-         * SYNOPSIS
+        /**
+         * Create new instance of template engine and setup common stuff needed for templates of a web application.
+         *
+         * @octdoc  m:web/getTemplate
+         * @return  \org\octris\core\tpl                Instance of template class.
          */
         public function getTemplate()
-        /*
-         * FUNCTION
-         *      create new instance of template engine and setup common stuff needed for templates of a web application
-         * OUTPUTS
-         *      (tpl) -- instance of template engine
-         ****
-         */
+        /**/
         {
-            $tpl = new \org\octris\core\tpl(\org\octris\core\tpl::T_WEB);
-            
+            $path_cache = \org\octris\core\app::getPath(\org\octris\core\app::T_PATH_CACHE);
+            $path_host  = \org\octris\core\app::getPath(\org\octris\core\app::T_PATH_HOST);
+            $path_work  = \org\octris\core\app::getPath(\org\octris\core\app::T_PATH_WORK);
+
+            $tpl = new \org\octris\core\tpl();
+
+            // setup template engine environment
+            $tpl->setL10n(\org\octris\core\l10n::getInstance());
+            $tpl->setOutputPath('tpl', $path_cache . '/templates_c/');
+            $tpl->setOutputPath('css', $path_host . '/styles/');
+            $tpl->setOutputPath('js',  $path_host . '/libsjs/');
+            $tpl->setResourcePath('css', $path_work);
+            $tpl->setResourcePath('js',  $path_work);
+            $tpl->addSearchPath(\org\octris\core\app::getPath(\org\octris\core\app::T_PATH_WORK_TPL));
+
+            // register common template methods
+            $tpl->registerMethod('getState', function() {
+                return $this->getState()->freeze();
+            }, array('min' => 0, 'max' => 0));
+            $tpl->registerMethod('isAuthenticated', function() {
+                return \org\octris\core\auth::getInstance()->isAuthenticated();
+            }, array('min' => 0, 'max' => 0));
+
             return $tpl;
         }
     }
@@ -326,12 +163,27 @@ namespace org\octris\core\app {
         // enable validation for superglobals
         define('OCTRIS_WRAPPER', true);
 
-        $_COOKIE  = new validate\wrapper($_COOKIE);
-        $_GET     = new validate\wrapper($_GET);
-        $_POST    = new validate\wrapper($_POST);
-        $_SERVER  = new validate\wrapper($_SERVER);
-        $_ENV     = new validate\wrapper($_ENV);
-        $_REQUEST = new validate\wrapper($_REQUEST);
-        $_FILES   = new validate\wrapper($_FILES);
+        $_ENV['OCTRIS_DEVEL'] = (isset($_ENV['OCTRIS_DEVEL']) && !!$_ENV['OCTRIS_DEVEL']);
+
+        provider::set('server',  $_SERVER,  provider::T_READONLY);
+        provider::set('env',     $_ENV,     provider::T_READONLY);
+        provider::set('request', $_REQUEST, provider::T_READONLY);
+        provider::set('post',    $_POST,    provider::T_READONLY);
+        provider::set('get',     $_GET,     provider::T_READONLY);
+        provider::set('cookie',  $_COOKIE,  provider::T_READONLY);
+        provider::set('files',   $_FILES,   provider::T_READONLY);
+
+        unset($_SERVER);
+        unset($_ENV);
+        unset($_REQUEST);
+        unset($_POST);
+        unset($_GET);
+        unset($_COOKIE);
+        unset($_SESSION);
+        unset($_FILES);
+
+        if (!provider::access('env')->isValid('OCTRIS_BASE', validate::T_PATH)) {
+            die("OCTRIS_BASE is not set\n");
+        }
     }
 }

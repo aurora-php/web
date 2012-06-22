@@ -1,133 +1,145 @@
 <?php
 
+/*
+ * This file is part of the 'org.octris.core' package.
+ *
+ * (c) Harald Lapp <harald@octris.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace org\octris\core\app {
-    use \org\octris\core\config as config;
-    
-    /****c* app/state
-     * NAME
-     *      state
-     * FUNCTION
-     *      Methods to freeze and thaw objects. The state class is used to transfer page/action specific data between two 
-     *      or more request, which can't be stored in a session because:
+    /**
+     * The state class is used to transfer page/action specific data between two or more requests. The state is essencial for
+     * transfering for example the last visited page to determine the next valid page. It can also be used to transfer additional
+     * abitrary data for example search query parameters, parameters that should not be visible and or not be modified by a user
+     * between two requests. The state helps to bring stateful requests to a web application, too.
      *
-     *      * they are not generalized, eg.: transfering search parameters between
-     *        requests - you need to be sure that you can handle multiple searches
-     *        without overwriting the parameters which will be the case, if the 
-     *        parameters are stored in the session
-     *
-     *      * the browser-back button is required to work and the data is (slightly)
-     *        changed between each request.
-     * COPYRIGHT
-     *      copyright (c) 2005-2010 by Harald Lapp
-     * AUTHOR
-     *      Harald Lapp <harald@octris.org>
-     ****
+     * @octdoc      c:app/state
+     * @copyright   copyright (c) 2011 by Harald Lapp
+     * @author      Harald Lapp <harald@octris.org>
      */
-     
-    class state extends \org\octris\core\type\collection {
-        /****d* state/hash_algo
-         * SYNOPSIS
+    class state extends \org\octris\core\type\collection
+    /**/
+    {
+        /**
+         * Hash algorithm to use to generate the checksum of the state.
+         *
+         * @octdoc  d:state/hash_algo
          */
         const hash_algo = 'sha256';
-        /*
-         * FUNCTION
-         *      hash algorithm to use to generate checksum.
-         ****
+        /**/
+
+        /**
+         * Magic setter.
+         *
+         * @octdoc  m:state/__set
+         * @param   string          $name               Name of state variable to set value for.
+         * @param   mixed           $value              Value for state variable.
          */
-    
-        /****m* state/push
-         * SYNOPSIS
-         */
-        public function push($name, $value)
-        /*
-         * FUNCTION
-         *      push value into state
-         * INPUTS
-         *      * $name (string) -- name of state variable to set value for
-         *      * $value (mixed) -- value for state variable
-         ****
-         */
+        public function __set($name, $value)
+        /**/
         {
             parent::offsetSet($name, $value);
         }
 
-        /****m* state/pop
-         * SYNOPSIS
+        /**
+         * Magic getter.
+         *
+         * @octdoc  m:state/__get
+         * @param   string          $name               Name of state variable to return value of.
+         * @return  mixed                               Value stored in state variable.
          */
-        public function pop($name) 
-        /*
-         * FUNCTION
-         *      returns and delete value from state
-         * INPUTS
-         *      * $name (string) -- name of variable to fetch from state
-         * OUTPUTS
-         *      (mixed) -- data object to fetch
-         ****
+        public function __get($name)
+        /**/
+        {
+            return parent::offsetGet($name);
+        }
+
+        /**
+         * Return value of a stored state variable and remove the variable from the state.
+         *
+         * @octdoc  m:state/pop
+         * @param   string          $name               Name of state variable to return value of and remove.
+         * @return  mixed                               Value stored in state variable.
          */
+        public function pop($name)
+        /**/
         {
             $return = parent::offsetGet($name);
+
             parent::offsetUnset($name);
-            
+
             return $return;
         }
-    
-        /****m* state/freeze
-         * SYNOPSIS
+
+        /**
+         * Freeze state object.
+         *
+         * @octdoc  m:state/freeze
+         * @param   string          $secret             Secret to use for generating hash and prevent the state from manipulation.
+         * @return  string                              Serialized and base64 for URLs encoded object secured by a hash.
          */
-        public function freeze($secret = null) 
-        /*
-         * FUNCTION
-         *      freeze object
-         * INPUTS
-         *      * $secret (string) -- (optional) secret to use for state freezing. if not supplied, use secret from config file.
-         * OUTPUTS
-         *      (string) -- serialized and encoded object + base64 obfuscated md5 checksum ;-)
-         ****
-         */
+        public function freeze($secret = '')
+        /**/
         {
-            $frozen = gzcompress(serialize($this)); 
-            $secret = (!is_null($secret) ? $secret : config::get('common.state.secret'));
+            $frozen = gzcompress(serialize((array)$this));
             $sum    = hash(self::hash_algo, $frozen . $secret);
-            $return = base64_encode($sum . '|' . $frozen);
-        
+            $return = \org\octris\core\app\web\request::base64UrlEncode($sum . '|' . $frozen);
+
             return $return;
         }
 
-        /****m* state/thaw
-         * SYNOPSIS
+        /**
+         * Validate frozen state object.
+         *
+         * @octdoc  m:state/validate
+         * @param   string          $state              Frozen state to validate.
+         * @param   string          $secret             Optional secret to use for generating hash to test if state is valid.
+         * @param   string          $decoded            Returns array with checksum and compressed state, ready to thaw.
+         * @return  bool                                Returns true if state is valid, otherwise returns false.
          */
-        public static function thaw($state, $secret = null)
-        /*
-         * FUNCTION
-         *      thaw object
-         * INPUTS
-         *      * $state (string) -- serialized object with included md5 checksum
-         *      * $secret (string) -- (optional) secret to use for state thawing. if not supplied, use secret from config file.
-         * OUTPUTS
-         *      (object) -- on success returns unserialized object instance
-         ****
-         */
+        public static function validate($state, $secret = '', array &$decoded = null)
+        /**/
         {
-            $debug = $state;
-            $state = base64_decode($state);
+            $tmp    = \org\octris\core\app\web\request::base64UrlDecode($state);
+            $sum    = '';
+            $frozen = '';
 
-            $pos    = (int)strpos($state, '|');
-            $sum    = substr($state, 0, $pos);
-            $frozen = substr($state, $pos + 1);
-            $secret = (!is_null($secret) ? $secret : config::get('common.state.secret'));
+            if (($pos = strpos($tmp, '|')) !== false) {
+                $sum    = substr($tmp, 0, $pos);
+                $frozen = substr($tmp, $pos + 1);
 
-            if (hash(self::hash_algo, $frozen . $secret) != $sum) {
-                // error
-                if (config::get('common.application.development')) {
-                    // debug output only on development server
-                    print "$sum != " . hash(self::hash_algo, $frozen . $secret) . "<br />";
-                    print $debug . "<br />";
-                    print_r(unserialize(gzuncompress($frozen)));
-                }
+                unset($tmp);
 
-                throw new \Exception('hack attempt - checksum does not match!');
+                $decoded = array(
+                    'checksum'  => $sum,
+                    'state'     => $frozen
+                );
+            }
+
+            return (($test = hash(self::hash_algo, $frozen . $secret)) != $sum);
+        }
+
+        /**
+         * Thaw frozen state object.
+         *
+         * @octdoc  m:state/thaw
+         * @param   string          $state              State to thaw.
+         * @param   string          $secret             Optional secret to use for generating hash to test if state is valid.
+         * @return  \org\octris\core\app\state          Instance of state object.
+         */
+        public static function thaw($state, $secret = '')
+        /**/
+        {
+            $frozen = array();
+
+            if (self::validate($state, $secret, $frozen)) {
+                // hash did not match
+                throw new \Exception(sprintf('[%s !=  %s | %s]', $test, $frozen['checksum'], $frozen['state']));
             } else {
-                return new static(unserialize(gzuncompress($frozen)));
+                return new static(unserialize(gzuncompress($frozen['state'])));
             }
         }
     }
