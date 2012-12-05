@@ -140,16 +140,14 @@ namespace org\octris\core\app\web {
         public static function setHandler(\org\octris\core\app\web\session\handler_if $handler, array $options = array())
         /**/
         {
-            $data =& self::$data;
-
             session_set_save_handler(
                 array($handler, 'open'),
                 array($handler, 'close'),
-                function($id) use ($handler, &$data) {
-                    $data = $handler->read($id);
+                function($id) use ($handler) {
+                    self::$data = $handler->read($id);
                 },
-                function($id, $_data) use ($handler, &$data) {
-                    $handler->write($id, $data);
+                function($id, $_data) use ($handler) {
+                    $handler->write($id, self::$data);
                 },
                 array($handler, 'destroy'),
                 array($handler, 'gc')
