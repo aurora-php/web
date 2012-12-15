@@ -273,11 +273,12 @@ namespace org\octris\core {
     }, E_ALL);
 }
 
-
 /*
- * put translate function into global namespace
+ * Put translate function and other stuff into global namespace for convenience reasons.
  */
 namespace {
+    require_once('octdebug.class.php');
+    
     /**
      * Global translate function.
      *
