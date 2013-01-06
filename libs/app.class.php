@@ -251,6 +251,25 @@ namespace org\octris\core {
         }
 
         /**
+         * Return application name.
+         *
+         * @octdoc  m:app/getAppName
+         * @param   string          $module             Optional module name to extract application name from.
+         * @return  string                              Determined application name.
+         */
+        public static function getAppName($module = '')
+        /**/
+        {
+            if ($module == '') {
+                $env = provider::access('env');
+
+                $module = $env->getValue('OCTRIS_APP');
+            }
+
+            return substr($module, strrpos($module, '.') + 1);
+        }
+
+        /**
          * Return instance of main application class.
          *
          * @octdoc  m:app/getInstance
