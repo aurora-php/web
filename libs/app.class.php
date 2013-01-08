@@ -232,9 +232,10 @@ namespace org\octris\core {
          * @octdoc  m:app/getPath
          * @param   string          $type               The type of the path to return.
          * @param   string          $module             Optional name of module to return path for. Default is: current application name.
+         * @param   string          $rel_path           Optional additional relative path to add.
          * @return  string                              Existing path or empty string, if path does not exist.
          */
-        public static function getPath($type, $module = '')
+        public static function getPath($type, $module = '', $rel_path = '')
         /**/
         {
             $env = provider::access('env');
@@ -245,7 +246,9 @@ namespace org\octris\core {
                 ($module
                     ? $module
                     : $env->getValue('OCTRIS_APP'))
-            );
+            ) . ($rel_path
+                    ? '/' . $rel_path
+                    : '');
 
             return realpath($return);
         }
@@ -297,7 +300,7 @@ namespace org\octris\core {
  */
 namespace {
     require_once('octdebug.class.php');
-    
+
     /**
      * Global translate function.
      *
