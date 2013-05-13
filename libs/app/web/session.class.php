@@ -14,7 +14,7 @@ namespace org\octris\core\app\web {
      * Session base class.
      *
      * @octdoc      c:web/session
-     * @copyright   copyright (c) 2011 by Harald Lapp
+     * @copyright   copyright (c) 2011-2013 by Harald Lapp
      * @author      Harald Lapp <harald@octris.org>
      */
     class session
@@ -161,7 +161,7 @@ namespace org\octris\core\app\web {
          * Return session handler instance.
          *
          * @octdoc  m:session/getHandler
-         * @return  \org\octris\core\app\web\session\handler
+         * @return  \org\octris\core\app\web\session\handler_if                 Session handler of session class instance.
          */
         public static function getHandler()
         /**/
@@ -173,6 +173,7 @@ namespace org\octris\core\app\web {
          * Return instance of session handler backend.
          *
          * @octdoc  m:session/getInstance
+         * @return  \org\octris\core\app\web\session                            Session class instance.
          */
         public static function getInstance()
         /**/
@@ -244,7 +245,7 @@ namespace org\octris\core\app\web {
          * Return current session Id.
          *
          * @octdoc  m:session/getId
-         * @return  string
+         * @return  string                              Current session Id.
          */
         public function getId()
         /**/
@@ -256,6 +257,7 @@ namespace org\octris\core\app\web {
          * Return domain the session is valid for.
          *
          * @octdoc  m:session/getDomain
+         * @return  string                              Domain name the session is valid for.
          */
         public function getDomain()
         /**/
@@ -268,6 +270,7 @@ namespace org\octris\core\app\web {
          * specified at the method 'setHandler'.
          *
          * @octdoc  m:session/getName
+         * @return  string                              Name of the session.
          */
         public function getName()
         /**/
@@ -280,6 +283,7 @@ namespace org\octris\core\app\web {
          * specified at the method 'setHandler'.
          *
          * @octdoc  m:session/getLifetime
+         * @return  int                                 Session lifetime.
          */
         public function getLifetime()
         /**/
