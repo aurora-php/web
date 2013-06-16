@@ -36,7 +36,7 @@ namespace org\octris\core {
         const T_PATH_CACHE_TPL      = '%s/cache/%s/templates_c';
         const T_PATH_DATA           = '%s/data/%s';
         const T_PATH_ETC            = '%s/etc/%s';
-        const T_PATH_HOME_ETC       = '%s/%s';
+        const T_PATH_HOME_ETC       = '%s/.octris/%s';
         const T_PATH_HOST           = '%s/host/%s';
         const T_PATH_LIBS           = '%s/libs/%s';
         const T_PATH_LIBSJS         = '%s/host/%s/libsjs';
@@ -242,18 +242,22 @@ namespace org\octris\core {
             $env = provider::access('env');
 
             if ($type == self::T_PATH_HOME_ETC) {
-                $info   = posix_getpwuid(posix_getuid());
-                $return = $info['dir'] . '/.octris/' .  ($module ? $module : $env->getValue('OCTRIS_APP'));
+                $info = posix_getpwuid(posix_getuid());
+                $base = $info['dir'];
             } else {
-                $return = sprintf(
-                    $type,
-                    $env->getValue('OCTRIS_BASE'),
-                    ($module
-                        ? $module
-                        : $env->getValue('OCTRIS_APP'))
-                ) . ($rel_path
-                        ? '/' . $rel_path
-                        : '');
+                $base = $env->getValue('OCTRIS_BASE');
+            }
+
+            $return = sprintf(
+                $type,
+                $base,
+                ($type == self::T_PATH_HOME_ETC,
+                ($module
+                    ? $module
+                    : $env->getValue('OCTRIS_APP'))
+            ) . ($rel_path
+                    ? '/' . $rel_path
+                    : '');
             }
 
             return realpath($return);
