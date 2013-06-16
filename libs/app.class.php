@@ -234,7 +234,7 @@ namespace org\octris\core {
          * @param   string          $type               The type of the path to return.
          * @param   string          $module             Optional name of module to return path for. Default is: current application name.
          * @param   string          $rel_path           Optional additional relative path to add.
-         * @return  string                              Existing path or empty string, if path does not exist.
+         * @return  string                              Existing path or false, if path does not exist.
          */
         public static function getPath($type, $module = '', $rel_path = '')
         /**/
