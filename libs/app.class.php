@@ -251,14 +251,12 @@ namespace org\octris\core {
             $return = sprintf(
                 $type,
                 $base,
-                ($type == self::T_PATH_HOME_ETC,
                 ($module
                     ? $module
                     : $env->getValue('OCTRIS_APP'))
             ) . ($rel_path
                     ? '/' . $rel_path
                     : '');
-            }
 
             return realpath($return);
         }
