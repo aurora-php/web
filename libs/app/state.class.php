@@ -99,12 +99,17 @@ namespace org\octris\core\app {
          * Freeze state object.
          *
          * @octdoc  m:state/freeze
+         * @param   array           $data               Optional data to inject into state before freezing. Note that the original
+         *                                              state will not be modified, only the frozen state contains the specified
+         *                                              data.
          * @return  string                              Serialized and base64 for URLs encoded object secured by a hash.
          */
-        public function freeze()
+        public function freeze(array $data = array())
         /**/
         {
-            $frozen = gzcompress(serialize((array)$this));
+            $tmp = array_merge((array)$this, $data);
+            
+            $frozen = gzcompress(serialize($tmp));
             $sum    = hash(self::hash_algo, $frozen . self::$secret);
             $return = \org\octris\core\app\web\request::base64UrlEncode($sum . '|' . $frozen);
 
