@@ -17,7 +17,7 @@ namespace org\octris\core\app {
      * between two requests. The state helps to bring stateful requests to a web application, too.
      *
      * @octdoc      c:app/state
-     * @copyright   copyright (c) 2011 by Harald Lapp
+     * @copyright   copyright (c) 2011-2013 by Harald Lapp
      * @author      Harald Lapp <harald@octris.org>
      */
     class state extends \org\octris\core\type\collection

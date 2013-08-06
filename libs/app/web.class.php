@@ -21,7 +21,7 @@ namespace org\octris\core\app {
      * Core class for Web applications.
      *
      * @octdoc      c:app/web
-     * @copyright   copyright (c) 2011 by Harald Lapp
+     * @copyright   copyright (c) 2011-2013 by Harald Lapp
      * @author      Harald Lapp <harald@octris.org>
      */
     abstract class web extends \org\octris\core\app
