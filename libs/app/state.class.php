@@ -32,6 +32,27 @@ namespace org\octris\core\app {
         /**/
 
         /**
+         * Secret to use for generating hash and prevent the state from manipulation.
+         *
+         * @octdoc  p:state/$secret
+         * @var     string
+         */
+        protected static $secret = '';
+        /**/
+
+        /**
+         * Set global state secret.
+         *
+         * @octdoc  p:state/setSecret
+         * @param   string          $secret             Secret for securing state.
+         */
+        public static function setSecret($secret)
+        /**/
+        {
+            self::$secret = $secret;
+        }
+
+        /**
          * Magic setter.
          *
          * @octdoc  m:state/__set
@@ -78,14 +99,13 @@ namespace org\octris\core\app {
          * Freeze state object.
          *
          * @octdoc  m:state/freeze
-         * @param   string          $secret             Secret to use for generating hash and prevent the state from manipulation.
          * @return  string                              Serialized and base64 for URLs encoded object secured by a hash.
          */
-        public function freeze($secret = '')
+        public function freeze()
         /**/
         {
             $frozen = gzcompress(serialize((array)$this));
-            $sum    = hash(self::hash_algo, $frozen . $secret);
+            $sum    = hash(self::hash_algo, $frozen . self::$secret);
             $return = \org\octris\core\app\web\request::base64UrlEncode($sum . '|' . $frozen);
 
             return $return;
@@ -96,11 +116,10 @@ namespace org\octris\core\app {
          *
          * @octdoc  m:state/validate
          * @param   string          $state              Frozen state to validate.
-         * @param   string          $secret             Optional secret to use for generating hash to test if state is valid.
          * @param   string          $decoded            Returns array with checksum and compressed state, ready to thaw.
          * @return  bool                                Returns true if state is valid, otherwise returns false.
          */
-        public static function validate($state, $secret = '', array &$decoded = null)
+        public static function validate($state, array &$decoded = null)
         /**/
         {
             $tmp    = \org\octris\core\app\web\request::base64UrlDecode($state);
@@ -119,7 +138,7 @@ namespace org\octris\core\app {
                 );
             }
 
-            return (($test = hash(self::hash_algo, $frozen . $secret)) != $sum);
+            return (($test = hash(self::hash_algo, $frozen . self::$secret)) != $sum);
         }
 
         /**
@@ -127,15 +146,14 @@ namespace org\octris\core\app {
          *
          * @octdoc  m:state/thaw
          * @param   string          $state              State to thaw.
-         * @param   string          $secret             Optional secret to use for generating hash to test if state is valid.
          * @return  \org\octris\core\app\state          Instance of state object.
          */
-        public static function thaw($state, $secret = '')
+        public static function thaw($state)
         /**/
         {
             $frozen = array();
 
-            if (self::validate($state, $secret, $frozen)) {
+            if (self::validate($state, self::$secret, $frozen)) {
                 // hash did not match
                 throw new \Exception(sprintf('[%s !=  %s | %s]', $test, $frozen['checksum'], $frozen['state']));
             } else {
