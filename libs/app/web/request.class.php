@@ -17,7 +17,7 @@ namespace org\octris\core\app\web {
      * Request helper functions
      *
      * @octdoc      c:web/request
-     * @copyright   copyright (c) 2010-2011 by Harald Lapp
+     * @copyright   copyright (c) 2010-2013 by Harald Lapp
      * @author      Harald Lapp <harald@octris.org>
      */
     class request
@@ -119,7 +119,7 @@ namespace org\octris\core\app\web {
          * Return hostname of current request.
          *
          * @octdoc  m:request/getHostname
-         * @param   string                                  Hostname.
+         * @return  string                                  Hostname.
          */
         public static function getHostname()
         /**/
@@ -145,7 +145,7 @@ namespace org\octris\core\app\web {
          * Return host of request.
          *
          * @octdoc  m:request/getHost
-         * @param   string                                  Host.
+         * @return  string                                  Host.
          */
         public function getHost()
         /**/

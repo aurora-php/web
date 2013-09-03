@@ -28,7 +28,7 @@ namespace org\octris\core {
         /**
          * Used in combination with app/getPath to determine path.
          *
-         * @octdoc  d:app/T_PATH_BASE, T_PATH_CACHE, T_PATH_DATA, T_PATH_ETC, T_PATH_HOST, T_PATH_LIBS, T_PATH_LIBSJS, T_PATH_LOCALE, T_PATH_RESOURCES, T_PATH_STYLES, T_PATH_LOG, T_PATH_WORK, T_PATH_WORK_LIBSJS, T_PATH_WORK_RESOURCES, T_PATH_WORK_STYLES, T_PATH_WORK_TPL
+         * @octdoc  d:app/T_PATH_BASE, T_PATH_CACHE, T_PATH_DATA, T_PATH_ETC, T_PATH_HOME_ETC, T_PATH_HOST, T_PATH_LIBS, T_PATH_LIBSJS, T_PATH_LOCALE, T_PATH_RESOURCES, T_PATH_STYLES, T_PATH_LOG, T_PATH_WORK, T_PATH_WORK_LIBSJS, T_PATH_WORK_RESOURCES, T_PATH_WORK_STYLES, T_PATH_WORK_TPL
          */
         const T_PATH_BASE           = '%s';
         const T_PATH_CACHE          = '%s/cache/%s';
@@ -36,6 +36,7 @@ namespace org\octris\core {
         const T_PATH_CACHE_TPL      = '%s/cache/%s/templates_c';
         const T_PATH_DATA           = '%s/data/%s';
         const T_PATH_ETC            = '%s/etc/%s';
+        const T_PATH_HOME_ETC       = '%s/.octris/%s';
         const T_PATH_HOST           = '%s/host/%s';
         const T_PATH_LIBS           = '%s/libs/%s';
         const T_PATH_LIBSJS         = '%s/host/%s/libsjs';
@@ -232,22 +233,51 @@ namespace org\octris\core {
          * @octdoc  m:app/getPath
          * @param   string          $type               The type of the path to return.
          * @param   string          $module             Optional name of module to return path for. Default is: current application name.
-         * @return  string                              Existing path or empty string, if path does not exist.
+         * @param   string          $rel_path           Optional additional relative path to add.
+         * @return  string                              Existing path or false, if path does not exist.
          */
-        public static function getPath($type, $module = '')
+        public static function getPath($type, $module = '', $rel_path = '')
         /**/
         {
             $env = provider::access('env');
 
+            if ($type == self::T_PATH_HOME_ETC) {
+                $info = posix_getpwuid(posix_getuid());
+                $base = $info['dir'];
+            } else {
+                $base = $env->getValue('OCTRIS_BASE');
+            }
+
             $return = sprintf(
                 $type,
-                $env->getValue('OCTRIS_BASE'),
+                $base,
                 ($module
                     ? $module
                     : $env->getValue('OCTRIS_APP'))
-            );
+            ) . ($rel_path
+                    ? '/' . $rel_path
+                    : '');
 
             return realpath($return);
+        }
+
+        /**
+         * Return application name.
+         *
+         * @octdoc  m:app/getAppName
+         * @param   string          $module             Optional module name to extract application name from.
+         * @return  string                              Determined application name.
+         */
+        public static function getAppName($module = '')
+        /**/
+        {
+            if ($module == '') {
+                $env = provider::access('env');
+
+                $module = $env->getValue('OCTRIS_APP');
+            }
+
+            return substr($module, strrpos($module, '.') + 1);
         }
 
         /**
@@ -277,8 +307,8 @@ namespace org\octris\core {
  * Put translate function and other stuff into global namespace for convenience reasons.
  */
 namespace {
-    require_once('octdebug.class.php');
-    
+    require_once('debug.class.php');
+
     /**
      * Global translate function.
      *

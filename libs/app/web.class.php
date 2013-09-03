@@ -21,7 +21,7 @@ namespace org\octris\core\app {
      * Core class for Web applications.
      *
      * @octdoc      c:app/web
-     * @copyright   copyright (c) 2011 by Harald Lapp
+     * @copyright   copyright (c) 2011-2013 by Harald Lapp
      * @author      Harald Lapp <harald@octris.org>
      */
     abstract class web extends \org\octris\core\app
@@ -148,9 +148,9 @@ namespace org\octris\core\app {
             $tpl->addSearchPath(\org\octris\core\app::getPath(\org\octris\core\app::T_PATH_WORK_TPL));
 
             // register common template methods
-            $tpl->registerMethod('getState', function() {
-                return $this->getState()->freeze();
-            }, array('min' => 0, 'max' => 0));
+            $tpl->registerMethod('getState', function(array $data = array()) {
+                return $this->getState()->freeze($data);
+            }, array('min' => 0, 'max' => 1));
             $tpl->registerMethod('isAuthenticated', function() {
                 return \org\octris\core\auth::getInstance()->isAuthenticated();
             }, array('min' => 0, 'max' => 0));
