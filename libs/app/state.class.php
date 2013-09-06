@@ -158,7 +158,7 @@ namespace org\octris\core\app {
         {
             $frozen = array();
 
-            if (self::validate($state, self::$secret, $frozen)) {
+            if (self::validate($state, $frozen)) {
                 // hash did not match
                 throw new \Exception(sprintf('[%s !=  %s | %s]', $test, $frozen['checksum'], $frozen['state']));
             } else {
