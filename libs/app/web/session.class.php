@@ -112,6 +112,10 @@ namespace org\octris\core\app\web {
             $this->lifetime = (int)(array_key_exists('lifetime', self::$options)
                                 ? self::$options['lifetime']
                                 : ini_get('session.gc_maxlifetime'));
+        
+            if (isset(self::$options['save_path'])) {
+                session_save_path(self::$options['save_path']);
+            }
         }
 
         /*
