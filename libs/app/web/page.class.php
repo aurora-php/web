@@ -194,11 +194,8 @@ namespace org\octris\core\app\web {
             if (is_null($this->template)) {
                 $this->template = \org\octris\core\app::getInstance()->getTemplate();
 
-                // TODO: PHP5.4
-                $breadcrumb =& $this->breadcrumb;
-
-                $this->template->registerMethod('getBreadcrumb', function() use (&$breadcrumb) {
-                    return $breadcrumb;
+                $this->template->registerMethod('getBreadcrumb', function() {
+                    return $this->breadcrumb;
                 }, array('max' => 0));
                 
                 // values
