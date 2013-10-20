@@ -314,15 +314,13 @@ namespace {
      *
      * @octdoc  m:l10n/__
      * @param   string      $msg            Message to translate.
-     * @param   mixed       $arg, ...       Optional additional arguments.
+     * @param   array       $args           Optional additional arguments.
+     * @param   string      $domain         Optional text domain.
      * @return  string                      Localized text.
      */
-    function __($msg)
+    function __($msg, array $args = array(), $domain = null)
     /**/
     {
-        $args = func_get_args();
-        array_shift($args);
-
-        return \org\octris\core\l10n::getInstance()->translate($msg, $args);
+        return \org\octris\core\l10n::getInstance()->translate($msg, $args, $domain);
     }
 }
