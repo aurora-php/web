@@ -24,7 +24,7 @@ namespace org\octris\core\app\web\page {
          * Template filename of page for rendering critical error information.
          *
          * @octdoc  p:critical/$template
-         * @var     string
+         * @type    string
          */
         protected $template = 'critical.html';
         /**/
@@ -33,7 +33,7 @@ namespace org\octris\core\app\web\page {
          * Instance of a logger.
          *
          * @octdoc  p:critical/$logger
-         * @var     \org\octris\core\logger
+         * @type    \org\octris\core\logger
          */
         private $logger = null;
         /**/
@@ -45,7 +45,7 @@ namespace org\octris\core\app\web\page {
          * the error in the logging backend.
          *
          * @octdoc  p:critical/$identifier
-         * @var     string
+         * @type    string
          */
         private $identifier = '';
         /**/

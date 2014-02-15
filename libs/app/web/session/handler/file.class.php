@@ -24,7 +24,7 @@ namespace org\octris\core\app\web\session\handler {
          * Stores the path the session files are stored in.
          *
          * @octdoc  p:file/$session_path
-         * @var     string
+         * @type    string
          */
         protected $session_path;
         /**/

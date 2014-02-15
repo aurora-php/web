@@ -27,7 +27,7 @@ namespace org\octris\core\app\web {
          * Template instance.
          *
          * @octdoc  p:page/$template
-         * @var     \org\octris\core\tpl
+         * @type    \org\octris\core\tpl
          */
         private $template = null;
         /**/
@@ -36,7 +36,7 @@ namespace org\octris\core\app\web {
          * Whether the page should be delivered only through HTTPS.
          *
          * @octdoc  p:page/$secure
-         * @var     bool
+         * @type    bool
          */
         protected $secure = false;
         /**/
@@ -45,7 +45,7 @@ namespace org\octris\core\app\web {
          * Breadcrumb for current page.
          *
          * @octdoc  p:page/$breadcrumb
-         * @var     array
+         * @type    array
          */
         protected $breadcrumb = array();
         /**/

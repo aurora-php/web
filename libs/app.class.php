@@ -68,7 +68,7 @@ namespace org\octris\core {
          * Application instance.
          *
          * @octdoc  p:app/$instance
-         * @var     \org\octris\core\app
+         * @type    \org\octris\core\app
          */
         private static $instance = null;
         /**/
@@ -77,7 +77,7 @@ namespace org\octris\core {
          * Context of the application.
          *
          * @octdoc  p:app/$context
-         * @var     int
+         * @type    int
          */
         protected $context = self::T_CONTEXT_UNDEFINED;
         /**/
@@ -86,7 +86,7 @@ namespace org\octris\core {
          * Application state.
          *
          * @octdoc  p:app/$state
-         * @var     \org\octris\core\app\state
+         * @type    \org\octris\core\app\state
          */
         protected $state = null;
         /**/
@@ -95,7 +95,7 @@ namespace org\octris\core {
          * Entry page to use if no other page is loaded. To be overwritten by applications' main class.
          *
          * @octdoc  p:app/$entry_page
-         * @var     string
+         * @type    string
          */
         protected $entry_page = '';
         /**/
