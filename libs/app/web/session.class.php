@@ -24,7 +24,7 @@ namespace org\octris\core\app\web {
          * Instance of session class.
          *
          * @octdoc  p:session/$instance
-         * @var     \org\octris\core\app\web\session
+         * @type    \org\octris\core\app\web\session
          */
         private static $instance = null;
         /**/
@@ -33,7 +33,7 @@ namespace org\octris\core\app\web {
          * Instance of session handler.
          *
          * @octdoc  p:session/$handler
-         * @var     \org\octris\core\app\web\session\handler
+         * @type    \org\octris\core\app\web\session\handler
          */
         private static $handler = null;
         /**/
@@ -42,7 +42,7 @@ namespace org\octris\core\app\web {
          * Options configured through 'setHandler'.
          *
          * @octdoc  p:session/$options
-         * @var     array
+         * @type    array
          */
         private static $options = array();
         /**/
@@ -51,7 +51,7 @@ namespace org\octris\core\app\web {
          * Session data.
          *
          * @octdoc  p:session/$data
-         * @var     array
+         * @type    array
          */
         private static $data = array();
         /**/
@@ -60,7 +60,7 @@ namespace org\octris\core\app\web {
          * Session lifetime. See php.ini: session.gc_maxlifetime.
          *
          * @octdoc  p:session/$lifetime
-         * @var     int
+         * @type    int
          */
         protected $lifetime = 0;
         /**/
@@ -69,7 +69,7 @@ namespace org\octris\core\app\web {
          * The domain, the session is valid for.
          *
          * @octdoc  p:session/$domain
-         * @var     string
+         * @type    string
          */
         protected $domain = '';
         /**/
@@ -78,7 +78,7 @@ namespace org\octris\core\app\web {
          * Session name. See php.ini: session.name.
          *
          * @octdoc  p:session/$name
-         * @var     string
+         * @type    string
          */
         protected $name = '';
         /**/
@@ -87,7 +87,7 @@ namespace org\octris\core\app\web {
          * Stores Id of current session.
          *
          * @octdoc  p:session/$id
-         * @var     string
+         * @type    string
          */
         protected $id = '';
         /**/

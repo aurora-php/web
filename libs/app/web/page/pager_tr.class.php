@@ -24,7 +24,7 @@ namespace org\octris\core\app\web\page {
          * Current page number.
          *
          * @octdoc  p:pager/$page
-         * @var     int
+         * @type    int
          */
         protected $page = 1;
         /**/
@@ -33,7 +33,7 @@ namespace org\octris\core\app\web\page {
          * Total number of "items" the pager should create pages for.
          *
          * @octdoc  p:pager/$total_items
-         * @var     int
+         * @type    int
          */
         protected $total_items = 0;
         /**/
@@ -42,7 +42,7 @@ namespace org\octris\core\app\web\page {
          * Number of "items" the application should display per page.
          *
          * @octdoc  p:pager/$items_per_page
-         * @var     int
+         * @type    int
          */
         protected $items_per_page = 20;
         /**/
@@ -51,7 +51,7 @@ namespace org\octris\core\app\web\page {
          * Total number of pages.
          *
          * @octdoc  p:pager/$total_pages
-         * @var     int
+         * @type    int
          */
         protected $total_pages = 1;
         /**/
@@ -60,7 +60,7 @@ namespace org\octris\core\app\web\page {
          * Number of "positions" the the pager contains.
          *
          * @octdoc  p:int/$pager_positions
-         * @var     int
+         * @type    int
          */
         protected $pager_positions = 9;
         /**/
@@ -70,7 +70,7 @@ namespace org\octris\core\app\web\page {
          * positions to show buttons for them.
          *
          * @octdoc  p:pager/$filler_position
-         * @var     int
+         * @type    int
          */
         protected $filler_position = 2;
         /**/
@@ -79,7 +79,7 @@ namespace org\octris\core\app\web\page {
          * Character to use as filler.
          *
          * @octdoc  p:pager/$filler_char
-         * @var     string
+         * @type    string
          */
         protected $filler_char = '...';
         /**/

@@ -35,7 +35,7 @@ namespace org\octris\core\app {
          * Secret to use for generating hash and prevent the state from manipulation.
          *
          * @octdoc  p:state/$secret
-         * @var     string
+         * @type    string
          */
         protected static $secret = '';
         /**/
