@@ -307,7 +307,7 @@ namespace org\octris\core {
  * Put translate function and other stuff into global namespace for convenience reasons.
  */
 namespace {
-    require_once('debug.class.php');
+    require_once('tools.class.php');
 
     /**
      * Global translate function.
