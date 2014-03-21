@@ -237,9 +237,11 @@ namespace org\octris\core\app\web {
         {
             $server = provider::access('server');
 
-            if (!$server->isExist('HTTP_ACCEPT_LANGUAGE') || !($accepted = $server->getValue('HTTP_ACCEPT_LANGUAGE', validate::T_PRINTABLE))) {
+            if (!$server->isExist('HTTP_ACCEPT_LANGUAGE') || !$server->isValid('HTTP_ACCEPT_LANGUAGE', validate::T_PRINTABLE)) {
                 return $default;
             }
+
+            $accepted = $server->getValue('HTTP_ACCEPT_LANGUAGE', validate::T_PRINTABLE);
 
             // generate language array
             $supported = array_combine(array_map(function($v) {
@@ -269,7 +271,7 @@ namespace org\octris\core\app\web {
                 }
             }
 
-            krsort($accepted);
+            ksort($accepted);
 
             // negotiate language
             $determined = $default;
