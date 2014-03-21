@@ -286,7 +286,7 @@ namespace org\octris\core\app\web {
                 }
             }
 
-            return $lc_specified;
+            return $determined;
         }
     }
 }
