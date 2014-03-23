@@ -271,7 +271,7 @@ namespace org\octris\core\app\web {
                 }
             }
 
-            ksort($accepted);
+            krsort($accepted);
 
             // negotiate language
             $determined = $default;
