@@ -65,6 +65,24 @@ namespace org\octris\core {
         /**/
 
         /**
+         * Application name.
+         *
+         * @octdoc  p:app/$octris_app
+         * @type    string|null
+         */
+        private $octris_app = null;
+        /**/
+
+        /**
+         * Application root directory.
+         *
+         * @octdoc  p:app/$octris_base
+         * @type    string|null
+         */
+        private $octris_base = null;
+        /**/
+
+        /**
          * Application instance.
          *
          * @octdoc  p:app/$instance
@@ -108,15 +126,6 @@ namespace org\octris\core {
         protected function __construct()
         /**/
         {
-            $env = provider::access('env');
-
-            if (!$env->isExist('OCTRIS_APP') || !$env->isExist('OCTRIS_BASE')) {
-                die("unable to import OCTRIS_APP or OCTRIS_BASE!\n");
-            }
-
-            if (!$env->isValid('OCTRIS_APP', validate::T_PROJECT) || !$env->isValid('OCTRIS_BASE', validate::T_PRINTABLE)) {
-                die("unable to import OCTRIS_APP or OCTRIS_BASE - invalid settings!\n");
-            }
         }
 
         /**
@@ -245,7 +254,7 @@ namespace org\octris\core {
                 $info = posix_getpwuid(posix_getuid());
                 $base = $info['dir'];
             } else {
-                $base = $env->getValue('OCTRIS_BASE');
+                $base = $this->octris_base;
             }
 
             $return = sprintf(
@@ -253,7 +262,7 @@ namespace org\octris\core {
                 $base,
                 ($module
                     ? $module
-                    : $env->getValue('OCTRIS_APP'))
+                    : $this->octris_app
             ) . ($rel_path
                     ? '/' . $rel_path
                     : '');
@@ -272,9 +281,7 @@ namespace org\octris\core {
         /**/
         {
             if ($module == '') {
-                $env = provider::access('env');
-
-                $module = $env->getValue('OCTRIS_APP');
+                $module = $this->octris_app;
             }
 
             return substr($module, strrpos($module, '.') + 1);
