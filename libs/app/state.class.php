@@ -17,7 +17,7 @@ namespace org\octris\core\app {
      * between two requests. The state helps to bring stateful requests to a web application, too.
      *
      * @octdoc      c:app/state
-     * @copyright   copyright (c) 2011-2013 by Harald Lapp
+     * @copyright   copyright (c) 2011-2014 by Harald Lapp
      * @author      Harald Lapp <harald@octris.org>
      */
     class state extends \org\octris\core\type\collection
@@ -107,7 +107,7 @@ namespace org\octris\core\app {
         public function freeze(array $data = array())
         /**/
         {
-            $tmp = array_merge((array)$this, $data);
+            $tmp = array_merge($this->getArrayCopy(), $data);
             
             $frozen = gzcompress(serialize($tmp));
             $sum    = hash(self::hash_algo, $frozen . self::$secret);
