@@ -118,7 +118,7 @@ namespace org\octris\core\app {
                     ? $provider->applyValidator($key)
                     : array(true, null, array(), null));
         }
-
+        
         /**
          * Apply validation ruleset.
          *
@@ -220,6 +220,30 @@ namespace org\octris\core\app {
         /**/
         {
             $this->messages = array_merge($this->messages, $msg);
+        }
+
+        /**
+         * Return list of error messages assigned to the page.
+         *
+         * @octdoc  m:page/getErrors
+         * @return  array                                       List of error messages.
+         */
+        public function getErrors()
+        /**/
+        {
+            return $this->errors;
+        }
+        
+        /**
+         * Return list of non-error messages assigned to the page.
+         *
+         * @octdoc  m:page/getMessages
+         * @return  array                                       List of non-error messages.
+         */
+        public function getMessages()
+        /**/
+        {
+            return $this->messages;
         }
 
         /**
