@@ -269,7 +269,7 @@ namespace org\octris\core\app\web {
                     $csrf = new \org\octris\core\app\web\csrf();
                     
                     return $csrf->createToken($scope);
-                });
+                }, array('max' => 1));
                 
                 // values
                 $this->template->setValue('errors',   $this->errors);
