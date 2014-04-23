@@ -223,7 +223,7 @@ namespace org\octris\core\app\web {
             } else {                    
                 $csrf = new \org\octris\core\app\web\csrf();
                 
-                if (!($is_valid = $csrf->verifyToken($state['__csrf_token'], $scope))) {
+                if (!($is_valid = $csrf->verifyToken($state->pop('__csrf_token'), $scope))) {
                     $this->addError(__('Provided CSRF token is invalid!'));
                 }
             }
