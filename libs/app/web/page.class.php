@@ -272,7 +272,6 @@ namespace org\octris\core\app\web {
                 });
                 
                 // values
-                $this->template->setValues($this->values);
                 $this->template->setValue('errors',   $this->errors);
                 $this->template->setValue('messages', $this->messages);
             }
