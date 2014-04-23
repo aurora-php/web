@@ -206,6 +206,32 @@ namespace org\octris\core\app\web {
         }
 
         /**
+         * Fetch a CSRF token from the state and verify it.
+         *
+         * @octdoc  m:page/verifyCsrfToken
+         * @param   string                  $scope                  Scope of the CSRF token to verify.
+         * @return  bool                                            Returns true if CSRF token is valid, otherwiese false.
+         */
+        public function verifyCsrfToken($scope)
+        /**/
+        {            
+            $state = \org\octris\core\app::getInstance()->getState();
+            
+            if (!($is_valid = isset($state['__csrf_token']))) {
+                // CSRF token is not in state
+                $this->addError(__('CSRF token is not provided in application state!'));
+            } else {                    
+                $csrf = new \org\octris\core\app\web\csrf();
+                
+                if (!($is_valid = $csrf->verifyToken($state['__csrf_token'], $scope))) {
+                    $this->addError(__('Provided CSRF token is invalid!'));
+                }
+            }
+            
+            return $is_valid;
+        }
+
+        /**
          * Validate configured CSRF protection.
          *
          * @octdoc  m:page/validate
@@ -216,24 +242,9 @@ namespace org\octris\core\app\web {
         /**/
         {
             $is_valid = parent::validate($action);
-
+            
             if (array_key_exists($action, $this->csrf_protection)) {
-                $state = \org\octris\core\app::getInstance()->getState();
-                
-                if (!isset($state['__csrf_token'])) {
-                    // CSRF token is not in state
-                    $this->addError(__('CSRF token is not provided in application state!'));
-
-                    $is_valid = false;
-                } else {                    
-                    $csrf = new \org\octris\core\app\web\csrf();
-                    
-                    if (!$csrf->verifyToken($state['__csrf_token'], $this->csrf_protection[$action])) {
-                        $this->addError(__('Provided CSRF token is invalid!'));
-                        
-                        $is_valid = false;
-                    }
-                }
+                $is_valid = ($this->verifyCsrfToken($this->csrf_protection[$action]) && $is_valid);
             }
             
             return $is_valid;
