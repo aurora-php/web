@@ -87,14 +87,15 @@ namespace org\octris\core\app\web {
          * Create a CSRF token and put it into CSRF token storage.
          *
          * @octdoc  m:csrf/createToken
+         * @param   string                      $scope                          Optional parameter to limit the scope of the token.
          * @return  string                                                      Created CSRF token.
          */
-        public function createToken()
+        public function createToken($scope = '')
         /**/
         {
             $token = self::$random->getRandom($this->entropy / 8);
             
-            self::$storage->addToken($token);
+            self::$storage->addToken($token, $scope);
             
             return $token;
         }
@@ -104,13 +105,14 @@ namespace org\octris\core\app\web {
          *
          * @octdoc  m:csrf/verifyToken
          * @param   string                      $token                          CSRF token to verify.
+         * @param   string                      $scope                          Optional scope of the token, this parameter must be provided, if the token was added using a scope.
          * @return  bool                                                        Return true if verification was successful.
          */
-        public function verifyToken($token)
+        public function verifyToken($token, $scope = '')
         /**/
         {
-            if (($is_valid = self::$storage->hasToken($token))) {
-                self::$storage->removeToken($token);
+            if (($is_valid = self::$storage->hasToken($token, $scope))) {
+                self::$storage->removeToken($token, $scope);
             }
             
             return $is_valid;

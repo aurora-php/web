@@ -45,11 +45,12 @@ namespace org\octris\core\app\web\csrf\storage {
          *
          * @octdoc  m:session/addToken
          * @param   string                      $token              CSRF token to add.
+         * @param   string                      $scope              Scope of the token.
          */
-        public function addToken($token)
+        public function addToken($token, $scope)
         /**/
         {
-            $this->session->setValue($token, microtime(true), __CLASS__);
+            $this->session->setValue($token . ':' . $scope, microtime(true), __CLASS__);
         }
 
         /**
@@ -57,12 +58,13 @@ namespace org\octris\core\app\web\csrf\storage {
          *
          * @octdoc  m:session/hasToken
          * @param   string                      $token              CSRF token to test.
+         * @param   string                      $scope              Scope of the token.
          * @return  bool                                            Returns true if token exists or false if it does not exist.
          */
-        public function hasToken($token)
+        public function hasToken($token, $scope)
         /**/
         {
-            return $this->session->isExist($token, __CLASS__);
+            return $this->session->isExist($token . ':' . $scope, __CLASS__);
         }
 
         /**
@@ -70,11 +72,12 @@ namespace org\octris\core\app\web\csrf\storage {
          *
          * @octdoc  m:session/removeToken
          * @param   string                      $token              CSRF token to remove.    
+         * @param   string                      $scope              Scope of the token.
          */
-        public function removeToken()
+        public function removeToken($token, $scope)
         /**/
         {
-            $this->session->unsetValue($token, __CLASS__);
+            $this->session->unsetValue($token . ':' . $scope, __CLASS__);
         }
     }
 }
