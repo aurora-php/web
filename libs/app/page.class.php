@@ -223,30 +223,6 @@ namespace org\octris\core\app {
         }
 
         /**
-         * Return list of error messages assigned to the page.
-         *
-         * @octdoc  m:page/getErrors
-         * @return  array                                       List of error messages.
-         */
-        public function getErrors()
-        /**/
-        {
-            return $this->errors;
-        }
-        
-        /**
-         * Return list of non-error messages assigned to the page.
-         *
-         * @octdoc  m:page/getMessages
-         * @return  array                                       List of non-error messages.
-         */
-        public function getMessages()
-        /**/
-        {
-            return $this->messages;
-        }
-
-        /**
          * Determine the action of the request.
          *
          * @octdoc  m:page/getAction

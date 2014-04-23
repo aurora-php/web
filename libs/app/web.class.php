@@ -28,24 +28,6 @@ namespace org\octris\core\app {
     /**/
     {
         /**
-         * Error messages assigned to the next page to render.
-         *
-         * @octdoc  p:web/$errors
-         * @type    array
-         */
-        protected $errors = array();
-        /**/
-        
-        /**
-         * Non-error messages assigned to the next page to render.
-         *
-         * @octdoc  p:web/$messages
-         * @type    array
-         */
-        protected $messages = array();
-        /**/
-        
-        /**
          * Initialization of web application.
          *
          * @octdoc  m:web/initialize
@@ -116,9 +98,6 @@ namespace org\octris\core\app {
                 exit;
             }
 
-            $this->errors   = $next_page->getErrors();
-            $this->messages = $next_page->getMessages();
-            
             // process with page
             $this->setLastPage($next_page);
 
@@ -166,11 +145,6 @@ namespace org\octris\core\app {
             $tpl->setResourcePath('css', $path_work);
             $tpl->setResourcePath('js',  $path_work);
             $tpl->addSearchPath(\org\octris\core\app::getPath(\org\octris\core\app::T_PATH_WORK_TPL));
-
-            $tpl->setValue('page', array(
-                'errors'   => $this->errors,
-                'messages' => $this->messages
-            ));
 
             // register common template methods
             $tpl->registerMethod('getState', function(array $data = array()) {
