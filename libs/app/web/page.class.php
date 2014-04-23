@@ -222,7 +222,7 @@ namespace org\octris\core\app\web {
                 
                 if (!isset($state['__csrf_token'])) {
                     // CSRF token is not in state
-                    $this->addError(__('CSRF token is not proveded in application state!'));
+                    $this->addError(__('CSRF token is not provided in application state!'));
 
                     $is_valid = false;
                 } else {                    
