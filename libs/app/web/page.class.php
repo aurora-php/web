@@ -83,14 +83,14 @@ namespace org\octris\core\app\web {
         }
         
         /**
-         * Set CSRF protection for the specified action with an optional specified
+         * Enable CSRF protection for the specified action with an optional specified
          * scope.
          *
-         * @octdoc  m:page/setCsrfProtection
+         * @octdoc  m:page/enableCsrfProtection
          * @param   string          $action                 Action the CSRF protection should be enabled for.
          * @param   string          $scope                  Optional scope of the CSRF token.
          */
-        public function setCsrfProtection($action, $scope = '')
+        public function enableCsrfProtection($action, $scope = '')
         /**/
         {
             $this->csrf_protection[$action] = $scope;
