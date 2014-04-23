@@ -17,7 +17,7 @@ namespace org\octris\core\app\web {
      * Page controller for web applications.
      *
      * @octdoc      c:web/page
-     * @copyright   copyright (c) 2010-2011 by Harald Lapp
+     * @copyright   copyright (c) 2010-2014 by Harald Lapp
      * @author      Harald Lapp <harald@octris.org>
      */
     abstract class page extends \org\octris\core\app\page
@@ -212,7 +212,7 @@ namespace org\octris\core\app\web {
          * @param   string                  $scope                  Scope of the CSRF token to verify.
          * @return  bool                                            Returns true if CSRF token is valid, otherwiese false.
          */
-        public function verifyCsrfToken($scope)
+        protected function verifyCsrfToken($scope)
         /**/
         {            
             $state = \org\octris\core\app::getInstance()->getState();
