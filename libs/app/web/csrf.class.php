@@ -77,7 +77,7 @@ namespace org\octris\core\app\web {
          * @octdoc  m:csrf/setStorage
          * @param   \org\octris\core\app\web\csrf\storage_if    $storage        Instance of CSRF token storage.
          */
-        public function setStorage(\org\octris\core\app\web\csrf\storage_if $storage)
+        public static function setStorage(\org\octris\core\app\web\csrf\storage_if $storage)
         /**/
         {
             self::$storage = $storage;
