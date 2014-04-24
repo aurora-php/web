@@ -17,7 +17,7 @@ namespace org\octris\core\app\web {
      * Page controller for web applications.
      *
      * @octdoc      c:web/page
-     * @copyright   copyright (c) 2010-2011 by Harald Lapp
+     * @copyright   copyright (c) 2010-2014 by Harald Lapp
      * @author      Harald Lapp <harald@octris.org>
      */
     abstract class page extends \org\octris\core\app\page
@@ -51,6 +51,15 @@ namespace org\octris\core\app\web {
         /**/
 
         /**
+         * Enabled CSRF protection.
+         *
+         * @octdoc  p:page/$csrf_protection
+         * @type    array
+         */
+        protected $csrf_protection = array();
+        /**/
+
+        /**
          * Constructor.
          *
          * @octdoc  m:page/__construct
@@ -71,6 +80,20 @@ namespace org\octris\core\app\web {
         /**/
         {
             return $this->secure;
+        }
+        
+        /**
+         * Set CSRF protection for the specified action with an optional specified
+         * scope.
+         *
+         * @octdoc  m:page/setCsrfProtection
+         * @param   string          $action                 Action the CSRF protection should be enabled for.
+         * @param   string          $scope                  Optional scope of the CSRF token.
+         */
+        public function setCsrfProtection($action, $scope = '')
+        /**/
+        {
+            $this->csrf_protection[$action] = $scope;
         }
 
         /**
@@ -183,6 +206,51 @@ namespace org\octris\core\app\web {
         }
 
         /**
+         * Fetch a CSRF token from the state and verify it.
+         *
+         * @octdoc  m:page/verifyCsrfToken
+         * @param   string                  $scope                  Scope of the CSRF token to verify.
+         * @return  bool                                            Returns true if CSRF token is valid, otherwiese false.
+         */
+        protected function verifyCsrfToken($scope)
+        /**/
+        {            
+            $state = \org\octris\core\app::getInstance()->getState();
+            
+            if (!($is_valid = isset($state['__csrf_token']))) {
+                // CSRF token is not in state
+                $this->addError(__('CSRF token is not provided in application state!'));
+            } else {                    
+                $csrf = new \org\octris\core\app\web\csrf();
+                
+                if (!($is_valid = $csrf->verifyToken($state['__csrf_token'], $scope))) {
+                    $this->addError(__('Provided CSRF token is invalid!'));
+                }
+            }
+            
+            return $is_valid;
+        }
+
+        /**
+         * Validate configured CSRF protection.
+         *
+         * @octdoc  m:page/validate
+         * @param   string                          $action         Action to select ruleset for.
+         * @return  bool                                            Returns true if validation suceeded, otherwise false.
+         */
+        public function validate($action)
+        /**/
+        {
+            $is_valid = parent::validate($action);
+            
+            if (array_key_exists($action, $this->csrf_protection)) {
+                $is_valid = ($this->verifyCsrfToken($this->csrf_protection[$action]) && $is_valid);
+            }
+            
+            return $is_valid;
+        }
+
+        /**
          * Return instance of template for current page.
          *
          * @octdoc  m:page/getTemplate
@@ -197,6 +265,11 @@ namespace org\octris\core\app\web {
                 $this->template->registerMethod('getBreadcrumb', function() {
                     return $this->breadcrumb;
                 }, array('max' => 0));
+                $this->template->registerMethod('getCsrfToken', function($scope = '') {
+                    $csrf = new \org\octris\core\app\web\csrf();
+                    
+                    return $csrf->createToken($scope);
+                });
                 
                 // values
                 $this->template->setValues($this->values);

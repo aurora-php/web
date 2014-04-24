@@ -101,7 +101,6 @@ namespace org\octris\core\app {
             // process with page
             $this->setLastPage($next_page);
 
-            // $next_page->prepareMessages($this);
             // $next_page->sendHeaders($this->headers);
             $next_page->render();
 

@@ -200,8 +200,8 @@ namespace org\octris\core {
         protected function getLastPage()
         /**/
         {
-            $class = (isset($this->state['last_page'])
-                      ? $this->state['last_page']
+            $class = (isset($this->state['__last_page'])
+                      ? $this->state['__last_page']
                       : $this->entry_page);
 
             $page = new $class();
@@ -221,7 +221,7 @@ namespace org\octris\core {
         {
             $class = get_class($page);
 
-            $this->state['last_page'] = $class;
+            $this->state['__last_page'] = $class;
         }
 
         /**

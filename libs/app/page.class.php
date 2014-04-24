@@ -118,7 +118,7 @@ namespace org\octris\core\app {
                     ? $provider->applyValidator($key)
                     : array(true, null, array(), null));
         }
-
+        
         /**
          * Apply validation ruleset.
          *
