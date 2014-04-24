@@ -162,8 +162,6 @@ namespace org\octris\core\app {
         // enable validation for superglobals
         define('OCTRIS_WRAPPER', true);
 
-        $_ENV['OCTRIS_DEVEL'] = (isset($_ENV['OCTRIS_DEVEL']) && !!$_ENV['OCTRIS_DEVEL']);
-
         provider::set('server',  $_SERVER,  provider::T_READONLY);
         provider::set('env',     $_ENV,     provider::T_READONLY);
         provider::set('request', $_REQUEST, provider::T_READONLY);
