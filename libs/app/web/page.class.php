@@ -83,14 +83,14 @@ namespace org\octris\core\app\web {
         }
         
         /**
-         * Set CSRF protection for the specified action with an optional specified
+         * Enable CSRF protection for the specified action with an optional specified
          * scope.
          *
-         * @octdoc  m:page/setCsrfProtection
+         * @octdoc  m:page/enableCsrfProtection
          * @param   string          $action                 Action the CSRF protection should be enabled for.
          * @param   string          $scope                  Optional scope of the CSRF token.
          */
-        public function setCsrfProtection($action, $scope = '')
+        public function enableCsrfProtection($action, $scope = '')
         /**/
         {
             $this->csrf_protection[$action] = $scope;
@@ -223,7 +223,7 @@ namespace org\octris\core\app\web {
             } else {                    
                 $csrf = new \org\octris\core\app\web\csrf();
                 
-                if (!($is_valid = $csrf->verifyToken($state['__csrf_token'], $scope))) {
+                if (!($is_valid = $csrf->verifyToken($state->pop('__csrf_token'), $scope))) {
                     $this->addError(__('Provided CSRF token is invalid!'));
                 }
             }
@@ -269,10 +269,9 @@ namespace org\octris\core\app\web {
                     $csrf = new \org\octris\core\app\web\csrf();
                     
                     return $csrf->createToken($scope);
-                });
+                }, array('max' => 1));
                 
                 // values
-                $this->template->setValues($this->values);
                 $this->template->setValue('errors',   $this->errors);
                 $this->template->setValue('messages', $this->messages);
             }
