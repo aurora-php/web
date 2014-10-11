@@ -262,10 +262,10 @@ namespace org\octris\core {
                 $base,
                 ($module
                     ? $module
-                    : $this->octris_app
+                    : $this->octris_app)
             ) . ($rel_path
                     ? '/' . $rel_path
-                    : ''));
+                    : '');
 
             return realpath($return);
         }
