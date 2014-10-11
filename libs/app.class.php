@@ -256,7 +256,7 @@ namespace org\octris\core {
                     : $env->getValue('OCTRIS_APP'))
             ) . ($rel_path
                     ? '/' . $rel_path
-                    : ''));
+                    : '');
 
             return realpath($return);
         }
