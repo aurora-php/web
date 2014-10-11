@@ -265,7 +265,7 @@ namespace org\octris\core {
                     : $this->octris_app
             ) . ($rel_path
                     ? '/' . $rel_path
-                    : '');
+                    : ''));
 
             return realpath($return);
         }
