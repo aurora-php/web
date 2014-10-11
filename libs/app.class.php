@@ -10,7 +10,7 @@
  */
 
 namespace org\octris\core {
-    require_once('org.octris.core/app/autoloader.class.php');
+    require_once('app/autoloader.class.php');
 
     use \org\octris\core\validate as validate;
     use \org\octris\core\provider as provider;
