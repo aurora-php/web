@@ -14,8 +14,8 @@ namespace org\octris\core\app {
     use \org\octris\core\validate as validate;
     use \org\octris\core\provider as provider;
 
-    require_once('org.octris.core/app.class.php');
-    require_once('org.octris.core/app/web/session.class.php');
+    require_once(__DIR__ . '/../app.class.php');
+    require_once(__DIR__ . '/web/session.class.php');
 
     /**
      * Core class for Web applications.
