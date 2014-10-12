@@ -59,7 +59,7 @@ namespace org\octris\core\app {
          * $app->process();
          * </code>
          *
-         * @octdoc  m:cli/process
+         * @octdoc  m:web/process
          */
         public function process()
         /**/
