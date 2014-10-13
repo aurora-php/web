@@ -282,11 +282,6 @@ namespace org\octris\core {
             return self::$instance;
         }
     }
-
-    // register error handler for 'normal' php errors
-    set_error_handler(function($code, $msg, $file, $line) {
-        throw new \ErrorException($msg, $code, 0, $file, $line);
-    }, E_ALL);
 }
 
 /*
@@ -294,6 +289,7 @@ namespace org\octris\core {
  */
 namespace {
     require_once('debug.class.php');
+    require_once('error.class.php');
 
     /**
      * Global translate function.
