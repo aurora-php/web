@@ -92,15 +92,6 @@ namespace org\octris\core {
         /**/
 
         /**
-         * Context of the application.
-         *
-         * @octdoc  p:app/$context
-         * @type    int
-         */
-        protected $context = self::T_CONTEXT_UNDEFINED;
-        /**/
-
-        /**
          * Application state.
          *
          * @octdoc  p:app/$state
@@ -222,18 +213,6 @@ namespace org\octris\core {
             $class = get_class($page);
 
             $this->state['__last_page'] = $class;
-        }
-
-        /**
-         * Return context the application is running in.
-         *
-         * @octdoc  m:app/getContext
-         * @return  int                                 Application context.
-         */
-        public static final function getContext()
-        /**/
-        {
-            return static::$context;
         }
 
         /**
