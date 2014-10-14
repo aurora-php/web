@@ -12,14 +12,13 @@
 namespace org\octris\core {
     require_once(__DIR__ . '/app/autoloader.class.php');
 
-    use \org\octris\core\validate as validate;
-    use \org\octris\core\provider as provider;
+    use \org\octris\core\registry as registry;
 
     /**
      * Core application class.
      *
      * @octdoc      c:core/app
-     * @copyright   copyright (c) 2010-2011 by Harald Lapp
+     * @copyright   copyright (c) 2010-2014 by Harald Lapp
      * @author      Harald Lapp <harald@octris.org>
      */
     abstract class app
@@ -62,24 +61,6 @@ namespace org\octris\core {
         const T_CONTEXT_CLI       = 1;
         const T_CONTEXT_WEB       = 2;
         const T_CONTEXT_TEST      = 3;
-        /**/
-
-        /**
-         * Application name.
-         *
-         * @octdoc  p:app/$octris_app
-         * @type    string|null
-         */
-        private $octris_app = null;
-        /**/
-
-        /**
-         * Application root directory.
-         *
-         * @octdoc  p:app/$octris_base
-         * @type    string|null
-         */
-        private $octris_base = null;
         /**/
 
         /**
@@ -227,13 +208,13 @@ namespace org\octris\core {
         public static function getPath($type, $module = '', $rel_path = '')
         /**/
         {
-            $env = provider::access('env');
+            $reg = registry::getInstance();
 
             if ($type == self::T_PATH_HOME_ETC) {
                 $info = posix_getpwuid(posix_getuid());
                 $base = $info['dir'];
             } else {
-                $base = $this->octris_base;
+                $base = $reg->OCTRIS_BASE;
             }
 
             $return = sprintf(
@@ -241,7 +222,7 @@ namespace org\octris\core {
                 $base,
                 ($module
                     ? $module
-                    : $this->octris_app)
+                    : $reg->OCTRIS_APP)
             ) . ($rel_path
                     ? '/' . $rel_path
                     : '');
@@ -260,7 +241,7 @@ namespace org\octris\core {
         /**/
         {
             if ($module == '') {
-                $module = $this->octris_app;
+                $module = registry::getInstance()->OCTRIS_APP;
             }
 
             return substr($module, strrpos($module, '.') + 1);
