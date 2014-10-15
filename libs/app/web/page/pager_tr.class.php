@@ -13,8 +13,8 @@ namespace org\octris\core\app\web\page {
     /**
      * Implements functionality to generate pagers.
      *
-     * @octdoc      t:page/pager
-     * @copyright   copyright (c) 2011 by Harald Lapp
+     * @octdoc      t:page/pager_tr
+     * @copyright   copyright (c) 2011-2014 by Harald Lapp
      * @author      Harald Lapp <harald@octris.org>
      */
     trait pager_tr
@@ -23,7 +23,7 @@ namespace org\octris\core\app\web\page {
         /**
          * Current page number.
          *
-         * @octdoc  p:pager/$page
+         * @octdoc  p:pager_tr/$page
          * @type    int
          */
         protected $page = 1;
@@ -32,7 +32,7 @@ namespace org\octris\core\app\web\page {
         /**
          * Total number of "items" the pager should create pages for.
          *
-         * @octdoc  p:pager/$total_items
+         * @octdoc  p:pager_tr/$total_items
          * @type    int
          */
         protected $total_items = 0;
@@ -41,7 +41,7 @@ namespace org\octris\core\app\web\page {
         /**
          * Number of "items" the application should display per page.
          *
-         * @octdoc  p:pager/$items_per_page
+         * @octdoc  p:pager_tr/$items_per_page
          * @type    int
          */
         protected $items_per_page = 20;
@@ -50,7 +50,7 @@ namespace org\octris\core\app\web\page {
         /**
          * Total number of pages.
          *
-         * @octdoc  p:pager/$total_pages
+         * @octdoc  p:pager_tr/$total_pages
          * @type    int
          */
         protected $total_pages = 1;
@@ -69,7 +69,7 @@ namespace org\octris\core\app\web\page {
          * Where to insert a filler, if the number of pages are more than the pager has
          * positions to show buttons for them.
          *
-         * @octdoc  p:pager/$filler_position
+         * @octdoc  p:pager_tr/$filler_position
          * @type    int
          */
         protected $filler_position = 2;
@@ -78,7 +78,7 @@ namespace org\octris\core\app\web\page {
         /**
          * Character to use as filler.
          *
-         * @octdoc  p:pager/$filler_char
+         * @octdoc  p:pager_tr/$filler_char
          * @type    string
          */
         protected $filler_char = '...';
@@ -87,7 +87,7 @@ namespace org\octris\core\app\web\page {
         /**
          * Return the number of the current page.
          *
-         * @octdoc  m:pager/getPage
+         * @octdoc  m:pager_tr/getPage
          * @return  int                             Number of current page.
          */
         public function getPage()
@@ -113,7 +113,7 @@ namespace org\octris\core\app\web\page {
         /**
          * Return number of items to show per page.
          *
-         * @octdoc  m:pager/getItemsPerPage
+         * @octdoc  m:pager_tr/getItemsPerPage
          * @return  int                             Number of items per page.
          */
         public function getItemsPerPage()
@@ -139,7 +139,7 @@ namespace org\octris\core\app\web\page {
         /**
          * Create and return all necessary information for rendering a navigation pager.
          *
-         * @octdoc  m:pager/getPager
+         * @octdoc  m:pager_tr/getPager
          * @return  array                           Array of pager data.
          */
         public function getPager()
