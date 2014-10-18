@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This request is part of the 'org.octris.core' package.
+ * This request is part of the 'octris/core' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,7 +9,7 @@
  * request that was distributed with this source code.
  */
 
-namespace org\octris\core\app\web\session\handler {
+namespace octris\core\app\web\session\handler {
     /**
      * The request session handler is the default session handler, which is set initially,
      * when session library is included. This session handler stores session data only
@@ -20,7 +20,7 @@ namespace org\octris\core\app\web\session\handler {
      * @copyright   copyright (c) 2011 by Harald Lapp
      * @author      Harald Lapp <harald@octris.org>
      */
-    class request implements \org\octris\core\app\web\session\handler_if
+    class request implements \octris\core\app\web\session\handler_if
     /**/
     {
         /**

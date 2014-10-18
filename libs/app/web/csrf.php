@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'org.octris.core' package.
+ * This file is part of the 'octris/core' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace org\octris\core\app\web {
+namespace octris\core\app\web {
     /**
      * Class provides functionality for handling CSRF (cross-site request forgery) tokens.
      *
@@ -24,7 +24,7 @@ namespace org\octris\core\app\web {
          * Instance of a random bytes generator.
          *
          * @octdoc  p:csrf/$random
-         * @type    null|\org\octris\core\security\random_if
+         * @type    null|\octris\core\security\random_if
          */
         protected static $random = null;
         /**/
@@ -33,7 +33,7 @@ namespace org\octris\core\app\web {
          * Server-side storage for CSRF tokens.
          *
          * @octdoc  p:csrf/$storage
-         * @type    null|\org\octris\core\app\web\csrf\storage_if
+         * @type    null|\octris\core\app\web\csrf\storage_if
          */
         protected static $storage = null;
         /**/
@@ -63,9 +63,9 @@ namespace org\octris\core\app\web {
          * Set random number generator / provider.
          *
          * @octdoc  m:csrf/setRandomProvider
-         * @param   \org\octris\core\security\random_if     $random             Instance of random number generator.
+         * @param   \octris\core\security\random_if     $random             Instance of random number generator.
          */
-        public static function setRandomProvider(\org\octris\core\security\random_if $random)
+        public static function setRandomProvider(\octris\core\security\random_if $random)
         /**/
         {
             self::$random = $random;
@@ -75,9 +75,9 @@ namespace org\octris\core\app\web {
          * Set server-side storage for generated CSRF token.
          *
          * @octdoc  m:csrf/setStorage
-         * @param   \org\octris\core\app\web\csrf\storage_if    $storage        Instance of CSRF token storage.
+         * @param   \octris\core\app\web\csrf\storage_if    $storage        Instance of CSRF token storage.
          */
-        public static function setStorage(\org\octris\core\app\web\csrf\storage_if $storage)
+        public static function setStorage(\octris\core\app\web\csrf\storage_if $storage)
         /**/
         {
             self::$storage = $storage;

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'org.octris.core' package.
+ * This file is part of the 'octris/core' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace org\octris\core\app\web {
-    use \org\octris\core\provider as provider;
-    use \org\octris\core\validate as validate;
+namespace octris\core\app\web {
+    use \octris\core\provider as provider;
+    use \octris\core\validate as validate;
 
     /**
      * Page controller for web applications.
@@ -20,14 +20,14 @@ namespace org\octris\core\app\web {
      * @copyright   copyright (c) 2010-2014 by Harald Lapp
      * @author      Harald Lapp <harald@octris.org>
      */
-    abstract class page extends \org\octris\core\app\page
+    abstract class page extends \octris\core\app\page
     /**/
     {
         /**
          * Template instance.
          *
          * @octdoc  p:page/$template
-         * @type    \org\octris\core\tpl
+         * @type    \octris\core\tpl
          */
         private $template = null;
         /**/
@@ -215,13 +215,13 @@ namespace org\octris\core\app\web {
         protected function verifyCsrfToken($scope)
         /**/
         {            
-            $state = \org\octris\core\app::getInstance()->getState();
+            $state = \octris\core\app::getInstance()->getState();
             
             if (!($is_valid = isset($state['__csrf_token']))) {
                 // CSRF token is not in state
                 $this->addError(__('CSRF token is not provided in application state!'));
             } else {                    
-                $csrf = new \org\octris\core\app\web\csrf();
+                $csrf = new \octris\core\app\web\csrf();
                 
                 if (!($is_valid = $csrf->verifyToken($state->pop('__csrf_token'), $scope))) {
                     $this->addError(__('Provided CSRF token is invalid!'));
@@ -254,19 +254,19 @@ namespace org\octris\core\app\web {
          * Return instance of template for current page.
          *
          * @octdoc  m:page/getTemplate
-         * @return  \org\octris\core\tpl                Instance of template engine.
+         * @return  \octris\core\tpl                Instance of template engine.
          */
         public function getTemplate()
         /**/
         {
             if (is_null($this->template)) {
-                $this->template = \org\octris\core\app::getInstance()->getTemplate();
+                $this->template = \octris\core\app::getInstance()->getTemplate();
 
                 $this->template->registerMethod('getBreadcrumb', function() {
                     return $this->breadcrumb;
                 }, array('max' => 0));
                 $this->template->registerMethod('getCsrfToken', function($scope = '') {
-                    $csrf = new \org\octris\core\app\web\csrf();
+                    $csrf = new \octris\core\app\web\csrf();
                     
                     return $csrf->createToken($scope);
                 }, array('max' => 1));

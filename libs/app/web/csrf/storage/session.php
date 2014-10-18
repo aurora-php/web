@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'org.octris.core' package.
+ * This file is part of the 'octris/core' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace org\octris\core\app\web\csrf\storage {
+namespace octris\core\app\web\csrf\storage {
     /**
      * Storage handler for storing CSRF tokens into session.
      *
@@ -17,14 +17,14 @@ namespace org\octris\core\app\web\csrf\storage {
      * @copyright   copyright (c) 2014 by Harald Lapp
      * @author      Harald Lapp <harald@octris.org>
      */
-    class session implements \org\octris\core\app\web\csrf\storage_if
+    class session implements \octris\core\app\web\csrf\storage_if
     /**/
     {
         /**
          * Instance of session class.
          *
          * @octdoc  p:session/$session
-         * @type    \org\octris\core\app\web\session
+         * @type    \octris\core\app\web\session
          */
         protected $session;
         /**/
@@ -37,7 +37,7 @@ namespace org\octris\core\app\web\csrf\storage {
         public function __construct()
         /**/
         {
-            $this->session = \org\octris\core\app\web\session::getInstance();
+            $this->session = \octris\core\app\web\session::getInstance();
         }
 
         /**

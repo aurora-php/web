@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'org.octris.core' package.
+ * This file is part of the 'octris/core' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace org\octris\core\app {
+namespace octris\core\app {
     require_once(__DIR__ . '/autoloader.class.php');
     
-    use \org\octris\core\validate as validate;
-    use \org\octris\core\provider as provider;
+    use \octris\core\validate as validate;
+    use \octris\core\provider as provider;
     
     /**
      * Test base class. The main purpose of this class is to include the

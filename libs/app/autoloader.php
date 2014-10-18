@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'org.octris.core' package.
+ * This file is part of the 'octris/core' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace org\octris\core\app {
+namespace octris\core\app {
     /**
      * Class Autoloader.
      *
@@ -38,5 +38,5 @@ namespace org\octris\core\app {
         }
     }
 
-    spl_autoload_register(array('\org\octris\core\app\autoloader', 'autoload'));
+    spl_autoload_register(array('\octris\core\app\autoloader', 'autoload'));
 }

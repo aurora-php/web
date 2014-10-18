@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'org.octris.core' package.
+ * This file is part of the 'octris/core' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace org\octris\core\app\web\session\handler {
+namespace octris\core\app\web\session\handler {
     /**
      * Session handler for storing sesion data in files.
      *
@@ -17,7 +17,7 @@ namespace org\octris\core\app\web\session\handler {
      * @copyright   copyright (c) 2011 by Harald Lapp
      * @author      Harald Lapp <harald@octris.org>
      */
-    class file implements \org\octris\core\app\web\session\handler_if
+    class file implements \octris\core\app\web\session\handler_if
     /**/
     {
         /**

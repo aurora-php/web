@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'org.octris.core' package.
+ * This file is part of the 'octris/core' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace org\octris\core\app {
+namespace octris\core\app {
     /**
      * The state class is used to transfer page/action specific data between two or more requests. The state is essencial for
      * transfering for example the last visited page to determine the next valid page. It can also be used to transfer additional
@@ -20,7 +20,7 @@ namespace org\octris\core\app {
      * @copyright   copyright (c) 2011-2014 by Harald Lapp
      * @author      Harald Lapp <harald@octris.org>
      */
-    class state extends \org\octris\core\type\collection
+    class state extends \octris\core\type\collection
     /**/
     {
         /**
@@ -111,7 +111,7 @@ namespace org\octris\core\app {
             
             $frozen = gzcompress(serialize($tmp));
             $sum    = hash(self::hash_algo, $frozen . self::$secret);
-            $return = \org\octris\core\app\web\request::base64UrlEncode($sum . '|' . $frozen);
+            $return = \octris\core\app\web\request::base64UrlEncode($sum . '|' . $frozen);
 
             return $return;
         }
@@ -127,7 +127,7 @@ namespace org\octris\core\app {
         public static function validate($state, array &$decoded = null)
         /**/
         {
-            $tmp    = \org\octris\core\app\web\request::base64UrlDecode($state);
+            $tmp    = \octris\core\app\web\request::base64UrlDecode($state);
             $sum    = '';
             $frozen = '';
 
@@ -151,7 +151,7 @@ namespace org\octris\core\app {
          *
          * @octdoc  m:state/thaw
          * @param   string          $state              State to thaw.
-         * @return  \org\octris\core\app\state          Instance of state object.
+         * @return  \octris\core\app\state          Instance of state object.
          */
         public static function thaw($state)
         /**/

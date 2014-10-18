@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'org.octris.core' package.
+ * This file is part of the 'octris/core' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace org\octris\core\app\web {
+namespace octris\core\app\web {
     /**
      * Session base class.
      *
@@ -24,7 +24,7 @@ namespace org\octris\core\app\web {
          * Instance of session class.
          *
          * @octdoc  p:session/$instance
-         * @type    \org\octris\core\app\web\session
+         * @type    \octris\core\app\web\session
          */
         private static $instance = null;
         /**/
@@ -33,7 +33,7 @@ namespace org\octris\core\app\web {
          * Instance of session handler.
          *
          * @octdoc  p:session/$handler
-         * @type    \org\octris\core\app\web\session\handler
+         * @type    \octris\core\app\web\session\handler
          */
         private static $handler = null;
         /**/
@@ -138,10 +138,10 @@ namespace org\octris\core\app\web {
          * Set session handler.
          *
          * @octdoc  m:session/setHandler
-         * @param   \org\octris\core\app\web\session\handler_if     $handler        Instance of session handler.
+         * @param   \octris\core\app\web\session\handler_if     $handler        Instance of session handler.
          * @param   array                                           $options        Optional options overwrite settings from php.ini.
          */
-        public static function setHandler(\org\octris\core\app\web\session\handler_if $handler, array $options = array())
+        public static function setHandler(\octris\core\app\web\session\handler_if $handler, array $options = array())
         /**/
         {
             session_set_save_handler(
@@ -165,7 +165,7 @@ namespace org\octris\core\app\web {
          * Return session handler instance.
          *
          * @octdoc  m:session/getHandler
-         * @return  \org\octris\core\app\web\session\handler_if                 Session handler of session class instance.
+         * @return  \octris\core\app\web\session\handler_if                 Session handler of session class instance.
          */
         public static function getHandler()
         /**/
@@ -177,7 +177,7 @@ namespace org\octris\core\app\web {
          * Return instance of session handler backend.
          *
          * @octdoc  m:session/getInstance
-         * @return  \org\octris\core\app\web\session                            Session class instance.
+         * @return  \octris\core\app\web\session                            Session class instance.
          */
         public static function getInstance()
         /**/
@@ -305,8 +305,8 @@ namespace org\octris\core\app\web {
         {
             session_name($this->name);
 
-            $cookie    = \org\octris\core\provider::access('cookie');
-            $cookie_id = ($cookie->isExist($this->name) && $cookie->isValid($this->name, \org\octris\core\validate::T_PRINTABLE)
+            $cookie    = \octris\core\provider::access('cookie');
+            $cookie_id = ($cookie->isExist($this->name) && $cookie->isValid($this->name, \octris\core\validate::T_PRINTABLE)
                             ? $cookie->getValue($this->name)
                             : false);
 
@@ -355,5 +355,5 @@ namespace org\octris\core\app\web {
     }
 
     // set default session handler
-    session::setHandler(new \org\octris\core\app\web\session\handler\request());
+    session::setHandler(new \octris\core\app\web\session\handler\request());
 }

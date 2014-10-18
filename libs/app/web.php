@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'org.octris.core' package.
+ * This file is part of the 'octris/core' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace org\octris\core\app {
-    use \org\octris\core\app\web\request as request;
-    use \org\octris\core\validate as validate;
-    use \org\octris\core\provider as provider;
+namespace octris\core\app {
+    use \octris\core\app\web\request as request;
+    use \octris\core\validate as validate;
+    use \octris\core\provider as provider;
 
     require_once(__DIR__ . '/../app.class.php');
     require_once(__DIR__ . '/web/session.class.php');
@@ -24,7 +24,7 @@ namespace org\octris\core\app {
      * @copyright   copyright (c) 2011-2013 by Harald Lapp
      * @author      Harald Lapp <harald@octris.org>
      */
-    abstract class web extends \org\octris\core\app
+    abstract class web extends \octris\core\app
     /**/
     {
         /**
@@ -52,7 +52,7 @@ namespace org\octris\core\app {
          * and handles everything required to determine the next page to display.
          *
          * The following example shows how to invoke an application, assuming that 'test'
-         * implements an application based on \org\octris\core\app.
+         * implements an application based on \octris\core\app.
          *
          * <code>
          * $app = test::getInstance();
@@ -126,32 +126,32 @@ namespace org\octris\core\app {
          * Create new instance of template engine and setup common stuff needed for templates of a web application.
          *
          * @octdoc  m:web/getTemplate
-         * @return  \org\octris\core\tpl                Instance of template class.
+         * @return  \octris\core\tpl                Instance of template class.
          */
         public function getTemplate()
         /**/
         {
-            $path_cache = \org\octris\core\app::getPath(\org\octris\core\app::T_PATH_CACHE);
-            $path_host  = \org\octris\core\app::getPath(\org\octris\core\app::T_PATH_HOST);
-            $path_work  = \org\octris\core\app::getPath(\org\octris\core\app::T_PATH_WORK);
+            $path_cache = \octris\core\app::getPath(\octris\core\app::T_PATH_CACHE);
+            $path_host  = \octris\core\app::getPath(\octris\core\app::T_PATH_HOST);
+            $path_work  = \octris\core\app::getPath(\octris\core\app::T_PATH_WORK);
 
-            $tpl = new \org\octris\core\tpl();
+            $tpl = new \octris\core\tpl();
 
             // setup template engine environment
-            $tpl->setL10n(\org\octris\core\l10n::getInstance());
+            $tpl->setL10n(\octris\core\l10n::getInstance());
             $tpl->setOutputPath('tpl', $path_cache . '/templates_c/');
             $tpl->setOutputPath('css', $path_host . '/styles/');
             $tpl->setOutputPath('js',  $path_host . '/libsjs/');
             $tpl->setResourcePath('css', $path_work);
             $tpl->setResourcePath('js',  $path_work);
-            $tpl->addSearchPath(\org\octris\core\app::getPath(\org\octris\core\app::T_PATH_WORK_TPL));
+            $tpl->addSearchPath(\octris\core\app::getPath(\octris\core\app::T_PATH_WORK_TPL));
 
             // register common template methods
             $tpl->registerMethod('getState', function(array $data = array()) {
                 return $this->getState()->freeze($data);
             }, array('min' => 0, 'max' => 1));
             $tpl->registerMethod('isAuthenticated', function() {
-                return \org\octris\core\auth::getInstance()->isAuthenticated();
+                return \octris\core\auth::getInstance()->isAuthenticated();
             }, array('min' => 0, 'max' => 0));
 
             return $tpl;

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'org.octris.core' package.
+ * This file is part of the 'octris/core' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace org\octris\core {
+namespace octris\core {
     require_once(__DIR__ . '/app/autoloader.class.php');
 
-    use \org\octris\core\registry as registry;
+    use \octris\core\registry as registry;
 
     /**
      * Core application class.
@@ -67,7 +67,7 @@ namespace org\octris\core {
          * Application instance.
          *
          * @octdoc  p:app/$instance
-         * @type    \org\octris\core\app
+         * @type    \octris\core\app
          */
         private static $instance = null;
         /**/
@@ -76,7 +76,7 @@ namespace org\octris\core {
          * Application state.
          *
          * @octdoc  p:app/$state
-         * @type    \org\octris\core\app\state
+         * @type    \octris\core\app\state
          */
         protected $state = null;
         /**/
@@ -124,10 +124,10 @@ namespace org\octris\core {
          * Invoke the page of an application without using the process workflow.
          *
          * @octdoc  m:app/invoke
-         * @param   \org\octris\core\app\page       $next_page          Application page to invoke.
+         * @param   \octris\core\app\page       $next_page          Application page to invoke.
          * @param   string                          $action             Optional action to invoke page with.
          */
-        public function invoke(\org\octris\core\app\page $next_page, $action = '')
+        public function invoke(\octris\core\app\page $next_page, $action = '')
         /**/
         {
             $this->initialize();
@@ -153,7 +153,7 @@ namespace org\octris\core {
          * Return application state.
          *
          * @octdoc  m:app/getState
-         * @return  \org\octris\core\app\state          State of application.
+         * @return  \octris\core\app\state          State of application.
          */
         public function getState()
         /**/
@@ -167,7 +167,7 @@ namespace org\octris\core {
          * a new instance of the applications' entry page is created.
          *
          * @octdoc  m:app/getLastPage
-         * @return  \org\octris\core\app\page           Returns instance of determined last visit page or instance of entry page.
+         * @return  \octris\core\app\page           Returns instance of determined last visit page or instance of entry page.
          */
         protected function getLastPage()
         /**/
@@ -186,9 +186,9 @@ namespace org\octris\core {
          * before aquiring an other application page.
          *
          * @octdoc  m:app/setLastPage
-         * @param   \org\octris\core\app\page       $page           Page object to set as last visited page.
+         * @param   \octris\core\app\page       $page           Page object to set as last visited page.
          */
-        protected function setLastPage(\org\octris\core\app\page $page)
+        protected function setLastPage(\octris\core\app\page $page)
         /**/
         {
             $class = get_class($page);
@@ -251,7 +251,7 @@ namespace org\octris\core {
          * Return instance of main application class.
          *
          * @octdoc  m:app/getInstance
-         * @return  \org\octris\core\app                Instance of main application class.
+         * @return  \octris\core\app                Instance of main application class.
          */
         public static function getInstance()
         /**/
@@ -284,6 +284,6 @@ namespace {
     function __($msg, array $args = array(), $domain = null)
     /**/
     {
-        return \org\octris\core\l10n::getInstance()->translate($msg, $args, $domain);
+        return \octris\core\l10n::getInstance()->translate($msg, $args, $domain);
     }
 }

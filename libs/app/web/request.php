@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'org.octris.core' package.
+ * This file is part of the 'octris/core' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace org\octris\core\app\web {
-    use \org\octris\core\validate as validate;
-    use \org\octris\core\provider as provider;
+namespace octris\core\app\web {
+    use \octris\core\validate as validate;
+    use \octris\core\provider as provider;
 
     /**
      * Request helper functions
