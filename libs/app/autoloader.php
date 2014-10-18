@@ -14,7 +14,7 @@ namespace octris\core\app {
      * Class Autoloader.
      *
      * @octdoc      c:app/autoloader
-     * @copyright   copyright (c) 2010-2011 by Harald Lapp
+     * @copyright   copyright (c) 2010-2014 by Harald Lapp
      * @author      Harald Lapp <harald@octris.org>
      */
     class autoloader
@@ -23,17 +23,18 @@ namespace octris\core\app {
         /**
          * Class Autoloader.
          *
-         * @octdoc  m:app/autoload
-         * @param   string      $classpath      Path of class to load.
+         * @octdoc  m:autoloader/autoload
+         * @param   string          $class              Class to load.
          */
-        public static function autoload($classpath)
+        public static function autoload($class)
         /**/
         {
-            $pkg = preg_replace('|\\\\|', '/', preg_replace('|\\\\|', '.', ltrim($classpath, '\\\\'), 2)) . '.class.php';
-
-            try {
-                include_once($pkg);
-            } catch(\Exception $e) {
+            if (strpos($class, 'octris\\core\\') === 0) {
+                $file = __DIR__ . '/../' . str_replace('\\', '/', substr($class, 12)) . '.php';
+                
+                if (file_exists($file)) {
+                    require_once($file);
+                }
             }
         }
     }
