@@ -10,7 +10,7 @@
  */
 
 namespace octris\core {
-    require_once(__DIR__ . '/app/autoloader.class.php');
+    require_once(__DIR__ . '/app/autoloader.php');
 
     use \octris\core\registry as registry;
 
@@ -269,8 +269,8 @@ namespace octris\core {
  * Put translate function and other stuff into global namespace for convenience reasons.
  */
 namespace {
-    require_once('debug.class.php');
-    require_once('error.class.php');
+    require_once(__DIR__ . '/debug.php');
+    require_once(__DIR__ . '/error.php');
 
     /**
      * Global translate function.
