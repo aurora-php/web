@@ -10,7 +10,7 @@
  */
 
 namespace octris\core\app {
-    require_once(__DIR__ . '/autoloader.class.php');
+    require_once(__DIR__ . '/autoloader.php');
     
     use \octris\core\validate as validate;
     use \octris\core\provider as provider;
@@ -21,7 +21,7 @@ namespace octris\core\app {
      * writing test cases.
      *
      * @octdoc      c:app/test
-     * @copyright   copyright (c) 2010-2011 by Harald Lapp
+     * @copyright   copyright (c) 2010-2014 by Harald Lapp
      * @author      Harald Lapp <harald@octris.org>
      */
     class test
