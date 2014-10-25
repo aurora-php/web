@@ -22,7 +22,6 @@ namespace octris\core {
      * @author      Harald Lapp <harald@octris.org>
      */
     abstract class app
-    /**/
     {
         /**
          * Used in combination with app/getPath to determine path.
@@ -96,7 +95,6 @@ namespace octris\core {
          * @octdoc  m:app/__construct
          */
         protected function __construct()
-        /**/
         {
         }
 
@@ -107,7 +105,6 @@ namespace octris\core {
          * @abstract
          */
         protected function initialize()
-        /**/
         {
         }
 
@@ -128,7 +125,6 @@ namespace octris\core {
          * @param   string                          $action             Optional action to invoke page with.
          */
         public function invoke(\octris\core\app\page $next_page, $action = '')
-        /**/
         {
             $this->initialize();
 
@@ -156,7 +152,6 @@ namespace octris\core {
          * @return  \octris\core\app\state          State of application.
          */
         public function getState()
-        /**/
         {
             return $this->state;
         }
@@ -170,7 +165,6 @@ namespace octris\core {
          * @return  \octris\core\app\page           Returns instance of determined last visit page or instance of entry page.
          */
         protected function getLastPage()
-        /**/
         {
             $class = (isset($this->state['__last_page'])
                       ? $this->state['__last_page']
@@ -189,7 +183,6 @@ namespace octris\core {
          * @param   \octris\core\app\page       $page           Page object to set as last visited page.
          */
         protected function setLastPage(\octris\core\app\page $page)
-        /**/
         {
             $class = get_class($page);
 
@@ -206,7 +199,6 @@ namespace octris\core {
          * @return  string                              Existing path or false, if path does not exist.
          */
         public static function getPath($type, $module = '', $rel_path = '')
-        /**/
         {
             $reg = registry::getInstance();
 
@@ -238,7 +230,6 @@ namespace octris\core {
          * @return  string                              Determined application name.
          */
         public static function getAppName($module = '')
-        /**/
         {
             if ($module == '') {
                 $module = registry::getInstance()->OCTRIS_APP;
@@ -254,7 +245,6 @@ namespace octris\core {
          * @return  \octris\core\app                Instance of main application class.
          */
         public static function getInstance()
-        /**/
         {
             if (is_null(self::$instance)) {
                 self::$instance = new static();
@@ -282,7 +272,6 @@ namespace {
      * @return  string                      Localized text.
      */
     function __($msg, array $args = array(), $domain = null)
-    /**/
     {
         return \octris\core\l10n::getInstance()->translate($msg, $args, $domain);
     }
