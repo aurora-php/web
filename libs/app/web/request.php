@@ -232,7 +232,7 @@ namespace octris\core\app\web {
             $accepted = $server->getValue('HTTP_ACCEPT_LANGUAGE', validate::T_PRINTABLE);
 
             // generate language array
-            $supported = array_combine(array_map(function($v) {
+            $supported = array_combine(array_map(function ($v) {
                 return str_replace('_', '-', $v);
             }, $supported), $supported);
 

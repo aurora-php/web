@@ -252,10 +252,10 @@ namespace octris\core\app\web {
             if (is_null($this->template)) {
                 $this->template = \octris\core\app::getInstance()->getTemplate();
 
-                $this->template->registerMethod('getBreadcrumb', function() {
+                $this->template->registerMethod('getBreadcrumb', function () {
                     return $this->breadcrumb;
                 }, array('max' => 0));
-                $this->template->registerMethod('getCsrfToken', function($scope = '') {
+                $this->template->registerMethod('getCsrfToken', function ($scope = '') {
                     $csrf = new \octris\core\app\web\csrf();
                     
                     return $csrf->createToken($scope);

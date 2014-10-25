@@ -139,10 +139,10 @@ namespace octris\core\app {
             $tpl->addSearchPath(\octris\core\app::getPath(\octris\core\app::T_PATH_WORK_TPL));
 
             // register common template methods
-            $tpl->registerMethod('getState', function(array $data = array()) {
+            $tpl->registerMethod('getState', function (array $data = array()) {
                 return $this->getState()->freeze($data);
             }, array('min' => 0, 'max' => 1));
-            $tpl->registerMethod('isAuthenticated', function() {
+            $tpl->registerMethod('isAuthenticated', function () {
                 return \octris\core\auth::getInstance()->isAuthenticated();
             }, array('min' => 0, 'max' => 0));
 
