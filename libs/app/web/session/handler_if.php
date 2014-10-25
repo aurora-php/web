@@ -18,7 +18,6 @@ namespace octris\core\app\web\session {
      * @author      Harald Lapp <harald@octris.org>
      */
     interface handler_if
-    /**/
     {
         /**
          * Open session.

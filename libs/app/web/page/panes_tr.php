@@ -18,7 +18,6 @@ namespace octris\core\app\web\page {
      * @author      Harald Lapp <harald@octris.org>
      */
     trait panes_tr
-    /**/
     {
     }
 }

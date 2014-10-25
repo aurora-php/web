@@ -21,7 +21,6 @@ namespace octris\core\app\web {
      * @author      Harald Lapp <harald@octris.org>
      */
     class request
-    /**/
     {
         /**
          * Request types.
@@ -40,7 +39,6 @@ namespace octris\core\app\web {
          * @return  string                                  Encoded data.
          */
         public static function base64UrlEncode($data)
-        /**/
         {
             return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
         }
@@ -53,7 +51,6 @@ namespace octris\core\app\web {
          * @param   string                                  Decoded data.
          */
         public static function base64UrlDecode($data)
-        /**/
         {
             return base64_decode(
                 str_pad(
@@ -72,7 +69,6 @@ namespace octris\core\app\web {
          * @return  string                                  Type of request.
          */
         public static function getRequestMethod()
-        /**/
         {
             static $method = null;
 
@@ -98,7 +94,6 @@ namespace octris\core\app\web {
          * @return  bool                                    Returns true if request is SSL secured.
          */
         public static function isSSL()
-        /**/
         {
             static $isSSL = null;
 
@@ -122,7 +117,6 @@ namespace octris\core\app\web {
          * @return  string                                  Hostname.
          */
         public static function getHostname()
-        /**/
         {
             static $host = false;
 
@@ -148,7 +142,6 @@ namespace octris\core\app\web {
          * @return  string                                  Host.
          */
         public function getHost()
-        /**/
         {
             $host = static::getHostname();
 
@@ -162,7 +155,6 @@ namespace octris\core\app\web {
          * @param   string                                  SSL secured host.
          */
         public static function getSSLHost()
-        /**/
         {
             return preg_replace('|^http://|i', 'https://', static::getHost());
         }
@@ -175,7 +167,6 @@ namespace octris\core\app\web {
          * @return  string                                  URL.
          */
         public static function getUrl()
-        /**/
         {
             $uri = static::getHost();
 
@@ -207,7 +198,6 @@ namespace octris\core\app\web {
          * @return  string                                  SSL secured URL.
          */
         public static function getSSLUrl()
-        /**/
         {
             return preg_replace('|^http://|i', 'https://', static::getUrl());
         }
@@ -219,7 +209,6 @@ namespace octris\core\app\web {
          * @return  string                                  Non-SSL secured URL.
          */
         public static function getNonSSLHost()
-        /**/
         {
             return preg_replace('|^https://|i', 'http://', static::getUrl());
         }
@@ -233,7 +222,6 @@ namespace octris\core\app\web {
          * @return  string                                  Determined language.
          */
         public static function negotiateLanguage(array $supported = array(), $default = '')
-        /**/
         {
             $server = provider::access('server');
 

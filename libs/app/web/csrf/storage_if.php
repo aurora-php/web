@@ -18,7 +18,6 @@ namespace octris\core\app\web\csrf {
      * @author      Harald Lapp <harald@octris.org>
      */
     interface storage_if
-    /**/
     {
         /**
          * Add a CSRF token to session storage.

@@ -21,7 +21,6 @@ namespace octris\core\app\web {
      * @author      Harald Lapp <harald@octris.org>
      */
     abstract class page extends \octris\core\app\page
-    /**/
     {
         /**
          * Template instance.
@@ -65,7 +64,6 @@ namespace octris\core\app\web {
          * @octdoc  m:page/__construct
          */
         public function __construct()
-        /**/
         {
             parent::__construct();
         }
@@ -77,7 +75,6 @@ namespace octris\core\app\web {
          * @return  bool                                    Secured flag.
          */
         public final function isSecure()
-        /**/
         {
             return $this->secure;
         }
@@ -91,7 +88,6 @@ namespace octris\core\app\web {
          * @param   string          $scope                  Optional scope of the CSRF token.
          */
         public function enableCsrfProtection($action, $scope = '')
-        /**/
         {
             $this->csrf_protection[$action] = $scope;
         }
@@ -104,7 +100,6 @@ namespace octris\core\app\web {
          * @param   string          $url                    URL for item.
          */
         public function addBreadcrumbItem($name, $url)
-        /**/
         {
             $this->breadcrumb[] = array(
                 'name'  => $name,
@@ -119,7 +114,6 @@ namespace octris\core\app\web {
          * @return  string                                      Name of action
          */
         public function getAction()
-        /**/
         {
             static $action = null;
 
@@ -170,7 +164,6 @@ namespace octris\core\app\web {
          * @return  string                                      Name of module
          */
         public function getModule()
-        /**/
         {
             static $module = '';
 
@@ -213,7 +206,6 @@ namespace octris\core\app\web {
          * @return  bool                                            Returns true if CSRF token is valid, otherwiese false.
          */
         protected function verifyCsrfToken($scope)
-        /**/
         {            
             $state = \octris\core\app::getInstance()->getState();
             
@@ -239,7 +231,6 @@ namespace octris\core\app\web {
          * @return  bool                                            Returns true if validation suceeded, otherwise false.
          */
         public function validate($action)
-        /**/
         {
             $is_valid = parent::validate($action);
             
@@ -257,7 +248,6 @@ namespace octris\core\app\web {
          * @return  \octris\core\tpl                Instance of template engine.
          */
         public function getTemplate()
-        /**/
         {
             if (is_null($this->template)) {
                 $this->template = \octris\core\app::getInstance()->getTemplate();

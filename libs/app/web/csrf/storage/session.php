@@ -18,7 +18,6 @@ namespace octris\core\app\web\csrf\storage {
      * @author      Harald Lapp <harald@octris.org>
      */
     class session implements \octris\core\app\web\csrf\storage_if
-    /**/
     {
         /**
          * Instance of session class.
@@ -35,7 +34,6 @@ namespace octris\core\app\web\csrf\storage {
          * @octdoc  m:session/__construct
          */
         public function __construct()
-        /**/
         {
             $this->session = \octris\core\app\web\session::getInstance();
         }
@@ -48,7 +46,6 @@ namespace octris\core\app\web\csrf\storage {
          * @param   string                      $scope              Scope of the token.
          */
         public function addToken($token, $scope)
-        /**/
         {
             $this->session->setValue($token . ':' . $scope, microtime(true), __CLASS__);
         }
@@ -62,7 +59,6 @@ namespace octris\core\app\web\csrf\storage {
          * @return  bool                                            Returns true if token exists or false if it does not exist.
          */
         public function hasToken($token, $scope)
-        /**/
         {
             return $this->session->isExist($token . ':' . $scope, __CLASS__);
         }
@@ -75,7 +71,6 @@ namespace octris\core\app\web\csrf\storage {
          * @param   string                      $scope              Scope of the token.
          */
         public function removeToken($token, $scope)
-        /**/
         {
             $this->session->unsetValue($token . ':' . $scope, __CLASS__);
         }

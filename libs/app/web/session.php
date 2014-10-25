@@ -18,7 +18,6 @@ namespace octris\core\app\web {
      * @author      Harald Lapp <harald@octris.org>
      */
     class session
-    /**/
     {
         /**
          * Instance of session class.
@@ -98,7 +97,6 @@ namespace octris\core\app\web {
          * @octdoc  m:session/__construct
          */
         protected function __construct()
-        /**/
         {
             $this->name     = (isset(self::$options['name'])
                                 ? self::$options['name']
@@ -129,7 +127,6 @@ namespace octris\core\app\web {
          * @octdoc  m:session/__destruct
          */
         public function __destruct()
-        /**/
         {
             session_write_close();
         }
@@ -142,7 +139,6 @@ namespace octris\core\app\web {
          * @param   array                                           $options        Optional options overwrite settings from php.ini.
          */
         public static function setHandler(\octris\core\app\web\session\handler_if $handler, array $options = array())
-        /**/
         {
             session_set_save_handler(
                 array($handler, 'open'),
@@ -168,7 +164,6 @@ namespace octris\core\app\web {
          * @return  \octris\core\app\web\session\handler_if                 Session handler of session class instance.
          */
         public static function getHandler()
-        /**/
         {
             return self::$handler;
         }
@@ -180,7 +175,6 @@ namespace octris\core\app\web {
          * @return  \octris\core\app\web\session                            Session class instance.
          */
         public static function getInstance()
-        /**/
         {
             if (is_null(self::$instance)) {
                 self::$instance = new static();
@@ -199,7 +193,6 @@ namespace octris\core\app\web {
          * @param   string          $namespace          Optional namespace.
          */
         public function setValue($name, $value, $namespace = 'default')
-        /**/
         {
             if (!isset(self::$data[$namespace])) self::$data[$namespace] = array();
 
@@ -214,7 +207,6 @@ namespace octris\core\app\web {
          * @param   string          $namespace          Optional namespace.
          */
         public function getValue($name, $namespace = 'default')
-        /**/
         {
             return self::$data[$namespace][$name];
         }
@@ -227,7 +219,6 @@ namespace octris\core\app\web {
          * @param   string          $namespace          Optional namespace.
          */
         public function unsetValue($name, $namespace = 'default')
-        /**/
         {
             unset(self::$data[$namespace][$name]);
         }
@@ -240,7 +231,6 @@ namespace octris\core\app\web {
          * @param   string          $namespace          Optional namespace.
          */
         public function isExist($name, $namespace = 'default')
-        /**/
         {
             return (isset(self::$data[$namespace]) && array_key_exists($name, self::$data[$namespace]));
         }
@@ -252,7 +242,6 @@ namespace octris\core\app\web {
          * @return  string                              Current session Id.
          */
         public function getId()
-        /**/
         {
             return $this->id;
         }
@@ -264,7 +253,6 @@ namespace octris\core\app\web {
          * @return  string                              Domain name the session is valid for.
          */
         public function getDomain()
-        /**/
         {
             return $this->domain;
         }
@@ -277,7 +265,6 @@ namespace octris\core\app\web {
          * @return  string                              Name of the session.
          */
         public function getName()
-        /**/
         {
             return $this->name;
         }
@@ -290,7 +277,6 @@ namespace octris\core\app\web {
          * @return  int                                 Session lifetime.
          */
         public function getLifetime()
-        /**/
         {
             return $this->lifetime;
         }
@@ -301,7 +287,6 @@ namespace octris\core\app\web {
          * @octdoc  m:session/start
          */
         public function start()
-        /**/
         {
             session_name($this->name);
 
@@ -336,7 +321,6 @@ namespace octris\core\app\web {
          * @octdoc  m:session/regenerate
          */
         public function regenerate()
-        /**/
         {
             session_name($this->name);
 

@@ -21,7 +21,6 @@ namespace octris\core\app {
      * @author      Harald Lapp <harald@octris.org>
      */
     class state extends \octris\core\type\collection
-    /**/
     {
         /**
          * Hash algorithm to use to generate the checksum of the state.
@@ -47,7 +46,6 @@ namespace octris\core\app {
          * @param   string          $secret             Secret for securing state.
          */
         public static function setSecret($secret)
-        /**/
         {
             self::$secret = $secret;
         }
@@ -60,7 +58,6 @@ namespace octris\core\app {
          * @param   mixed           $value              Value for state variable.
          */
         public function __set($name, $value)
-        /**/
         {
             parent::offsetSet($name, $value);
         }
@@ -73,7 +70,6 @@ namespace octris\core\app {
          * @return  mixed                               Value stored in state variable.
          */
         public function __get($name)
-        /**/
         {
             return parent::offsetGet($name);
         }
@@ -86,7 +82,6 @@ namespace octris\core\app {
          * @return  mixed                               Value stored in state variable.
          */
         public function pop($name)
-        /**/
         {
             $return = parent::offsetGet($name);
 
@@ -105,7 +100,6 @@ namespace octris\core\app {
          * @return  string                              Serialized and base64 for URLs encoded object secured by a hash.
          */
         public function freeze(array $data = array())
-        /**/
         {
             $tmp = array_merge($this->getArrayCopy(), $data);
             
@@ -125,7 +119,6 @@ namespace octris\core\app {
          * @return  bool                                Returns true if state is valid, otherwise returns false.
          */
         public static function validate($state, array &$decoded = null)
-        /**/
         {
             $tmp    = \octris\core\app\web\request::base64UrlDecode($state);
             $sum    = '';
@@ -154,7 +147,6 @@ namespace octris\core\app {
          * @return  \octris\core\app\state          Instance of state object.
          */
         public static function thaw($state)
-        /**/
         {
             $frozen = array();
 

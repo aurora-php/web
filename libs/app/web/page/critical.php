@@ -18,7 +18,6 @@ namespace octris\core\app\web\page {
      * @author      Harald Lapp <harald@octris.org>
      */
     abstract class critical extends \octris\core\app\web\page
-    /**/
     {
         /**
          * Template filename of page for rendering critical error information.
@@ -56,7 +55,6 @@ namespace octris\core\app\web\page {
          * @octdoc  m:critical/__construct
          */
         public function __construct()
-        /**/
         {
             parent::__construct();
         }
@@ -68,7 +66,6 @@ namespace octris\core\app\web\page {
          * @param   \octris\core\logger     $logger         Logger instance.
          */
         public function setLogger(\octris\core\logger $logger)
-        /**/
         {
             $this->logger = $logger;
         }
@@ -81,7 +78,6 @@ namespace octris\core\app\web\page {
          * @param   array                       $data           Additional data to include in error report.
          */
         public function setException(\Exception $exception, array $data = array())
-        /**/
         {
             $this->identifier = base64_encode(uniqid(gethostname() . '.', true));
 
@@ -110,7 +106,6 @@ namespace octris\core\app\web\page {
          * @return  mixed                                           Returns either page to redirect to or null.
          */
         public function prepare(\octris\core\app\page $last_page, $action)
-        /**/
         {
         }
 
@@ -120,7 +115,6 @@ namespace octris\core\app\web\page {
          * @octdoc  m:critical/render
          */
         public function render()
-        /**/
         {
             $tpl = $this->getTemplate();
             $tpl->setValue('identifier', $this->identifier);

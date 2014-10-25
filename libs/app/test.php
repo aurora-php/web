@@ -25,7 +25,6 @@ namespace octris\core\app {
      * @author      Harald Lapp <harald@octris.org>
      */
     class test
-    /**/
     {
         /**
          * This is a helper method to unit tests to enable access to
@@ -39,7 +38,6 @@ namespace octris\core\app {
          * @return  ReflectionMethod                    Method object.
          */
         public static function getMethod($class, $name)
-        /**/
         {
             $class = new \ReflectionClass($class);
             $method = $class->getMethod($name);
@@ -58,7 +56,6 @@ namespace octris\core\app {
          * @return  ReflectionProperty                  Property object.
          */
         public static function getProperty($class, $name)
-        /**/
         {
             $class = new \ReflectionClass($class);
             $property = $class->getProperty($name);

@@ -18,7 +18,6 @@ namespace octris\core\app\web {
      * @author      Harald Lapp <harald@octris.org>
      */
     class csrf
-    /**/
     {
         /**
          * Instance of a random bytes generator.
@@ -54,7 +53,6 @@ namespace octris\core\app\web {
          * @param   int             $entryp             Entropy for generating random bytes for CSRF token.
          */
         public function __construct($entropy = 256)
-        /**/
         {
             $this->entropy = $entropy;
         }
@@ -66,7 +64,6 @@ namespace octris\core\app\web {
          * @param   \octris\core\security\random_if     $random             Instance of random number generator.
          */
         public static function setRandomProvider(\octris\core\security\random_if $random)
-        /**/
         {
             self::$random = $random;
         }
@@ -78,7 +75,6 @@ namespace octris\core\app\web {
          * @param   \octris\core\app\web\csrf\storage_if    $storage        Instance of CSRF token storage.
          */
         public static function setStorage(\octris\core\app\web\csrf\storage_if $storage)
-        /**/
         {
             self::$storage = $storage;
         }
@@ -91,7 +87,6 @@ namespace octris\core\app\web {
          * @return  string                                                      Created CSRF token.
          */
         public function createToken($scope = '')
-        /**/
         {
             $token = self::$random->getRandom($this->entropy / 8);
             
@@ -109,7 +104,6 @@ namespace octris\core\app\web {
          * @return  bool                                                        Return true if verification was successful.
          */
         public function verifyToken($token, $scope = '')
-        /**/
         {
             if (($is_valid = self::$storage->hasToken($token, $scope))) {
                 self::$storage->removeToken($token, $scope);

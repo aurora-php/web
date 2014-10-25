@@ -18,7 +18,6 @@ namespace octris\core\app\web\page {
      * @author      Harald Lapp <harald@octris.org>
      */
     trait pager_tr
-    /**/
     {
         /**
          * Current page number.
@@ -91,7 +90,6 @@ namespace octris\core\app\web\page {
          * @return  int                             Number of current page.
          */
         public function getPage()
-        /**/
         {
             static $page = null;
 
@@ -117,7 +115,6 @@ namespace octris\core\app\web\page {
          * @return  int                             Number of items per page.
          */
         public function getItemsPerPage()
-        /**/
         {
             static $ipp = null;
 
@@ -143,7 +140,6 @@ namespace octris\core\app\web\page {
          * @return  array                           Array of pager data.
          */
         public function getPager()
-        /**/
         {
             $page = $this->getPage();
             $ipp  = $this->getItemsPerPage();

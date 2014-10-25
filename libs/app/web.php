@@ -22,7 +22,6 @@ namespace octris\core\app {
      * @author      Harald Lapp <harald@octris.org>
      */
     abstract class web extends \octris\core\app
-    /**/
     {
         /**
          * Initialization of web application.
@@ -30,7 +29,6 @@ namespace octris\core\app {
          * @octdoc  m:web/initialize
          */
         protected function initialize()
-        /**/
         {
             $request = provider::access('request');
 
@@ -59,7 +57,6 @@ namespace octris\core\app {
          * @octdoc  m:web/process
          */
         public function process()
-        /**/
         {
             ob_start();
 
@@ -114,7 +111,6 @@ namespace octris\core\app {
          * @param   string          $value              Value to set for header.
          */
         public function addHeader($name, $value)
-        /**/
         {
             $this->headers[$name] = $value;
         }
@@ -126,7 +122,6 @@ namespace octris\core\app {
          * @return  \octris\core\tpl                Instance of template class.
          */
         public function getTemplate()
-        /**/
         {
             $path_cache = \octris\core\app::getPath(\octris\core\app::T_PATH_CACHE);
             $path_host  = \octris\core\app::getPath(\octris\core\app::T_PATH_HOST);

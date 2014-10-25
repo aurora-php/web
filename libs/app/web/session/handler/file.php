@@ -18,7 +18,6 @@ namespace octris\core\app\web\session\handler {
      * @author      Harald Lapp <harald@octris.org>
      */
     class file implements \octris\core\app\web\session\handler_if
-    /**/
     {
         /**
          * Stores the path the session files are stored in.
@@ -37,7 +36,6 @@ namespace octris\core\app\web\session\handler {
          * @param   string          $name               Session name.
          */
         public function open($path, $name)
-        /**/
         {
             $this->session_path = rtrim($path, '/');
 
@@ -54,7 +52,6 @@ namespace octris\core\app\web\session\handler {
          * @octdoc  m:file/close
          */
         public function close()
-        /**/
         {
             return true;
         }
@@ -66,7 +63,6 @@ namespace octris\core\app\web\session\handler {
          * @param   string      $id                     Id of session to read.
          */
         public function read($id)
-        /**/
         {
             $file   = $this->session_path . '/sess_' . $id;
             $return = array();
@@ -88,7 +84,6 @@ namespace octris\core\app\web\session\handler {
          * @param   array       $data                   Session data to write.
          */
         public function write($id, array $data)
-        /**/
         {
             $return = false;
 
@@ -112,7 +107,6 @@ namespace octris\core\app\web\session\handler {
          * @param   string      $id                     Id of session to destroy.
          */
         public function destroy($id)
-        /**/
         {
             $file   = $this->session_path . '/sess_' . $id;
             $return = false;
@@ -131,7 +125,6 @@ namespace octris\core\app\web\session\handler {
          * @param   int         $lifetime               Maximum lifetime of session.
          */
         public function gc($lifetime)
-        /**/
         {
             if (is_dir($this->session_path)) {
                 $file = $this->session_path . '/sess_*';

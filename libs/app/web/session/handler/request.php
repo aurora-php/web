@@ -21,7 +21,6 @@ namespace octris\core\app\web\session\handler {
      * @author      Harald Lapp <harald@octris.org>
      */
     class request implements \octris\core\app\web\session\handler_if
-    /**/
     {
         /**
          * Open session.
@@ -31,7 +30,6 @@ namespace octris\core\app\web\session\handler {
          * @param   string          $name               Session name.
          */
         public function open($path, $name)
-        /**/
         {
             return true;
         }
@@ -42,7 +40,6 @@ namespace octris\core\app\web\session\handler {
          * @octdoc  m:request/close
          */
         public function close()
-        /**/
         {
             return true;
         }
@@ -54,7 +51,6 @@ namespace octris\core\app\web\session\handler {
          * @param   string      $id                     Id of session to read.
          */
         public function read($id)
-        /**/
         {
             return array();
         }
@@ -67,7 +63,6 @@ namespace octris\core\app\web\session\handler {
          * @param   array       $data                   Session data to write.
          */
         public function write($id, array $data)
-        /**/
         {
             return true;
         }
@@ -79,7 +74,6 @@ namespace octris\core\app\web\session\handler {
          * @param   string      $id                     Id of session to destroy.
          */
         public function destroy($id)
-        /**/
         {
             return true;
         }
@@ -91,7 +85,6 @@ namespace octris\core\app\web\session\handler {
          * @param   int         $lifetime               Maximum lifetime of session.
          */
         public function gc($lifetime)
-        /**/
         {
             return true;
         }
