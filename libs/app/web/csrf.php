@@ -28,7 +28,7 @@ class csrf
      */
     protected static $random = null;
     /**/
-    
+
     /**
      * Server-side storage for CSRF tokens.
      *
@@ -37,7 +37,7 @@ class csrf
      */
     protected static $storage = null;
     /**/
-    
+
     /**
      * Entropy for generating random bytes for CSRF token.
      *
@@ -46,7 +46,7 @@ class csrf
      */
     protected $entropy;
     /**/
-    
+
     /**
      * Constructor.
      *
@@ -57,7 +57,7 @@ class csrf
     {
         $this->entropy = $entropy;
     }
-    
+
     /**
      * Set random number generator / provider.
      *
@@ -68,7 +68,7 @@ class csrf
     {
         self::$random = $random;
     }
-    
+
     /**
      * Set server-side storage for generated CSRF token.
      *
@@ -79,7 +79,7 @@ class csrf
     {
         self::$storage = $storage;
     }
-    
+
     /**
      * Create a CSRF token and put it into CSRF token storage.
      *
@@ -90,12 +90,12 @@ class csrf
     public function createToken($scope = '')
     {
         $token = self::$random->getRandom($this->entropy / 8);
-        
+
         self::$storage->addToken($token, $scope);
-        
+
         return $token;
     }
-    
+
     /**
      * Check if a token exists in storage and remove it from storage.
      *
@@ -109,7 +109,7 @@ class csrf
         if (($is_valid = self::$storage->hasToken($token, $scope))) {
             self::$storage->removeToken($token, $scope);
         }
-        
+
         return $is_valid;
     }
 }

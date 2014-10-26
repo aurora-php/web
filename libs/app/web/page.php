@@ -79,7 +79,7 @@ abstract class page extends \octris\core\app\page
     {
         return $this->secure;
     }
-    
+
     /**
      * Enable CSRF protection for the specified action with an optional specified
      * scope.
@@ -207,20 +207,20 @@ abstract class page extends \octris\core\app\page
      * @return  bool                                            Returns true if CSRF token is valid, otherwiese false.
      */
     protected function verifyCsrfToken($scope)
-    {            
+    {
         $state = \octris\core\app::getInstance()->getState();
-        
+
         if (!($is_valid = isset($state['__csrf_token']))) {
             // CSRF token is not in state
             $this->addError(__('CSRF token is not provided in application state!'));
-        } else {                    
+        } else {
             $csrf = new \octris\core\app\web\csrf();
-            
+
             if (!($is_valid = $csrf->verifyToken($state->pop('__csrf_token'), $scope))) {
                 $this->addError(__('Provided CSRF token is invalid!'));
             }
         }
-        
+
         return $is_valid;
     }
 
@@ -234,11 +234,11 @@ abstract class page extends \octris\core\app\page
     public function validate($action)
     {
         $is_valid = parent::validate($action);
-        
+
         if (array_key_exists($action, $this->csrf_protection)) {
             $is_valid = ($this->verifyCsrfToken($this->csrf_protection[$action]) && $is_valid);
         }
-        
+
         return $is_valid;
     }
 
@@ -258,10 +258,10 @@ abstract class page extends \octris\core\app\page
             }, array('max' => 0));
             $this->template->registerMethod('getCsrfToken', function ($scope = '') {
                 $csrf = new \octris\core\app\web\csrf();
-                
+
                 return $csrf->createToken($scope);
             }, array('max' => 1));
-            
+
             // values
             $this->template->setValue('errors',   $this->errors);
             $this->template->setValue('messages', $this->messages);

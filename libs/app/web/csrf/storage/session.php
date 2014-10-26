@@ -68,7 +68,7 @@ class session implements \octris\core\app\web\csrf\storage_if
      * Remove a token from session storage.
      *
      * @octdoc  m:session/removeToken
-     * @param   string                      $token              CSRF token to remove.    
+     * @param   string                      $token              CSRF token to remove.
      * @param   string                      $scope              Scope of the token.
      */
     public function removeToken($token, $scope)

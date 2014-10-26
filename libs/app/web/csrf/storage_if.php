@@ -45,7 +45,7 @@ interface storage_if
      * Remove a token from session storage.
      *
      * @octdoc  m:storage_if/removeToken
-     * @param   string                      $token              CSRF token to remove.    
+     * @param   string                      $token              CSRF token to remove.
      * @param   string                      $scope              Scope of the token.
      */
     public function removeToken($token, $scope);

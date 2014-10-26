@@ -46,7 +46,7 @@ class test
 
         return $method;
     }
-    
+
     /**
      * Implements the same as ~getMethod~ for object properties.
      *

@@ -103,7 +103,7 @@ class state extends \octris\core\type\collection
     public function freeze(array $data = array())
     {
         $tmp = array_merge($this->getArrayCopy(), $data);
-        
+
         $frozen = gzcompress(serialize($tmp));
         $sum    = hash(self::hash_algo, $frozen . self::$secret);
         $return = \octris\core\app\web\request::base64UrlEncode($sum . '|' . $frozen);
