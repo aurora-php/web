@@ -9,70 +9,71 @@
  * file that was distributed with this source code.
  */
 
-namespace octris\core\app\web\csrf\storage {
+namespace octris\core\app\web\csrf\storage;
+
+/**
+ * Storage handler for storing CSRF tokens into session.
+ *
+ * @octdoc      c:storage/session
+ * @copyright   copyright (c) 2014 by Harald Lapp
+ * @author      Harald Lapp <harald@octris.org>
+ */
+class session implements \octris\core\app\web\csrf\storage_if
+{
     /**
-     * Storage handler for storing CSRF tokens into session.
+     * Instance of session class.
      *
-     * @octdoc      c:storage/session
-     * @copyright   copyright (c) 2014 by Harald Lapp
-     * @author      Harald Lapp <harald@octris.org>
+     * @octdoc  p:session/$session
+     * @type    \octris\core\app\web\session
      */
-    class session implements \octris\core\app\web\csrf\storage_if
+    protected $session;
+    /**/
+
+    /**
+     * Constructor.
+     *
+     * @octdoc  m:session/__construct
+     */
+    public function __construct()
     {
-        /**
-         * Instance of session class.
-         *
-         * @octdoc  p:session/$session
-         * @type    \octris\core\app\web\session
-         */
-        protected $session;
-        /**/
+        $this->session = \octris\core\app\web\session::getInstance();
+    }
 
-        /**
-         * Constructor.
-         *
-         * @octdoc  m:session/__construct
-         */
-        public function __construct()
-        {
-            $this->session = \octris\core\app\web\session::getInstance();
-        }
+    /**
+     * Add a CSRF token to session storage.
+     *
+     * @octdoc  m:session/addToken
+     * @param   string                      $token              CSRF token to add.
+     * @param   string                      $scope              Scope of the token.
+     */
+    public function addToken($token, $scope)
+    {
+        $this->session->setValue($token . ':' . $scope, microtime(true), __CLASS__);
+    }
 
-        /**
-         * Add a CSRF token to session storage.
-         *
-         * @octdoc  m:session/addToken
-         * @param   string                      $token              CSRF token to add.
-         * @param   string                      $scope              Scope of the token.
-         */
-        public function addToken($token, $scope)
-        {
-            $this->session->setValue($token . ':' . $scope, microtime(true), __CLASS__);
-        }
+    /**
+     * Test whether a CSRF token exists in session storage.
+     *
+     * @octdoc  m:session/hasToken
+     * @param   string                      $token              CSRF token to test.
+     * @param   string                      $scope              Scope of the token.
+     * @return  bool                                            Returns true if token exists or false if it does not exist.
+     */
+    public function hasToken($token, $scope)
+    {
+        return $this->session->isExist($token . ':' . $scope, __CLASS__);
+    }
 
-        /**
-         * Test whether a CSRF token exists in session storage.
-         *
-         * @octdoc  m:session/hasToken
-         * @param   string                      $token              CSRF token to test.
-         * @param   string                      $scope              Scope of the token.
-         * @return  bool                                            Returns true if token exists or false if it does not exist.
-         */
-        public function hasToken($token, $scope)
-        {
-            return $this->session->isExist($token . ':' . $scope, __CLASS__);
-        }
-
-        /**
-         * Remove a token from session storage.
-         *
-         * @octdoc  m:session/removeToken
-         * @param   string                      $token              CSRF token to remove.    
-         * @param   string                      $scope              Scope of the token.
-         */
-        public function removeToken($token, $scope)
-        {
-            $this->session->unsetValue($token . ':' . $scope, __CLASS__);
-        }
+    /**
+     * Remove a token from session storage.
+     *
+     * @octdoc  m:session/removeToken
+     * @param   string                      $token              CSRF token to remove.    
+     * @param   string                      $scope              Scope of the token.
+     */
+    public function removeToken($token, $scope)
+    {
+        $this->session->unsetValue($token . ':' . $scope, __CLASS__);
     }
 }
+
