@@ -252,7 +252,6 @@ abstract class app
         return self::$instance;
     }
 }
-}
 
 /*
  * Put translate function and other stuff into global namespace for convenience reasons.
