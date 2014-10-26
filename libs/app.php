@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace octris\core;
+namespace octris\core {
 
 use \octris\core\registry as registry;
 
@@ -253,11 +253,10 @@ abstract class app
     }
 }
 
-/*
- * Put translate function and other stuff into global namespace for convenience reasons.
- */
-namespace;
+}
 
+namespace {
+    
 require_once(__DIR__ . '/debug.php');
 require_once(__DIR__ . '/error.php');
 
@@ -273,4 +272,6 @@ require_once(__DIR__ . '/error.php');
 function __($msg, array $args = array(), $domain = null)
 {
     return \octris\core\l10n::getInstance()->translate($msg, $args, $domain);
+}
+
 }
