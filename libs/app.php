@@ -11,8 +11,6 @@
 
 namespace octris\core;
 
-require_once(__DIR__ . '/app/autoloader.php');
-
 use \octris\core\registry as registry;
 
 /**
