@@ -141,4 +141,3 @@ class file implements \octris\core\app\web\session\handler_if
         return true;
     }
 }
-

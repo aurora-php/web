@@ -51,4 +51,3 @@ interface storage_if
     public function removeToken($token, $scope);
     /**/
 }
-

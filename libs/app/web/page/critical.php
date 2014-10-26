@@ -122,4 +122,3 @@ abstract class critical extends \octris\core\app\web\page
         $tpl->render($this->template);
     }
 }
-

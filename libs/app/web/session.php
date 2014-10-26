@@ -341,4 +341,3 @@ class session
 
 // set default session handler
 session::setHandler(new \octris\core\app\web\session\handler\request());
-

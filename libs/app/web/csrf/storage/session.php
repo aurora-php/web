@@ -76,4 +76,3 @@ class session implements \octris\core\app\web\csrf\storage_if
         $this->session->unsetValue($token . ':' . $scope, __CLASS__);
     }
 }
-

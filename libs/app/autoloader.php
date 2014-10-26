@@ -39,4 +39,3 @@ class autoloader
 }
 
 spl_autoload_register(array('\octris\core\app\autoloader', 'autoload'));
-

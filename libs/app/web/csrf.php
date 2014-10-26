@@ -113,4 +113,3 @@ class csrf
         return $is_valid;
     }
 }
-

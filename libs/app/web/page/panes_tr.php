@@ -21,4 +21,3 @@ namespace octris\core\app\web\page;
 trait panes_tr
 {
 }
-

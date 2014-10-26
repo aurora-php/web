@@ -159,4 +159,3 @@ class state extends \octris\core\type\collection
         }
     }
 }
-

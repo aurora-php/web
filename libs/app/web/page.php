@@ -270,4 +270,3 @@ abstract class page extends \octris\core\app\page
         return $this->template;
     }
 }
-

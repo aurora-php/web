@@ -75,4 +75,3 @@ interface handler_if
     public function gc($lifetime);
     /**/
 }
-

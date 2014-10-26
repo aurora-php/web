@@ -202,4 +202,3 @@ trait pager_tr
         );
     }
 }
-
