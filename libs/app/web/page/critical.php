@@ -93,7 +93,7 @@ abstract class critical extends \octris\core\app\web\page
                         '_identifier' => $this->identifier
                     )
                 );
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
             }
         }
     }
