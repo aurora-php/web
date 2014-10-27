@@ -12,10 +12,13 @@
 namespace Octris\Core\App;
 
 /**
- * The state class is used to transfer page/action specific data between two or more requests. The state is essencial for
- * transfering for example the last visited page to determine the next valid page. It can also be used to transfer additional
- * abitrary data for example search query parameters, parameters that should not be visible and or not be modified by a user
- * between two requests. The state helps to bring stateful requests to a web application, too.
+ * The state class is used to transfer page/action specific data between two
+ * or more requests. The state is essencial for transfering for example the
+ * last visited page to determine the next valid page. It can also be used
+ * to transfer additional abitrary data for example search query parameters,
+ * parameters that should not be visible and or not be modified by a user
+ * between two requests. The state helps to bring stateful requests to a web
+ * application, too.
  *
  * @octdoc      c:app/state
  * @copyright   copyright (c) 2011-2014 by Harald Lapp
@@ -26,9 +29,9 @@ class State extends \Octris\Core\Type\Collection
     /**
      * Hash algorithm to use to generate the checksum of the state.
      *
-     * @octdoc  d:state/hash_algo
+     * @octdoc  d:state/HASH_ALGO
      */
-    const hash_algo = 'sha256';
+    const HASH_ALGO = 'sha256';
     /**/
 
     /**
@@ -95,9 +98,10 @@ class State extends \Octris\Core\Type\Collection
      * Freeze state object.
      *
      * @octdoc  m:state/freeze
-     * @param   array           $data               Optional data to inject into state before freezing. Note that the original
-     *                                              state will not be modified, only the frozen state contains the specified
-     *                                              data.
+     * @param   array           $data               Optional data to inject into state before freezing. Note that
+     *                                              the original
+     *                                              state will not be modified, only the frozen state contains
+     *                                              the specified data.
      * @return  string                              Serialized and base64 for URLs encoded object secured by a hash.
      */
     public function freeze(array $data = array())
@@ -105,7 +109,7 @@ class State extends \Octris\Core\Type\Collection
         $tmp = array_merge($this->getArrayCopy(), $data);
 
         $frozen = gzcompress(serialize($tmp));
-        $sum    = hash(self::hash_algo, $frozen . self::$secret);
+        $sum    = hash(self::HASH_ALGO, $frozen . self::$secret);
         $return = \Octris\Core\App\Web\Request::base64UrlEncode($sum . '|' . $frozen);
 
         return $return;
@@ -137,7 +141,7 @@ class State extends \Octris\Core\Type\Collection
             );
         }
 
-        return (($test = hash(self::hash_algo, $frozen . self::$secret)) != $sum);
+        return (($test = hash(self::HASH_ALGO, $frozen . self::$secret)) != $sum);
     }
 
     /**
