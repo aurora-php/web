@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace octris\core\app\web\page;
+namespace Octris\Core\App\Web\Page;
 
 /**
  * Implements functionality to generate pagers.

@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace octris\core {
+namespace Octris\Core;
 
-use \octris\core\registry as registry;
+use \Octris\Core\Registry as registry;
 
 /**
  * Core application class.
@@ -20,7 +20,7 @@ use \octris\core\registry as registry;
  * @copyright   copyright (c) 2010-2014 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-abstract class app
+abstract class App
 {
     /**
      * Used in combination with app/getPath to determine path.
@@ -120,10 +120,10 @@ abstract class app
      * Invoke the page of an application without using the process workflow.
      *
      * @octdoc  m:app/invoke
-     * @param   \octris\core\app\page       $next_page          Application page to invoke.
+     * @param   \Octris\Core\App\Page       $next_page          Application page to invoke.
      * @param   string                          $action             Optional action to invoke page with.
      */
-    public function invoke(\octris\core\app\page $next_page, $action = '')
+    public function invoke(\Octris\Core\App\Page $next_page, $action = '')
     {
         $this->initialize();
 
@@ -179,9 +179,9 @@ abstract class app
      * before aquiring an other application page.
      *
      * @octdoc  m:app/setLastPage
-     * @param   \octris\core\app\page       $page           Page object to set as last visited page.
+     * @param   \Octris\Core\App\Page       $page           Page object to set as last visited page.
      */
-    protected function setLastPage(\octris\core\app\page $page)
+    protected function setLastPage(\Octris\Core\App\Page $page)
     {
         $class = get_class($page);
 
@@ -256,7 +256,7 @@ abstract class app
 }
 
 namespace {
-    
+
 require_once(__DIR__ . '/debug.php');
 require_once(__DIR__ . '/error.php');
 
@@ -271,7 +271,7 @@ require_once(__DIR__ . '/error.php');
  */
 function __($msg, array $args = array(), $domain = null)
 {
-    return \octris\core\l10n::getInstance()->translate($msg, $args, $domain);
+    return \Octris\Core\L10n::getInstance()->translate($msg, $args, $domain);
 }
 
 }

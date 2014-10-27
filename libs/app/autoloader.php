@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace octris\core\app;
+namespace Octris\Core\App;
 
 /**
  * Class Autoloader.
@@ -18,7 +18,7 @@ namespace octris\core\app;
  * @copyright   copyright (c) 2010-2014 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-class autoloader
+class Autoloader
 {
     /**
      * Class Autoloader.
@@ -38,4 +38,4 @@ class autoloader
     }
 }
 
-spl_autoload_register(array('\octris\core\app\autoloader', 'autoload'));
+spl_autoload_register(array('\Octris\Core\App\Autoloader', 'autoload'));

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace octris\core\app\web;
+namespace Octris\Core\App\Web;
 
 /**
  * Session base class.
@@ -18,7 +18,7 @@ namespace octris\core\app\web;
  * @copyright   copyright (c) 2011-2013 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-class session
+class Session
 {
     /**
      * Instance of session class.
@@ -136,10 +136,10 @@ class session
      * Set session handler.
      *
      * @octdoc  m:session/setHandler
-     * @param   \octris\core\app\web\session\handler_if     $handler        Instance of session handler.
+     * @param   \Octris\Core\App\Web\Session\Handler_if     $handler        Instance of session handler.
      * @param   array                                           $options        Optional options overwrite settings from php.ini.
      */
-    public static function setHandler(\octris\core\app\web\session\handler_if $handler, array $options = array())
+    public static function setHandler(\Octris\Core\App\Web\Session\Handler_if $handler, array $options = array())
     {
         session_set_save_handler(
             array($handler, 'open'),
@@ -291,8 +291,8 @@ class session
     {
         session_name($this->name);
 
-        $cookie    = \octris\core\provider::access('cookie');
-        $cookie_id = ($cookie->isExist($this->name) && $cookie->isValid($this->name, \octris\core\validate::T_PRINTABLE)
+        $cookie    = \Octris\Core\Provider::access('cookie');
+        $cookie_id = ($cookie->isExist($this->name) && $cookie->isValid($this->name, \Octris\Core\Validate::T_PRINTABLE)
                         ? $cookie->getValue($this->name)
                         : false);
 
@@ -340,4 +340,4 @@ class session
 }
 
 // set default session handler
-session::setHandler(new \octris\core\app\web\session\handler\request());
+session::setHandler(new \Octris\Core\App\Web\Session\Handler\Request());

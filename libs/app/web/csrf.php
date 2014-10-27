@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace octris\core\app\web;
+namespace Octris\Core\App\Web;
 
 /**
  * Class provides functionality for handling CSRF (cross-site request forgery) tokens.
@@ -18,7 +18,7 @@ namespace octris\core\app\web;
  * @copyright   copyright (c) 2014 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-class csrf
+class Csrf
 {
     /**
      * Instance of a random bytes generator.
@@ -62,9 +62,9 @@ class csrf
      * Set random number generator / provider.
      *
      * @octdoc  m:csrf/setRandomProvider
-     * @param   \octris\core\security\random_if     $random             Instance of random number generator.
+     * @param   \Octris\Core\Security\Random_if     $random             Instance of random number generator.
      */
-    public static function setRandomProvider(\octris\core\security\random_if $random)
+    public static function setRandomProvider(\Octris\Core\Security\Random_if $random)
     {
         self::$random = $random;
     }
@@ -73,9 +73,9 @@ class csrf
      * Set server-side storage for generated CSRF token.
      *
      * @octdoc  m:csrf/setStorage
-     * @param   \octris\core\app\web\csrf\storage_if    $storage        Instance of CSRF token storage.
+     * @param   \Octris\Core\App\Web\Csrf\Storage_if    $storage        Instance of CSRF token storage.
      */
-    public static function setStorage(\octris\core\app\web\csrf\storage_if $storage)
+    public static function setStorage(\Octris\Core\App\Web\Csrf\Storage_if $storage)
     {
         self::$storage = $storage;
     }

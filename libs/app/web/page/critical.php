@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace octris\core\app\web\page;
+namespace Octris\Core\App\Web\Page;
 
 /**
  * Special page for handling critical errors.
@@ -18,7 +18,7 @@ namespace octris\core\app\web\page;
  * @copyright   copyright (c) 2011 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-abstract class critical extends \octris\core\app\web\page
+abstract class Critical extends \Octris\Core\App\Web\Page
 {
     /**
      * Template filename of page for rendering critical error information.
@@ -64,9 +64,9 @@ abstract class critical extends \octris\core\app\web\page
      * Configure a logger instance to log critical exception to.
      *
      * @octdoc  m:critical/setLogger
-     * @param   \octris\core\logger     $logger         Logger instance.
+     * @param   \Octris\Core\Logger     $logger         Logger instance.
      */
-    public function setLogger(\octris\core\logger $logger)
+    public function setLogger(\Octris\Core\Logger $logger)
     {
         $this->logger = $logger;
     }
@@ -87,7 +87,7 @@ abstract class critical extends \octris\core\app\web\page
         if (!is_null($this->logger)) {
             try {
                 $this->logger->log(
-                    \octris\core\logger::T_CRITICAL,
+                    \Octris\Core\Logger::T_CRITICAL,
                     $exception,
                     array(
                         '_identifier' => $this->identifier
@@ -102,11 +102,11 @@ abstract class critical extends \octris\core\app\web\page
      * Implements abstract prepare methof of parent class.
      *
      * @octdoc  m:critical/prepare
-     * @param   \octris\core\app\page       $last_page      Instance of last called page.
+     * @param   \Octris\Core\App\Page       $last_page      Instance of last called page.
      * @param   string                          $action         Action that led to current page.
      * @return  mixed                                           Returns either page to redirect to or null.
      */
-    public function prepare(\octris\core\app\page $last_page, $action)
+    public function prepare(\Octris\Core\App\Page $last_page, $action)
     {
     }
 

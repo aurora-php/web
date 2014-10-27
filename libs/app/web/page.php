@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace octris\core\app\web;
+namespace Octris\Core\App\Web;
 
-use \octris\core\provider as provider;
-use \octris\core\validate as validate;
+use \Octris\Core\Provider as provider;
+use \Octris\Core\Validate as validate;
 
 /**
  * Page controller for web applications.
@@ -21,7 +21,7 @@ use \octris\core\validate as validate;
  * @copyright   copyright (c) 2010-2014 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-abstract class page extends \octris\core\app\page
+abstract class Page extends \Octris\Core\App\Page
 {
     /**
      * Template instance.
@@ -208,13 +208,13 @@ abstract class page extends \octris\core\app\page
      */
     protected function verifyCsrfToken($scope)
     {
-        $state = \octris\core\app::getInstance()->getState();
+        $state = \Octris\Core\App::getInstance()->getState();
 
         if (!($is_valid = isset($state['__csrf_token']))) {
             // CSRF token is not in state
             $this->addError(__('CSRF token is not provided in application state!'));
         } else {
-            $csrf = new \octris\core\app\web\csrf();
+            $csrf = new \Octris\Core\App\Web\Csrf();
 
             if (!($is_valid = $csrf->verifyToken($state->pop('__csrf_token'), $scope))) {
                 $this->addError(__('Provided CSRF token is invalid!'));
@@ -251,13 +251,13 @@ abstract class page extends \octris\core\app\page
     public function getTemplate()
     {
         if (is_null($this->template)) {
-            $this->template = \octris\core\app::getInstance()->getTemplate();
+            $this->template = \Octris\Core\App::getInstance()->getTemplate();
 
             $this->template->registerMethod('getBreadcrumb', function () {
                 return $this->breadcrumb;
             }, array('max' => 0));
             $this->template->registerMethod('getCsrfToken', function ($scope = '') {
-                $csrf = new \octris\core\app\web\csrf();
+                $csrf = new \Octris\Core\App\Web\Csrf();
 
                 return $csrf->createToken($scope);
             }, array('max' => 1));

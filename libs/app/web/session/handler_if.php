@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace octris\core\app\web\session;
+namespace Octris\Core\App\Web\Session;
 
 /**
  * Interface for implementing session handlers.

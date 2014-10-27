@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace octris\core\app;
+namespace Octris\Core\App;
 
-use \octris\core\app\web\request as request;
-use \octris\core\validate as validate;
-use \octris\core\provider as provider;
+use \Octris\Core\App\Web\Request as request;
+use \Octris\Core\Validate as validate;
+use \Octris\Core\Provider as provider;
 
 /**
  * Core class for Web applications.
@@ -22,7 +22,7 @@ use \octris\core\provider as provider;
  * @copyright   copyright (c) 2011-2014 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-abstract class web extends \octris\core\app
+abstract class Web extends \Octris\Core\App
 {
     /**
      * Initialization of web application.
@@ -124,27 +124,27 @@ abstract class web extends \octris\core\app
      */
     public function getTemplate()
     {
-        $path_cache = \octris\core\app::getPath(\octris\core\app::T_PATH_CACHE);
-        $path_host  = \octris\core\app::getPath(\octris\core\app::T_PATH_HOST);
-        $path_work  = \octris\core\app::getPath(\octris\core\app::T_PATH_WORK);
+        $path_cache = \Octris\Core\App::getPath(\Octris\Core\App::T_PATH_CACHE);
+        $path_host  = \Octris\Core\App::getPath(\Octris\Core\App::T_PATH_HOST);
+        $path_work  = \Octris\Core\App::getPath(\Octris\Core\App::T_PATH_WORK);
 
-        $tpl = new \octris\core\tpl();
+        $tpl = new \Octris\Core\Tpl();
 
         // setup template engine environment
-        $tpl->setL10n(\octris\core\l10n::getInstance());
+        $tpl->setL10n(\Octris\Core\L10n::getInstance());
         $tpl->setOutputPath('tpl', $path_cache . '/templates_c/');
         $tpl->setOutputPath('css', $path_host . '/styles/');
         $tpl->setOutputPath('js',  $path_host . '/libsjs/');
         $tpl->setResourcePath('css', $path_work);
         $tpl->setResourcePath('js',  $path_work);
-        $tpl->addSearchPath(\octris\core\app::getPath(\octris\core\app::T_PATH_WORK_TPL));
+        $tpl->addSearchPath(\Octris\Core\App::getPath(\Octris\Core\App::T_PATH_WORK_TPL));
 
         // register common template methods
         $tpl->registerMethod('getState', function (array $data = array()) {
             return $this->getState()->freeze($data);
         }, array('min' => 0, 'max' => 1));
         $tpl->registerMethod('isAuthenticated', function () {
-            return \octris\core\auth::getInstance()->isAuthenticated();
+            return \Octris\Core\Auth::getInstance()->isAuthenticated();
         }, array('min' => 0, 'max' => 0));
 
         return $tpl;

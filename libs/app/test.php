@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace octris\core\app;
+namespace Octris\Core\App;
 
 require_once(__DIR__ . '/autoloader.php');
 
-use \octris\core\validate as validate;
-use \octris\core\provider as provider;
+use \Octris\Core\Validate as validate;
+use \Octris\Core\Provider as provider;
 
 /**
  * Test base class. The main purpose of this class is to include the
@@ -25,7 +25,7 @@ use \octris\core\provider as provider;
  * @copyright   copyright (c) 2010-2014 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-class test
+class Test
 {
     /**
      * This is a helper method to unit tests to enable access to

@@ -9,7 +9,7 @@
  * request that was distributed with this source code.
  */
 
-namespace octris\core\app\web\session\handler;
+namespace Octris\Core\App\Web\Session\Handler;
 
 /**
  * The request session handler is the default session handler, which is set initially,
@@ -21,7 +21,7 @@ namespace octris\core\app\web\session\handler;
  * @copyright   copyright (c) 2011 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-class request implements \octris\core\app\web\session\handler_if
+class Request implements \Octris\Core\App\Web\Session\Handler_if
 {
     /**
      * Open session.

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace octris\core\app;
+namespace Octris\Core\App;
 
 /**
  * The state class is used to transfer page/action specific data between two or more requests. The state is essencial for
@@ -21,7 +21,7 @@ namespace octris\core\app;
  * @copyright   copyright (c) 2011-2014 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-class state extends \octris\core\type\collection
+class State extends \Octris\Core\Type\Collection
 {
     /**
      * Hash algorithm to use to generate the checksum of the state.
@@ -106,7 +106,7 @@ class state extends \octris\core\type\collection
 
         $frozen = gzcompress(serialize($tmp));
         $sum    = hash(self::hash_algo, $frozen . self::$secret);
-        $return = \octris\core\app\web\request::base64UrlEncode($sum . '|' . $frozen);
+        $return = \Octris\Core\App\Web\Request::base64UrlEncode($sum . '|' . $frozen);
 
         return $return;
     }
@@ -121,7 +121,7 @@ class state extends \octris\core\type\collection
      */
     public static function validate($state, array &$decoded = null)
     {
-        $tmp    = \octris\core\app\web\request::base64UrlDecode($state);
+        $tmp    = \Octris\Core\App\Web\Request::base64UrlDecode($state);
         $sum    = '';
         $frozen = '';
 

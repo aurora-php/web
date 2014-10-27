@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace octris\core\app\web;
+namespace Octris\Core\App\Web;
 
-use \octris\core\validate as validate;
-use \octris\core\provider as provider;
+use \Octris\Core\Validate as validate;
+use \Octris\Core\Provider as provider;
 
 /**
  * Request helper functions
@@ -21,7 +21,7 @@ use \octris\core\provider as provider;
  * @copyright   copyright (c) 2010-2013 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-class request
+class Request
 {
     /**
      * Request types.

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace octris\core\app\web\csrf;
+namespace Octris\Core\App\Web\Csrf;
 
 /**
  * Interface for CSRF token storages classes.
