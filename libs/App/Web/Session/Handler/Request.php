@@ -17,7 +17,7 @@ namespace Octris\Core\App\Web\Session\Handler;
  * during the current request. That means, that session data is not persistent, instead
  * every request starts with an empty session data storage.
  *
- * @copyright   copyright (c) 2011 by Harald Lapp
+ * @copyright   copyright (c) 2011-2014 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
 class Request implements \Octris\Core\App\Web\Session\IHandler

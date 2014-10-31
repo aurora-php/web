@@ -14,7 +14,7 @@ namespace Octris\Core\App\Web\Session\Handler;
 /**
  * Session handler for storing sesion data in files.
  *
- * @copyright   copyright (c) 2011 by Harald Lapp
+ * @copyright   copyright (c) 2011-2014 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
 class File implements \Octris\Core\App\Web\Session\IHandler

@@ -14,7 +14,7 @@ namespace Octris\Core\App\Web;
 /**
  * Session base class.
  *
- * @copyright   copyright (c) 2011-2013 by Harald Lapp
+ * @copyright   copyright (c) 2011-2014 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
 class Session

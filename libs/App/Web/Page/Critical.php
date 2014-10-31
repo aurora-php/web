@@ -14,7 +14,7 @@ namespace Octris\Core\App\Web\Page;
 /**
  * Special page for handling critical errors.
  *
- * @copyright   copyright (c) 2011 by Harald Lapp
+ * @copyright   copyright (c) 2011-2014 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
 abstract class Critical extends \Octris\Core\App\Web\Page
