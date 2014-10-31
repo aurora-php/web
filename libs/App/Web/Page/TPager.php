@@ -17,7 +17,7 @@ namespace Octris\Core\App\Web\Page;
  * @copyright   copyright (c) 2011-2014 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-trait pager_tr
+trait TPager
 {
     /**
      * Current page number.

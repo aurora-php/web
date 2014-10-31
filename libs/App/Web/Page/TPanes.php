@@ -17,6 +17,6 @@ namespace Octris\Core\App\Web\Page;
  * @copyright   copyright (c) 2011 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-trait panes_tr
+trait TPanes
 {
 }
