@@ -17,7 +17,6 @@ namespace Octris\Core\App\Web\Session\Handler;
  * during the current request. That means, that session data is not persistent, instead
  * every request starts with an empty session data storage.
  *
- * @octdoc      c:handler/request
  * @copyright   copyright (c) 2011 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
@@ -26,7 +25,6 @@ class Request implements \Octris\Core\App\Web\Session\Handler_if
     /**
      * Open session.
      *
-     * @octdoc  m:request/open
      * @param   string          $path               Session starage path.
      * @param   string          $name               Session name.
      */
@@ -38,7 +36,6 @@ class Request implements \Octris\Core\App\Web\Session\Handler_if
     /**
      * Close session.
      *
-     * @octdoc  m:request/close
      */
     public function close()
     {
@@ -48,7 +45,6 @@ class Request implements \Octris\Core\App\Web\Session\Handler_if
     /**
      * Read session.
      *
-     * @octdoc  m:request/read
      * @param   string      $id                     Id of session to read.
      */
     public function read($id)
@@ -59,7 +55,6 @@ class Request implements \Octris\Core\App\Web\Session\Handler_if
     /**
      * Write session.
      *
-     * @octdoc  m:request/write
      * @param   string      $id                     Id of session to write.
      * @param   array       $data                   Session data to write.
      */
@@ -71,7 +66,6 @@ class Request implements \Octris\Core\App\Web\Session\Handler_if
     /**
      * Destroy session.
      *
-     * @octdoc  m:request/destroy
      * @param   string      $id                     Id of session to destroy.
      */
     public function destroy($id)
@@ -82,7 +76,6 @@ class Request implements \Octris\Core\App\Web\Session\Handler_if
     /**
      * Garbage collect a session.
      *
-     * @octdoc  m:request/gc
      * @param   int         $lifetime               Maximum lifetime of session.
      */
     public function gc($lifetime)

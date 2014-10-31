@@ -14,7 +14,6 @@ namespace Octris\Core\App\Web;
 /**
  * Class provides functionality for handling CSRF (cross-site request forgery) tokens.
  *
- * @octdoc      c:web/csrf
  * @copyright   copyright (c) 2014 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
@@ -23,34 +22,27 @@ class Csrf
     /**
      * Instance of a random bytes generator.
      *
-     * @octdoc  p:csrf/$random
      * @type    null|\octris\core\security\random_if
      */
     protected static $random = null;
-    /**/
-
+    
     /**
      * Server-side storage for CSRF tokens.
      *
-     * @octdoc  p:csrf/$storage
      * @type    null|\octris\core\app\web\csrf\storage_if
      */
     protected static $storage = null;
-    /**/
-
+    
     /**
      * Entropy for generating random bytes for CSRF token.
      *
-     * @octdoc  p:csrf/$entropy
      * @type    int
      */
     protected $entropy;
-    /**/
-
+    
     /**
      * Constructor.
      *
-     * @octdoc  m:csrf/__construct
      * @param   int             $entryp             Entropy for generating random bytes for CSRF token.
      */
     public function __construct($entropy = 256)
@@ -61,7 +53,6 @@ class Csrf
     /**
      * Set random number generator / provider.
      *
-     * @octdoc  m:csrf/setRandomProvider
      * @param   \Octris\Core\Security\Random_if     $random             Instance of random number generator.
      */
     public static function setRandomProvider(\Octris\Core\Security\Random_if $random)
@@ -72,7 +63,6 @@ class Csrf
     /**
      * Set server-side storage for generated CSRF token.
      *
-     * @octdoc  m:csrf/setStorage
      * @param   \Octris\Core\App\Web\Csrf\Storage_if    $storage        Instance of CSRF token storage.
      */
     public static function setStorage(\Octris\Core\App\Web\Csrf\Storage_if $storage)
@@ -83,7 +73,6 @@ class Csrf
     /**
      * Create a CSRF token and put it into CSRF token storage.
      *
-     * @octdoc  m:csrf/createToken
      * @param   string                      $scope                          Optional parameter to limit the scope of the token.
      * @return  string                                                      Created CSRF token.
      */
@@ -99,7 +88,6 @@ class Csrf
     /**
      * Check if a token exists in storage and remove it from storage.
      *
-     * @octdoc  m:csrf/verifyToken
      * @param   string                      $token                          CSRF token to verify.
      * @param   string                      $scope                          Optional scope of the token, this parameter must be provided, if the token was added using a scope.
      * @return  bool                                                        Return true if verification was successful.

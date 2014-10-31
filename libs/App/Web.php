@@ -18,7 +18,6 @@ use \Octris\Core\Provider as provider;
 /**
  * Core class for Web applications.
  *
- * @octdoc      c:app/web
  * @copyright   copyright (c) 2011-2014 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
@@ -27,7 +26,6 @@ abstract class Web extends \Octris\Core\App
     /**
      * Initialization of web application.
      *
-     * @octdoc  m:web/initialize
      */
     protected function initialize()
     {
@@ -55,7 +53,6 @@ abstract class Web extends \Octris\Core\App
      * $app->process();
      * </code>
      *
-     * @octdoc  m:web/process
      */
     public function process()
     {
@@ -107,7 +104,6 @@ abstract class Web extends \Octris\Core\App
     /**
      * Adds header to output when rendering web site.
      *
-     * @octdoc  m:web/addHeader
      * @param   string          $name               Name of header to add.
      * @param   string          $value              Value to set for header.
      */
@@ -119,7 +115,6 @@ abstract class Web extends \Octris\Core\App
     /**
      * Create new instance of template engine and setup common stuff needed for templates of a web application.
      *
-     * @octdoc  m:web/getTemplate
      * @return  \octris\core\tpl                Instance of template class.
      */
     public function getTemplate()

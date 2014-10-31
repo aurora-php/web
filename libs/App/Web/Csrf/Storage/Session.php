@@ -14,7 +14,6 @@ namespace Octris\Core\App\Web\Csrf\Storage;
 /**
  * Storage handler for storing CSRF tokens into session.
  *
- * @octdoc      c:storage/session
  * @copyright   copyright (c) 2014 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
@@ -23,16 +22,13 @@ class Session implements \Octris\Core\App\Web\Csrf\Storage_if
     /**
      * Instance of session class.
      *
-     * @octdoc  p:session/$session
      * @type    \octris\core\app\web\session
      */
     protected $session;
-    /**/
-
+    
     /**
      * Constructor.
      *
-     * @octdoc  m:session/__construct
      */
     public function __construct()
     {
@@ -42,7 +38,6 @@ class Session implements \Octris\Core\App\Web\Csrf\Storage_if
     /**
      * Add a CSRF token to session storage.
      *
-     * @octdoc  m:session/addToken
      * @param   string                      $token              CSRF token to add.
      * @param   string                      $scope              Scope of the token.
      */
@@ -54,7 +49,6 @@ class Session implements \Octris\Core\App\Web\Csrf\Storage_if
     /**
      * Test whether a CSRF token exists in session storage.
      *
-     * @octdoc  m:session/hasToken
      * @param   string                      $token              CSRF token to test.
      * @param   string                      $scope              Scope of the token.
      * @return  bool                                            Returns true if token exists or false if it does not exist.
@@ -67,7 +61,6 @@ class Session implements \Octris\Core\App\Web\Csrf\Storage_if
     /**
      * Remove a token from session storage.
      *
-     * @octdoc  m:session/removeToken
      * @param   string                      $token              CSRF token to remove.
      * @param   string                      $scope              Scope of the token.
      */

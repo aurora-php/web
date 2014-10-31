@@ -14,7 +14,6 @@ namespace Octris\Core\App\Web\Session\Handler;
 /**
  * Session handler for storing sesion data in files.
  *
- * @octdoc      c:handler/file
  * @copyright   copyright (c) 2011 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
@@ -23,16 +22,13 @@ class File implements \Octris\Core\App\Web\Session\Handler_if
     /**
      * Stores the path the session files are stored in.
      *
-     * @octdoc  p:file/$session_path
      * @type    string
      */
     protected $session_path;
-    /**/
-
+    
     /**
      * Open session.
      *
-     * @octdoc  m:file/open
      * @param   string          $path               Session starage path.
      * @param   string          $name               Session name.
      */
@@ -50,7 +46,6 @@ class File implements \Octris\Core\App\Web\Session\Handler_if
     /**
      * Close session.
      *
-     * @octdoc  m:file/close
      */
     public function close()
     {
@@ -60,7 +55,6 @@ class File implements \Octris\Core\App\Web\Session\Handler_if
     /**
      * Read session.
      *
-     * @octdoc  m:file/read
      * @param   string      $id                     Id of session to read.
      */
     public function read($id)
@@ -80,7 +74,6 @@ class File implements \Octris\Core\App\Web\Session\Handler_if
     /**
      * Write session.
      *
-     * @octdoc  m:file/write
      * @param   string      $id                     Id of session to write.
      * @param   array       $data                   Session data to write.
      */
@@ -104,7 +97,6 @@ class File implements \Octris\Core\App\Web\Session\Handler_if
     /**
      * Destroy session.
      *
-     * @octdoc  m:file/destroy
      * @param   string      $id                     Id of session to destroy.
      */
     public function destroy($id)
@@ -122,7 +114,6 @@ class File implements \Octris\Core\App\Web\Session\Handler_if
     /**
      * Garbage collect a session.
      *
-     * @octdoc  m:file/gc
      * @param   int         $lifetime               Maximum lifetime of session.
      */
     public function gc($lifetime)

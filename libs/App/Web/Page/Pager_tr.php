@@ -14,7 +14,6 @@ namespace Octris\Core\App\Web\Page;
 /**
  * Implements functionality to generate pagers.
  *
- * @octdoc      t:page/pager_tr
  * @copyright   copyright (c) 2011-2014 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
@@ -23,71 +22,56 @@ trait pager_tr
     /**
      * Current page number.
      *
-     * @octdoc  p:pager_tr/$page
      * @type    int
      */
     protected $page = 1;
-    /**/
-
+    
     /**
      * Total number of "items" the pager should create pages for.
      *
-     * @octdoc  p:pager_tr/$total_items
      * @type    int
      */
     protected $total_items = 0;
-    /**/
-
+    
     /**
      * Number of "items" the application should display per page.
      *
-     * @octdoc  p:pager_tr/$items_per_page
      * @type    int
      */
     protected $items_per_page = 20;
-    /**/
-
+    
     /**
      * Total number of pages.
      *
-     * @octdoc  p:pager_tr/$total_pages
      * @type    int
      */
     protected $total_pages = 1;
-    /**/
-
+    
     /**
      * Number of "positions" the the pager contains.
      *
-     * @octdoc  p:int/$pager_positions
      * @type    int
      */
     protected $pager_positions = 9;
-    /**/
-
+    
     /**
      * Where to insert a filler, if the number of pages are more than the pager has
      * positions to show buttons for them.
      *
-     * @octdoc  p:pager_tr/$filler_position
      * @type    int
      */
     protected $filler_position = 2;
-    /**/
-
+    
     /**
      * Character to use as filler.
      *
-     * @octdoc  p:pager_tr/$filler_char
      * @type    string
      */
     protected $filler_char = '...';
-    /**/
-
+    
     /**
      * Return the number of the current page.
      *
-     * @octdoc  m:pager_tr/getPage
      * @return  int                             Number of current page.
      */
     public function getPage()
@@ -112,7 +96,6 @@ trait pager_tr
     /**
      * Return number of items to show per page.
      *
-     * @octdoc  m:pager_tr/getItemsPerPage
      * @return  int                             Number of items per page.
      */
     public function getItemsPerPage()
@@ -137,7 +120,6 @@ trait pager_tr
     /**
      * Create and return all necessary information for rendering a navigation pager.
      *
-     * @octdoc  m:pager_tr/getPager
      * @return  array                           Array of pager data.
      */
     public function getPager()

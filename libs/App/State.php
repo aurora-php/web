@@ -20,7 +20,6 @@ namespace Octris\Core\App;
  * between two requests. The state helps to bring stateful requests to a web
  * application, too.
  *
- * @octdoc      c:app/state
  * @copyright   copyright (c) 2011-2014 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
@@ -29,24 +28,19 @@ class State extends \Octris\Core\Type\Collection
     /**
      * Hash algorithm to use to generate the checksum of the state.
      *
-     * @octdoc  d:state/HASH_ALGO
      */
     const HASH_ALGO = 'sha256';
-    /**/
-
+    
     /**
      * Secret to use for generating hash and prevent the state from manipulation.
      *
-     * @octdoc  p:state/$secret
      * @type    string
      */
     protected static $secret = '';
-    /**/
-
+    
     /**
      * Set global state secret.
      *
-     * @octdoc  p:state/setSecret
      * @param   string          $secret             Secret for securing state.
      */
     public static function setSecret($secret)
@@ -57,7 +51,6 @@ class State extends \Octris\Core\Type\Collection
     /**
      * Magic setter.
      *
-     * @octdoc  m:state/__set
      * @param   string          $name               Name of state variable to set value for.
      * @param   mixed           $value              Value for state variable.
      */
@@ -69,7 +62,6 @@ class State extends \Octris\Core\Type\Collection
     /**
      * Magic getter.
      *
-     * @octdoc  m:state/__get
      * @param   string          $name               Name of state variable to return value of.
      * @return  mixed                               Value stored in state variable.
      */
@@ -81,7 +73,6 @@ class State extends \Octris\Core\Type\Collection
     /**
      * Return value of a stored state variable and remove the variable from the state.
      *
-     * @octdoc  m:state/pop
      * @param   string          $name               Name of state variable to return value of and remove.
      * @return  mixed                               Value stored in state variable.
      */
@@ -97,7 +88,6 @@ class State extends \Octris\Core\Type\Collection
     /**
      * Freeze state object.
      *
-     * @octdoc  m:state/freeze
      * @param   array           $data               Optional data to inject into state before freezing. Note that
      *                                              the original
      *                                              state will not be modified, only the frozen state contains
@@ -118,7 +108,6 @@ class State extends \Octris\Core\Type\Collection
     /**
      * Validate frozen state object.
      *
-     * @octdoc  m:state/validate
      * @param   string          $state              Frozen state to validate.
      * @param   string          $decoded            Returns array with checksum and compressed state, ready to thaw.
      * @return  bool                                Returns true if state is valid, otherwise returns false.
@@ -147,7 +136,6 @@ class State extends \Octris\Core\Type\Collection
     /**
      * Thaw frozen state object.
      *
-     * @octdoc  m:state/thaw
      * @param   string          $state              State to thaw.
      * @return  \octris\core\app\state          Instance of state object.
      */

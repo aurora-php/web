@@ -14,7 +14,6 @@ namespace Octris\Core\App;
 /**
  * Class Autoloader.
  *
- * @octdoc      c:app/autoloader
  * @copyright   copyright (c) 2010-2014 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
@@ -23,7 +22,6 @@ class Autoloader
     /**
      * Class Autoloader.
      *
-     * @octdoc  m:autoloader/autoload
      * @param   string          $class              Class to load.
      */
     public static function autoload($class)

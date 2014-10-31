@@ -16,7 +16,6 @@ use \Octris\Core\Registry as registry;
 /**
  * Core application class.
  *
- * @octdoc      c:core/app
  * @copyright   copyright (c) 2010-2014 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
@@ -25,7 +24,6 @@ abstract class App
     /**
      * Used in combination with app/getPath to determine path.
      *
-     * @octdoc  d:app/T_PATH_BASE, T_PATH_CACHE, T_PATH_DATA, T_PATH_ETC, T_PATH_HOME_ETC, T_PATH_HOST, T_PATH_LIBS, T_PATH_LIBSJS, T_PATH_LOCALE, T_PATH_RESOURCES, T_PATH_STYLES, T_PATH_LOG, T_PATH_WORK, T_PATH_WORK_LIBSJS, T_PATH_WORK_RESOURCES, T_PATH_WORK_STYLES, T_PATH_WORK_TPL
      */
     const T_PATH_BASE           = '%s';
     const T_PATH_CACHE          = '%s/cache/%s';
@@ -48,50 +46,40 @@ abstract class App
     const T_PATH_WORK_RESOURCES = '%s/work/%s/resources';
     const T_PATH_WORK_STYLES    = '%s/work/%s/styles';
     const T_PATH_WORK_TPL       = '%s/work/%s/templates';
-    /**/
-
+    
     /**
      * Used to abstract application context types.
      *
-     * @octdoc  d:app/T_CONTEXT_UNDEFINED, T_CONTEXT_CLI, T_CONTEXT_WEB, T_CONTEXT_TEST
      */
     const T_CONTEXT_UNDEFINED = 0;
     const T_CONTEXT_CLI       = 1;
     const T_CONTEXT_WEB       = 2;
     const T_CONTEXT_TEST      = 3;
-    /**/
-
+    
     /**
      * Application instance.
      *
-     * @octdoc  p:app/$instance
      * @type    \octris\core\app
      */
     private static $instance = null;
-    /**/
-
+    
     /**
      * Application state.
      *
-     * @octdoc  p:app/$state
      * @type    \octris\core\app\state
      */
     protected $state = null;
-    /**/
-
+    
     /**
      * Entry page to use if no other page is loaded. To be overwritten by applications' main class.
      *
-     * @octdoc  p:app/$entry_page
      * @type    string
      */
     protected $entry_page = '';
-    /**/
-
+    
     /**
      * Constructor is protected to force creation of instance using 'getInstance' method.
      *
-     * @octdoc  m:app/__construct
      */
     protected function __construct()
     {
@@ -100,7 +88,6 @@ abstract class App
     /**
      * Abstract method definition. Initialize must be implemented by any subclass.
      *
-     * @octdoc  m:app/initialize
      * @abstract
      */
     protected function initialize()
@@ -110,16 +97,13 @@ abstract class App
     /**
      * Abstract method definition. Process must be implemented by any subclass.
      *
-     * @octdoc  m:app/process
      * @abstract
      */
     abstract public function process();
-    /**/
-
+    
     /**
      * Invoke the page of an application without using the process workflow.
      *
-     * @octdoc  m:app/invoke
      * @param   \Octris\Core\App\Page       $next_page          Application page to invoke.
      * @param   string                          $action             Optional action to invoke page with.
      */
@@ -147,7 +131,6 @@ abstract class App
     /**
      * Return application state.
      *
-     * @octdoc  m:app/getState
      * @return  \octris\core\app\state          State of application.
      */
     public function getState()
@@ -160,7 +143,6 @@ abstract class App
      * last visited page can't be determined (eg.: when entering the application),
      * a new instance of the applications' entry page is created.
      *
-     * @octdoc  m:app/getLastPage
      * @return  \octris\core\app\page           Returns instance of determined last visit page or instance of entry page.
      */
     protected function getLastPage()
@@ -178,7 +160,6 @@ abstract class App
      * Make a page the last visited page. This method is called internally by the 'process' method
      * before aquiring an other application page.
      *
-     * @octdoc  m:app/setLastPage
      * @param   \Octris\Core\App\Page       $page           Page object to set as last visited page.
      */
     protected function setLastPage(\Octris\Core\App\Page $page)
@@ -191,7 +172,6 @@ abstract class App
     /**
      * Returns path for specified path type for current application instance.
      *
-     * @octdoc  m:app/getPath
      * @param   string          $type               The type of the path to return.
      * @param   string          $module             Optional name of module to return path for. Default is: current application name.
      * @param   string          $rel_path           Optional additional relative path to add.
@@ -224,7 +204,6 @@ abstract class App
     /**
      * Return application name.
      *
-     * @octdoc  m:app/getAppName
      * @param   string          $module             Optional module name to extract application name from.
      * @return  string                              Determined application name.
      */
@@ -240,7 +219,6 @@ abstract class App
     /**
      * Return instance of main application class.
      *
-     * @octdoc  m:app/getInstance
      * @return  \octris\core\app                Instance of main application class.
      */
     public static function getInstance()
@@ -263,7 +241,6 @@ require_once(__DIR__ . '/error.php');
 /**
  * Global translate function.
  *
- * @octdoc  m:l10n/__
  * @param   string      $msg            Message to translate.
  * @param   array       $args           Optional additional arguments.
  * @param   string      $domain         Optional text domain.

@@ -17,7 +17,6 @@ use \Octris\Core\Provider as provider;
 /**
  * Request helper functions
  *
- * @octdoc      c:web/request
  * @copyright   copyright (c) 2010-2013 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
@@ -26,16 +25,13 @@ class Request
     /**
      * Request types.
      *
-     * @octdoc  d:request/T_POST, T_GET
      */
     const T_POST = 'post';
     const T_GET  = 'get';
-    /**/
-
+    
     /**
      * Base64 for URLs encoding.
      *
-     * @octdoc  m:request/base64UrlEncode
      * @param   string          $data                   Data to encode.
      * @return  string                                  Encoded data.
      */
@@ -47,7 +43,6 @@ class Request
     /**
      * Base64 for URLs decoding.
      *
-     * @octdoc  m:request/base64UrlDecode
      * @param   string          $data                   Data to decode.
      * @param   string                                  Decoded data.
      */
@@ -66,7 +61,6 @@ class Request
     /**
      * Determine and return method of the request.
      *
-     * @octdoc  m:request/getRequestMehot
      * @return  string                                  Type of request.
      */
     public static function getRequestMethod()
@@ -91,7 +85,6 @@ class Request
     /**
      * Determine whether request is SSL secured.
      *
-     * @octdoc  m:request/isSSL
      * @return  bool                                    Returns true if request is SSL secured.
      */
     public static function isSSL()
@@ -114,7 +107,6 @@ class Request
     /**
      * Return hostname of current request.
      *
-     * @octdoc  m:request/getHostname
      * @return  string                                  Hostname.
      */
     public static function getHostname()
@@ -139,7 +131,6 @@ class Request
     /**
      * Return host of request.
      *
-     * @octdoc  m:request/getHost
      * @return  string                                  Host.
      */
     public function getHost()
@@ -152,7 +143,6 @@ class Request
     /**
      * Return current host forced to https.
      *
-     * @octdoc  m:request/getSSLHost
      * @param   string                                  SSL secured host.
      */
     public static function getSSLHost()
@@ -163,7 +153,6 @@ class Request
     /**
      * Determine current URL of application and return it.
      *
-     * @octdoc  m:request/getUrl
      * @todo    This method is not fully tested with all webservers, but it works for apache, lighttpd, nginx and IIS.
      * @return  string                                  URL.
      */
@@ -195,7 +184,6 @@ class Request
     /**
      * Return current URL forced to https.
      *
-     * @octdoc  m:request/getSSLUrl
      * @return  string                                  SSL secured URL.
      */
     public static function getSSLUrl()
@@ -206,7 +194,6 @@ class Request
     /**
      * Return current URL non-SSL secured.
      *
-     * @octdoc  m:request/getNonSSLHost
      * @return  string                                  Non-SSL secured URL.
      */
     public static function getNonSSLHost()
@@ -217,7 +204,6 @@ class Request
     /**
      * Uses HTTP's "Accept-Language" header to negotiate accepted language.
      *
-     * @octdoc  m:request/negotiateLanguage
      * @param   array           $supported              Optional supported languages.
      * @param   string          $default                Optional default language to use if no accepted language matches.
      * @return  string                                  Determined language.

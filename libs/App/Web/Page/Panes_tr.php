@@ -14,7 +14,6 @@ namespace Octris\Core\App\Web\Page;
 /**
  * Implements functionality for using tab panes in a page.
  *
- * @octdoc      t:page/panes
  * @copyright   copyright (c) 2011 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */

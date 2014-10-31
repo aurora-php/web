@@ -21,7 +21,6 @@ use \Octris\Core\Provider as provider;
  * OCTRiS autoloader and to provide some helper methods useful for
  * writing test cases.
  *
- * @octdoc      c:app/test
  * @copyright   copyright (c) 2010-2014 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
@@ -32,7 +31,6 @@ class Test
      * a method which is protected / private and make it possible
      * to write a testcase for it.
      *
-     * @octdoc  m:test/getMethod
      * @param   mixed           $class              Name or instance of class
      *                                              the method is located in.
      * @param   string          $name               Name of method to enable access to.
@@ -50,7 +48,6 @@ class Test
     /**
      * Implements the same as ~getMethod~ for object properties.
      *
-     * @octdoc  m:test/getProperty
      * @param   mixed           $class              Name or instance of class
      *                                              the property is located in.
      * @param   string          $name               Name of property to enable access to.

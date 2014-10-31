@@ -14,7 +14,6 @@ namespace Octris\Core\App\Web;
 /**
  * Session base class.
  *
- * @octdoc      c:web/session
  * @copyright   copyright (c) 2011-2013 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
@@ -23,79 +22,62 @@ class Session
     /**
      * Instance of session class.
      *
-     * @octdoc  p:session/$instance
      * @type    \octris\core\app\web\session
      */
     private static $instance = null;
-    /**/
-
+    
     /**
      * Instance of session handler.
      *
-     * @octdoc  p:session/$handler
      * @type    \octris\core\app\web\session\handler
      */
     private static $handler = null;
-    /**/
-
+    
     /**
      * Options configured through 'setHandler'.
      *
-     * @octdoc  p:session/$options
      * @type    array
      */
     private static $options = array();
-    /**/
-
+    
     /**
      * Session data.
      *
-     * @octdoc  p:session/$data
      * @type    array
      */
     private static $data = array();
-    /**/
-
+    
     /**
      * Session lifetime. See php.ini: session.gc_maxlifetime.
      *
-     * @octdoc  p:session/$lifetime
      * @type    int
      */
     protected $lifetime = 0;
-    /**/
-
+    
     /**
      * The domain, the session is valid for.
      *
-     * @octdoc  p:session/$domain
      * @type    string
      */
     protected $domain = '';
-    /**/
-
+    
     /**
      * Session name. See php.ini: session.name.
      *
-     * @octdoc  p:session/$name
      * @type    string
      */
     protected $name = '';
-    /**/
-
+    
     /**
      * Stores Id of current session.
      *
-     * @octdoc  p:session/$id
      * @type    string
      */
     protected $id = '';
-    /**/
-
+    
     /**
      * Constructor.
      *
-     * @octdoc  m:session/__construct
      */
     protected function __construct()
     {
@@ -125,7 +107,6 @@ class Session
     /**
      * Destructor.
      *
-     * @octdoc  m:session/__destruct
      */
     public function __destruct()
     {
@@ -135,7 +116,6 @@ class Session
     /**
      * Set session handler.
      *
-     * @octdoc  m:session/setHandler
      * @param   \Octris\Core\App\Web\Session\Handler_if     $handler        Instance of session handler.
      * @param   array                                           $options        Optional options overwrite settings from php.ini.
      */
@@ -161,7 +141,6 @@ class Session
     /**
      * Return session handler instance.
      *
-     * @octdoc  m:session/getHandler
      * @return  \octris\core\app\web\session\handler_if                 Session handler of session class instance.
      */
     public static function getHandler()
@@ -172,7 +151,6 @@ class Session
     /**
      * Return instance of session handler backend.
      *
-     * @octdoc  m:session/getInstance
      * @return  \octris\core\app\web\session                            Session class instance.
      */
     public static function getInstance()
@@ -188,7 +166,6 @@ class Session
     /**
      * Store a value in session.
      *
-     * @octdoc  m:session/setValue
      * @param   string          $name               Name of property to set.
      * @param   mixed           $value              Value to store in session.
      * @param   string          $namespace          Optional namespace.
@@ -203,7 +180,6 @@ class Session
     /**
      * Return a value stored in session.
      *
-     * @octdoc  m:session/getValue
      * @param   string          $name               Name of property to return value of.
      * @param   string          $namespace          Optional namespace.
      */
@@ -215,7 +191,6 @@ class Session
     /**
      * Unset a value stored in session.
      *
-     * @octdoc  m:session/unsetValue
      * @param   string          $name               Name of property to unset.
      * @param   string          $namespace          Optional namespace.
      */
@@ -227,7 +202,6 @@ class Session
     /**
      * Test if a stored property exists.
      *
-     * @octdoc  m:session/isExist
      * @param   string          $name               Name of property to test.
      * @param   string          $namespace          Optional namespace.
      */
@@ -239,7 +213,6 @@ class Session
     /**
      * Return current session Id.
      *
-     * @octdoc  m:session/getId
      * @return  string                              Current session Id.
      */
     public function getId()
@@ -250,7 +223,6 @@ class Session
     /**
      * Return domain the session is valid for.
      *
-     * @octdoc  m:session/getDomain
      * @return  string                              Domain name the session is valid for.
      */
     public function getDomain()
@@ -262,7 +234,6 @@ class Session
      * Return name of session, which is either configured by 'php.ini' or by the options property
      * specified at the method 'setHandler'.
      *
-     * @octdoc  m:session/getName
      * @return  string                              Name of the session.
      */
     public function getName()
@@ -274,7 +245,6 @@ class Session
      * Return session lifetime, which is either configured by 'php.ini' or by the options property
      * specified at the method 'setHandler'.
      *
-     * @octdoc  m:session/getLifetime
      * @return  int                                 Session lifetime.
      */
     public function getLifetime()
@@ -285,7 +255,6 @@ class Session
     /**
      * Start or continue a session.
      *
-     * @octdoc  m:session/start
      */
     public function start()
     {
@@ -319,7 +288,6 @@ class Session
      * Regenerate the session. This method should be called after each login and logout
      * and should prevent session fixation.
      *
-     * @octdoc  m:session/regenerate
      */
     public function regenerate()
     {

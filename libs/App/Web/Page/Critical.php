@@ -14,7 +14,6 @@ namespace Octris\Core\App\Web\Page;
 /**
  * Special page for handling critical errors.
  *
- * @octdoc      c:page/critical
  * @copyright   copyright (c) 2011 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
@@ -23,37 +22,30 @@ abstract class Critical extends \Octris\Core\App\Web\Page
     /**
      * Template filename of page for rendering critical error information.
      *
-     * @octdoc  p:critical/$template
      * @type    string
      */
     protected $template = 'critical.html';
-    /**/
-
+    
     /**
      * Instance of a logger.
      *
-     * @octdoc  p:critical/$logger
      * @type    \octris\core\logger
      */
     private $logger = null;
-    /**/
-
+    
     /**
      * Identifier to print on the webpage. The identifier may be send by a
      * user to the support. On the one hand it helps communicating between
      * user and support, on the other hand the identifier helps to locate
      * the error in the logging backend.
      *
-     * @octdoc  p:critical/$identifier
      * @type    string
      */
     private $identifier = '';
-    /**/
-
+    
     /**
      * Constructor.
      *
-     * @octdoc  m:critical/__construct
      */
     public function __construct()
     {
@@ -63,7 +55,6 @@ abstract class Critical extends \Octris\Core\App\Web\Page
     /**
      * Configure a logger instance to log critical exception to.
      *
-     * @octdoc  m:critical/setLogger
      * @param   \Octris\Core\Logger     $logger         Logger instance.
      */
     public function setLogger(\Octris\Core\Logger $logger)
@@ -74,7 +65,6 @@ abstract class Critical extends \Octris\Core\App\Web\Page
     /**
      * Set exception to handle.
      *
-     * @octdoc  m:critical/setException
      * @param   \Exception                  $exception      Exception to handle.
      * @param   array                       $data           Additional data to include in error report.
      */
@@ -101,7 +91,6 @@ abstract class Critical extends \Octris\Core\App\Web\Page
     /**
      * Implements abstract prepare methof of parent class.
      *
-     * @octdoc  m:critical/prepare
      * @param   \Octris\Core\App\Page       $last_page      Instance of last called page.
      * @param   string                          $action         Action that led to current page.
      * @return  mixed                                           Returns either page to redirect to or null.
@@ -113,7 +102,6 @@ abstract class Critical extends \Octris\Core\App\Web\Page
     /**
      * Renders critical error page.
      *
-     * @octdoc  m:critical/render
      */
     public function render()
     {
