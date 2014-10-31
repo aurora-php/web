@@ -17,7 +17,7 @@ namespace Octris\Core\App\Web\Session\Handler;
  * @copyright   copyright (c) 2011 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-class File implements \Octris\Core\App\Web\Session\Handler_if
+class File implements \Octris\Core\App\Web\Session\IHandler
 {
     /**
      * Stores the path the session files are stored in.

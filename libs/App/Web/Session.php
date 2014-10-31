@@ -116,10 +116,10 @@ class Session
     /**
      * Set session handler.
      *
-     * @param   \Octris\Core\App\Web\Session\Handler_if     $handler        Instance of session handler.
+     * @param   \Octris\Core\App\Web\Session\IHandler     $handler        Instance of session handler.
      * @param   array                                           $options        Optional options overwrite settings from php.ini.
      */
-    public static function setHandler(\Octris\Core\App\Web\Session\Handler_if $handler, array $options = array())
+    public static function setHandler(\Octris\Core\App\Web\Session\IHandler $handler, array $options = array())
     {
         session_set_save_handler(
             array($handler, 'open'),
@@ -141,7 +141,7 @@ class Session
     /**
      * Return session handler instance.
      *
-     * @return  \octris\core\app\web\session\handler_if                 Session handler of session class instance.
+     * @return  \octris\core\app\web\session\IHandler                 Session handler of session class instance.
      */
     public static function getHandler()
     {

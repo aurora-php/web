@@ -22,7 +22,7 @@ class Csrf
     /**
      * Instance of a random bytes generator.
      *
-     * @type    null|\octris\core\security\random_if
+     * @type    null|\octris\core\security\IRandom
      */
     protected static $random = null;
     
@@ -53,9 +53,9 @@ class Csrf
     /**
      * Set random number generator / provider.
      *
-     * @param   \Octris\Core\Security\Random_if     $random             Instance of random number generator.
+     * @param   \Octris\Core\Security\IRandom     $random             Instance of random number generator.
      */
-    public static function setRandomProvider(\Octris\Core\Security\Random_if $random)
+    public static function setRandomProvider(\Octris\Core\Security\IRandom $random)
     {
         self::$random = $random;
     }

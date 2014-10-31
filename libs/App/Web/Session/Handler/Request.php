@@ -20,7 +20,7 @@ namespace Octris\Core\App\Web\Session\Handler;
  * @copyright   copyright (c) 2011 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-class Request implements \Octris\Core\App\Web\Session\Handler_if
+class Request implements \Octris\Core\App\Web\Session\IHandler
 {
     /**
      * Open session.
