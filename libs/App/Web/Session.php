@@ -102,7 +102,9 @@ class Session
     /*
      * prevent cloning
      */
-    protected function __clone() {}
+    protected function __clone()
+    {
+    }
 
     /**
      * Destructor.
@@ -172,7 +174,9 @@ class Session
      */
     public function setValue($name, $value, $namespace = 'default')
     {
-        if (!isset(self::$data[$namespace])) self::$data[$namespace] = array();
+        if (!isset(self::$data[$namespace])) {
+            self::$data[$namespace] = array();
+        }
 
         self::$data[$namespace][$name] = $value;
     }

@@ -64,7 +64,7 @@ abstract class Page extends \Octris\Core\App\Page
      *
      * @return  bool                                    Secured flag.
      */
-    public final function isSecure()
+    final public function isSecure()
     {
         return $this->secure;
     }
@@ -245,7 +245,7 @@ abstract class Page extends \Octris\Core\App\Page
             }, array('max' => 1));
 
             // values
-            $this->template->setValue('errors',   $this->errors);
+            $this->template->setValue('errors', $this->errors);
             $this->template->setValue('messages', $this->messages);
         }
 

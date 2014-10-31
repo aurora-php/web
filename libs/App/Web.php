@@ -129,9 +129,9 @@ abstract class Web extends \Octris\Core\App
         $tpl->setL10n(\Octris\Core\L10n::getInstance());
         $tpl->setOutputPath('tpl', $path_cache . '/templates_c/');
         $tpl->setOutputPath('css', $path_host . '/styles/');
-        $tpl->setOutputPath('js',  $path_host . '/libsjs/');
+        $tpl->setOutputPath('js', $path_host . '/libsjs/');
         $tpl->setResourcePath('css', $path_work);
-        $tpl->setResourcePath('js',  $path_work);
+        $tpl->setResourcePath('js', $path_work);
         $tpl->addSearchPath(\Octris\Core\App::getPath(\Octris\Core\App::T_PATH_WORK_TPL));
 
         // register common template methods
@@ -146,10 +146,10 @@ abstract class Web extends \Octris\Core\App
     }
 }
 
-provider::set('server',  $_SERVER,  provider::T_READONLY);
-provider::set('env',     $_ENV,     provider::T_READONLY);
+provider::set('server', $_SERVER, provider::T_READONLY);
+provider::set('env', $_ENV, provider::T_READONLY);
 provider::set('request', $_REQUEST, provider::T_READONLY);
-provider::set('post',    $_POST,    provider::T_READONLY);
-provider::set('get',     $_GET,     provider::T_READONLY);
-provider::set('cookie',  $_COOKIE,  provider::T_READONLY);
-provider::set('files',   $_FILES,   provider::T_READONLY);
+provider::set('post', $_POST, provider::T_READONLY);
+provider::set('get', $_GET, provider::T_READONLY);
+provider::set('cookie', $_COOKIE, provider::T_READONLY);
+provider::set('files', $_FILES, provider::T_READONLY);

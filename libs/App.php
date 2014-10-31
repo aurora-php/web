@@ -235,20 +235,20 @@ abstract class App
 
 namespace {
 
-require_once(__DIR__ . '/debug.php');
-require_once(__DIR__ . '/error.php');
+    require_once(__DIR__ . '/debug.php');
+    require_once(__DIR__ . '/error.php');
 
-/**
- * Global translate function.
- *
- * @param   string      $msg            Message to translate.
- * @param   array       $args           Optional additional arguments.
- * @param   string      $domain         Optional text domain.
- * @return  string                      Localized text.
- */
-function __($msg, array $args = array(), $domain = null)
-{
-    return \Octris\Core\L10n::getInstance()->translate($msg, $args, $domain);
-}
+    /**
+     * Global translate function.
+     *
+     * @param   string      $msg            Message to translate.
+     * @param   array       $args           Optional additional arguments.
+     * @param   string      $domain         Optional text domain.
+     * @return  string                      Localized text.
+     */
+    function __($msg, array $args = array(), $domain = null)
+    {
+        return \Octris\Core\L10n::getInstance()->translate($msg, $args, $domain);
+    }
 
 }

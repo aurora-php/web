@@ -63,10 +63,10 @@ class Test
     }
 }
 
-provider::set('server',  $_SERVER,  provider::T_READONLY);
-provider::set('env',     $_ENV,     provider::T_READONLY);
+provider::set('server', $_SERVER, provider::T_READONLY);
+provider::set('env', $_ENV, provider::T_READONLY);
 provider::set('request', $_REQUEST, provider::T_READONLY);
-provider::set('post',    $_POST,    provider::T_READONLY);
-provider::set('get',     $_GET,     provider::T_READONLY);
-provider::set('cookie',  $_COOKIE,  provider::T_READONLY);
-provider::set('files',   $_FILES,   provider::T_READONLY);
+provider::set('post', $_POST, provider::T_READONLY);
+provider::set('get', $_GET, provider::T_READONLY);
+provider::set('cookie', $_COOKIE, provider::T_READONLY);
+provider::set('files', $_FILES, provider::T_READONLY);
