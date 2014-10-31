@@ -11,7 +11,7 @@
 
 namespace Octris\Core\App;
 
-require_once(__DIR__ . '/autoloader.php');
+require_once(__DIR__ . '/Autoloader.php');
 
 use \Octris\Core\Validate as validate;
 use \Octris\Core\Provider as provider;

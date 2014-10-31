@@ -235,8 +235,8 @@ abstract class App
 
 namespace {
 
-    require_once(__DIR__ . '/debug.php');
-    require_once(__DIR__ . '/error.php');
+    require_once(__DIR__ . '/Debug.php');
+    require_once(__DIR__ . '/Error.php');
 
     /**
      * Global translate function.
