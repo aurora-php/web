@@ -29,7 +29,7 @@ class Csrf
     /**
      * Server-side storage for CSRF tokens.
      *
-     * @type    null|\octris\core\app\web\csrf\storage_if
+     * @type    null|\octris\core\app\web\csrf\IStorage
      */
     protected static $storage = null;
     
@@ -63,9 +63,9 @@ class Csrf
     /**
      * Set server-side storage for generated CSRF token.
      *
-     * @param   \Octris\Core\App\Web\Csrf\Storage_if    $storage        Instance of CSRF token storage.
+     * @param   \Octris\Core\App\Web\Csrf\IStorage    $storage        Instance of CSRF token storage.
      */
-    public static function setStorage(\Octris\Core\App\Web\Csrf\Storage_if $storage)
+    public static function setStorage(\Octris\Core\App\Web\Csrf\IStorage $storage)
     {
         self::$storage = $storage;
     }

@@ -17,7 +17,7 @@ namespace Octris\Core\App\Web\Csrf\Storage;
  * @copyright   copyright (c) 2014 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-class Session implements \Octris\Core\App\Web\Csrf\Storage_if
+class Session implements \Octris\Core\App\Web\Csrf\IStorage
 {
     /**
      * Instance of session class.
