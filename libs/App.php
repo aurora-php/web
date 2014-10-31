@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Core;
+namespace Octris\Core {
 
 use \Octris\Core\Registry as registry;
 
