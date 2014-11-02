@@ -45,7 +45,7 @@ abstract class Web extends \Octris\Core\App
      * and handles everything required to determine the next page to display.
      *
      * The following example shows how to invoke an application, assuming that 'test'
-     * implements an application based on \octris\core\app.
+     * implements an application based on \Octris\Core\App.
      *
      * <code>
      * $app = test::getInstance();
@@ -113,7 +113,7 @@ abstract class Web extends \Octris\Core\App
     /**
      * Create new instance of template engine and setup common stuff needed for templates of a web application.
      *
-     * @return  \octris\core\tpl                Instance of template class.
+     * @return  \Octris\Core\Tpl                Instance of template class.
      */
     public function getTemplate()
     {

@@ -25,7 +25,7 @@ abstract class Page extends \Octris\Core\App\Page
     /**
      * Template instance.
      *
-     * @type    \octris\core\tpl
+     * @type    \Octris\Core\Tpl
      */
     private $template = null;
 
@@ -118,7 +118,7 @@ abstract class Page extends \Octris\Core\App\Page
             $request = provider::access($method);
         }
 
-        if ($request instanceof provider) {
+        if ($request instanceof Provider) {
             if ($request->isExist('ACTION')) {
                 if ($request->isValid('ACTION', validate::T_ALPHANUM)) {
                     $action = $request->getValue('ACTION');
@@ -227,7 +227,7 @@ abstract class Page extends \Octris\Core\App\Page
     /**
      * Return instance of template for current page.
      *
-     * @return  \octris\core\tpl                Instance of template engine.
+     * @return  \Octris\Core\Tpl                Instance of template engine.
      */
     public function getTemplate()
     {

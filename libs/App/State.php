@@ -136,7 +136,7 @@ class State extends \Octris\Core\Type\Collection
      * Thaw frozen state object.
      *
      * @param   string          $state              State to thaw.
-     * @return  \octris\core\app\state          Instance of state object.
+     * @return  \Octris\Core\App\State          Instance of state object.
      */
     public static function thaw($state)
     {

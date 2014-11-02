@@ -22,14 +22,14 @@ class Session
     /**
      * Instance of session class.
      *
-     * @type    \octris\core\app\web\session
+     * @type    \Octris\Core\App\Web\Session
      */
     private static $instance = null;
 
     /**
      * Instance of session handler.
      *
-     * @type    \octris\core\app\web\session\handler
+     * @type    \Octris\Core\App\Web\Session\Handler
      */
     private static $handler = null;
 
@@ -141,7 +141,7 @@ class Session
     /**
      * Return session handler instance.
      *
-     * @return  \octris\core\app\web\session\IHandler                 Session handler of session class instance.
+     * @return  \Octris\Core\App\Web\Session\IHandler                 Session handler of session class instance.
      */
     public static function getHandler()
     {
@@ -151,7 +151,7 @@ class Session
     /**
      * Return instance of session handler backend.
      *
-     * @return  \octris\core\app\web\session                            Session class instance.
+     * @return  \Octris\Core\App\Web\Session                            Session class instance.
      */
     public static function getInstance()
     {

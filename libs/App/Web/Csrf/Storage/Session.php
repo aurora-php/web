@@ -22,7 +22,7 @@ class Session implements \Octris\Core\App\Web\Csrf\IStorage
     /**
      * Instance of session class.
      *
-     * @type    \octris\core\app\web\session
+     * @type    \Octris\Core\App\Web\Session
      */
     protected $session;
 

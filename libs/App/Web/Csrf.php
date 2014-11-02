@@ -22,24 +22,24 @@ class Csrf
     /**
      * Instance of a random bytes generator.
      *
-     * @type    null|\octris\core\security\IRandom
+     * @type    null|\Octris\Core\Security\IRandom
      */
     protected static $random = null;
-    
+
     /**
      * Server-side storage for CSRF tokens.
      *
-     * @type    null|\octris\core\app\web\csrf\IStorage
+     * @type    null|\Octris\Core\App\Web\Csrf\IStorage
      */
     protected static $storage = null;
-    
+
     /**
      * Entropy for generating random bytes for CSRF token.
      *
      * @type    int
      */
     protected $entropy;
-    
+
     /**
      * Constructor.
      *

@@ -57,14 +57,14 @@ namespace Octris\Core {
         /**
          * Application instance.
          *
-         * @type    \octris\core\app
+         * @type    \Octris\Core\App
          */
         private static $instance = null;
 
         /**
          * Application state.
          *
-         * @type    \octris\core\app\state
+         * @type    \Octris\Core\App\State
          */
         protected $state = null;
 
@@ -128,7 +128,7 @@ namespace Octris\Core {
         /**
          * Return application state.
          *
-         * @return  \octris\core\app\state          State of application.
+         * @return  \Octris\Core\App\State          State of application.
          */
         public function getState()
         {
@@ -140,7 +140,7 @@ namespace Octris\Core {
          * last visited page can't be determined (eg.: when entering the application),
          * a new instance of the applications' entry page is created.
          *
-         * @return  \octris\core\app\page           Returns instance of determined last visit page or instance of entry page.
+         * @return  \Octris\Core\App\Page           Returns instance of determined last visit page or instance of entry page.
          */
         protected function getLastPage()
         {
@@ -216,7 +216,7 @@ namespace Octris\Core {
         /**
          * Return instance of main application class.
          *
-         * @return  \octris\core\app                Instance of main application class.
+         * @return  \Octris\Core\App                Instance of main application class.
          */
         public static function getInstance()
         {

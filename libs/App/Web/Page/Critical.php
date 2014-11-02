@@ -29,7 +29,7 @@ abstract class Critical extends \Octris\Core\App\Web\Page
     /**
      * Instance of a logger.
      *
-     * @type    \octris\core\logger
+     * @type    \Octris\Core\Logger
      */
     private $logger = null;
 
