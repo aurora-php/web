@@ -25,59 +25,58 @@ class Session
      * @type    \octris\core\app\web\session
      */
     private static $instance = null;
-    
+
     /**
      * Instance of session handler.
      *
      * @type    \octris\core\app\web\session\handler
      */
     private static $handler = null;
-    
+
     /**
      * Options configured through 'setHandler'.
      *
      * @type    array
      */
     private static $options = array();
-    
+
     /**
      * Session data.
      *
      * @type    array
      */
     private static $data = array();
-    
+
     /**
      * Session lifetime. See php.ini: session.gc_maxlifetime.
      *
      * @type    int
      */
     protected $lifetime = 0;
-    
+
     /**
      * The domain, the session is valid for.
      *
      * @type    string
      */
     protected $domain = '';
-    
+
     /**
      * Session name. See php.ini: session.name.
      *
      * @type    string
      */
     protected $name = '';
-    
+
     /**
      * Stores Id of current session.
      *
      * @type    string
      */
     protected $id = '';
-    
+
     /**
      * Constructor.
-     *
      */
     protected function __construct()
     {
@@ -108,7 +107,6 @@ class Session
 
     /**
      * Destructor.
-     *
      */
     public function __destruct()
     {
@@ -258,7 +256,6 @@ class Session
 
     /**
      * Start or continue a session.
-     *
      */
     public function start()
     {
@@ -291,7 +288,6 @@ class Session
     /**
      * Regenerate the session. This method should be called after each login and logout
      * and should prevent session fixation.
-     *
      */
     public function regenerate()
     {

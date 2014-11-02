@@ -25,7 +25,6 @@ abstract class Web extends \Octris\Core\App
 {
     /**
      * Initialization of web application.
-     *
      */
     protected function initialize()
     {
@@ -52,7 +51,6 @@ abstract class Web extends \Octris\Core\App
      * $app = test::getInstance();
      * $app->process();
      * </code>
-     *
      */
     public function process()
     {

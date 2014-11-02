@@ -24,11 +24,10 @@ class Request
 {
     /**
      * Request types.
-     *
      */
     const T_POST = 'post';
     const T_GET  = 'get';
-    
+
     /**
      * Base64 for URLs encoding.
      *

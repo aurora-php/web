@@ -26,20 +26,19 @@ interface IHandler
      * @param   string          $name               Session name.
      */
     public function open($path, $name);
-    
+
     /**
      * Close session.
-     *
      */
     public function close();
-    
+
     /**
      * Read session.
      *
      * @param   string      $id                     Id of session to read.
      */
     public function read($id);
-    
+
     /**
      * Write session.
      *
@@ -47,14 +46,14 @@ interface IHandler
      * @param   array       $data                   Session data to write.
      */
     public function write($id, array $data);
-    
+
     /**
      * Destroy session.
      *
      * @param   string      $id                     Id of session to destroy.
      */
     public function destroy($id);
-    
+
     /**
      * Garbage collect a session.
      *

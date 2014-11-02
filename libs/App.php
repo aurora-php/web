@@ -23,7 +23,6 @@ namespace Octris\Core {
     {
         /**
          * Used in combination with app/getPath to determine path.
-         *
          */
         const T_PATH_BASE           = '%s';
         const T_PATH_CACHE          = '%s/cache/%s';
@@ -46,40 +45,38 @@ namespace Octris\Core {
         const T_PATH_WORK_RESOURCES = '%s/work/%s/resources';
         const T_PATH_WORK_STYLES    = '%s/work/%s/styles';
         const T_PATH_WORK_TPL       = '%s/work/%s/templates';
-    
+
         /**
          * Used to abstract application context types.
-         *
          */
         const T_CONTEXT_UNDEFINED = 0;
         const T_CONTEXT_CLI       = 1;
         const T_CONTEXT_WEB       = 2;
         const T_CONTEXT_TEST      = 3;
-    
+
         /**
          * Application instance.
          *
          * @type    \octris\core\app
          */
         private static $instance = null;
-    
+
         /**
          * Application state.
          *
          * @type    \octris\core\app\state
          */
         protected $state = null;
-    
+
         /**
          * Entry page to use if no other page is loaded. To be overwritten by applications' main class.
          *
          * @type    string
          */
         protected $entry_page = '';
-    
+
         /**
          * Constructor is protected to force creation of instance using 'getInstance' method.
-         *
          */
         protected function __construct()
         {
@@ -100,7 +97,7 @@ namespace Octris\Core {
          * @abstract
          */
         abstract public function process();
-    
+
         /**
          * Invoke the page of an application without using the process workflow.
          *

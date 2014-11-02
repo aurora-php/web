@@ -28,31 +28,30 @@ abstract class Page extends \Octris\Core\App\Page
      * @type    \octris\core\tpl
      */
     private $template = null;
-    
+
     /**
      * Whether the page should be delivered only through HTTPS.
      *
      * @type    bool
      */
     protected $secure = false;
-    
+
     /**
      * Breadcrumb for current page.
      *
      * @type    array
      */
     protected $breadcrumb = array();
-    
+
     /**
      * Enabled CSRF protection.
      *
      * @type    array
      */
     protected $csrf_protection = array();
-    
+
     /**
      * Constructor.
-     *
      */
     public function __construct()
     {

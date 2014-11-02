@@ -25,10 +25,9 @@ class Session implements \Octris\Core\App\Web\Csrf\IStorage
      * @type    \octris\core\app\web\session
      */
     protected $session;
-    
+
     /**
      * Constructor.
-     *
      */
     public function __construct()
     {

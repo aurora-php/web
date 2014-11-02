@@ -25,7 +25,7 @@ class File implements \Octris\Core\App\Web\Session\IHandler
      * @type    string
      */
     protected $session_path;
-    
+
     /**
      * Open session.
      *
@@ -45,7 +45,6 @@ class File implements \Octris\Core\App\Web\Session\IHandler
 
     /**
      * Close session.
-     *
      */
     public function close()
     {

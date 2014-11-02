@@ -25,14 +25,14 @@ abstract class Critical extends \Octris\Core\App\Web\Page
      * @type    string
      */
     protected $template = 'critical.html';
-    
+
     /**
      * Instance of a logger.
      *
      * @type    \octris\core\logger
      */
     private $logger = null;
-    
+
     /**
      * Identifier to print on the webpage. The identifier may be send by a
      * user to the support. On the one hand it helps communicating between
@@ -42,10 +42,9 @@ abstract class Critical extends \Octris\Core\App\Web\Page
      * @type    string
      */
     private $identifier = '';
-    
+
     /**
      * Constructor.
-     *
      */
     public function __construct()
     {
@@ -101,7 +100,6 @@ abstract class Critical extends \Octris\Core\App\Web\Page
 
     /**
      * Renders critical error page.
-     *
      */
     public function render()
     {

@@ -35,7 +35,6 @@ class Request implements \Octris\Core\App\Web\Session\IHandler
 
     /**
      * Close session.
-     *
      */
     public function close()
     {

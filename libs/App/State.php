@@ -27,17 +27,16 @@ class State extends \Octris\Core\Type\Collection
 {
     /**
      * Hash algorithm to use to generate the checksum of the state.
-     *
      */
     const HASH_ALGO = 'sha256';
-    
+
     /**
      * Secret to use for generating hash and prevent the state from manipulation.
      *
      * @type    string
      */
     protected static $secret = '';
-    
+
     /**
      * Set global state secret.
      *
