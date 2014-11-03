@@ -24,26 +24,11 @@ namespace Octris\Core {
         /**
          * Used in combination with app/getPath to determine path.
          */
-        const T_PATH_BASE           = '%s';
         const T_PATH_CACHE          = '%s/cache/%s';
-        const T_PATH_CACHE_DATA     = '%s/cache/%s/data';
-        const T_PATH_CACHE_TPL      = '%s/cache/%s/templates_c';
-        const T_PATH_DATA           = '%s/data/%s';
         const T_PATH_ETC            = '%s/etc/%s';
         const T_PATH_HOME_ETC       = '%s/.octris/%s';
         const T_PATH_HOST           = '%s/host/%s';
-        const T_PATH_LIBS           = '%s/libs/%s';
-        const T_PATH_LIBSJS         = '%s/host/%s/libsjs';
-        const T_PATH_LOCALE         = '%s/locale/%s';
-        const T_PATH_LOG            = '%s/log/%s';
-        const T_PATH_RESOURCES      = '%s/host/%s/resources';
-        const T_PATH_STYLES         = '%s/host/%s/styles';
-        const T_PATH_TOOLS          = '%s/tools/%s';
         const T_PATH_WORK           = '%s/work/%s';
-        const T_PATH_WORK_LIBS      = '%s/work/%s/libs';
-        const T_PATH_WORK_LIBSJS    = '%s/work/%s/libsjs';
-        const T_PATH_WORK_RESOURCES = '%s/work/%s/resources';
-        const T_PATH_WORK_STYLES    = '%s/work/%s/styles';
         const T_PATH_WORK_TPL       = '%s/work/%s/templates';
 
         /**
@@ -201,16 +186,11 @@ namespace Octris\Core {
         /**
          * Return application name.
          *
-         * @param   string          $module             Optional module name to extract application name from.
          * @return  string                              Determined application name.
          */
-        public static function getAppName($module = '')
+        public static function getAppName()
         {
-            if ($module == '') {
-                $module = registry::getInstance()->OCTRIS_APP;
-            }
-
-            return substr($module, strrpos($module, '.') + 1);
+            return registry::getInstance()->OCTRIS_APP;
         }
 
         /**
