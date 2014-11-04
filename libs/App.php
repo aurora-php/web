@@ -22,16 +22,6 @@ namespace Octris\Core {
     abstract class App
     {
         /**
-         * Used in combination with app/getPath to determine path.
-         */
-        const T_PATH_CACHE          = '%s/cache/%s';
-        const T_PATH_ETC            = '%s/etc/%s';
-        const T_PATH_HOME_ETC       = '%s/.octris/%s';
-        const T_PATH_HOST           = '%s/host/%s';
-        const T_PATH_WORK           = '%s/work/%s';
-        const T_PATH_WORK_TPL       = '%s/work/%s/templates';
-
-        /**
          * Used to abstract application context types.
          */
         const T_CONTEXT_UNDEFINED = 0;
@@ -84,33 +74,6 @@ namespace Octris\Core {
         abstract public function process();
 
         /**
-         * Invoke the page of an application without using the process workflow.
-         *
-         * @param   \Octris\Core\App\Page       $next_page          Application page to invoke.
-         * @param   string                          $action             Optional action to invoke page with.
-         */
-        public function invoke(\Octris\Core\App\Page $next_page, $action = '')
-        {
-            $this->initialize();
-
-            $max = 3;
-
-            $last_page = $next_page;
-
-            do {
-                $redirect_page = $next_page->prepare($last_page, $action);
-
-                if (is_object($redirect_page) && $next_page != $redirect_page) {
-                    $next_page = $redirect_page;
-                } else {
-                    break;
-                }
-            } while (--$max);
-
-            $next_page->render();
-        }
-
-        /**
          * Return application state.
          *
          * @return  \Octris\Core\App\State          State of application.
@@ -149,48 +112,6 @@ namespace Octris\Core {
             $class = get_class($page);
 
             $this->state['__last_page'] = $class;
-        }
-
-        /**
-         * Returns path for specified path type for current application instance.
-         *
-         * @param   string          $type               The type of the path to return.
-         * @param   string          $module             Optional name of module to return path for. Default is: current application name.
-         * @param   string          $rel_path           Optional additional relative path to add.
-         * @return  string                              Existing path or false, if path does not exist.
-         */
-        public static function getPath($type, $module = '', $rel_path = '')
-        {
-            $reg = registry::getInstance();
-
-            if ($type == self::T_PATH_HOME_ETC) {
-                $info = posix_getpwuid(posix_getuid());
-                $base = $info['dir'];
-            } else {
-                $base = $reg->OCTRIS_BASE;
-            }
-
-            $return = sprintf(
-                $type,
-                $base,
-                ($module
-                    ? $module
-                    : $reg->OCTRIS_APP)
-            ) . ($rel_path
-                    ? '/' . $rel_path
-                    : '');
-
-            return realpath($return);
-        }
-
-        /**
-         * Return application name.
-         *
-         * @return  string                              Determined application name.
-         */
-        public static function getAppName()
-        {
-            return registry::getInstance()->OCTRIS_APP;
         }
 
         /**
