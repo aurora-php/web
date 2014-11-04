@@ -52,10 +52,12 @@ abstract class Page extends \Octris\Core\App\Page
 
     /**
      * Constructor.
+     *
+     * @param   \Octris\Core\App\Web                    Application instance.
      */
-    public function __construct()
+    public function __construct(\Octris\Core\App\Web $app)
     {
-        parent::__construct();
+        parent::__construct($app);
     }
 
     /**

@@ -96,7 +96,7 @@ namespace Octris\Core {
                       ? $this->state['__last_page']
                       : $this->entry_page);
 
-            $page = new $class();
+            $page = new $class($this->app);
 
             return $page;
         }
