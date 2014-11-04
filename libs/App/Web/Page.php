@@ -144,48 +144,6 @@ abstract class Page extends \Octris\Core\App\Page
     }
 
     /**
-     * Determine requested module with specified action. If a module was determined but the action is not
-     * valid, this method will return default application module. The module must be reachable from inside
-     * the application.
-     *
-     * @return  string                                      Name of module
-     */
-    public function getModule()
-    {
-        static $module = '';
-
-        if ($module != '') {
-            return $module;
-        }
-
-        $method  = request::getRequestMethod();
-
-        if ($method == request::T_POST || $method == request::T_GET) {
-            $method = ($method == request::T_POST
-                        ? 'post'
-                        : 'get');
-
-            $request = provider::access($method);
-        }
-
-        if (($tmp = $request->getValue('MODULE', validate::T_ALPHANUM)) !== false) {
-            $module = $tmp;
-        } else {
-            // try to determine module from a request parameter named MODULE_...
-            foreach ($request->getPrefixed('MODULE_', validate::T_ALPHANUM) as $k => $v) {
-                $module = substr($k, 7);
-                break;
-            }
-        }
-
-        if (!$module) {
-            $module = 'default';
-        }
-
-        return $module;
-    }
-
-    /**
      * Fetch a CSRF token from the state and verify it.
      *
      * @param   string                  $scope                  Scope of the CSRF token to verify.

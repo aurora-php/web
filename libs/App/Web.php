@@ -62,7 +62,6 @@ abstract class Web extends \Octris\Core\App
         // page flow control
         $last_page = $this->getLastPage();
         $action    = $last_page->getAction();
-        // $module = self::getModule();
 
         $last_page->validate($action);
 
