@@ -30,13 +30,6 @@ namespace Octris\Core {
         const T_CONTEXT_TEST      = 3;
 
         /**
-         * Application instance.
-         *
-         * @type    \Octris\Core\App
-         */
-        private static $instance = null;
-
-        /**
          * Application state.
          *
          * @type    \Octris\Core\App\State
@@ -51,9 +44,9 @@ namespace Octris\Core {
         protected $entry_page = '';
 
         /**
-         * Constructor is protected to force creation of instance using 'getInstance' method.
+         * Constructor.
          */
-        protected function __construct()
+        public function __construct()
         {
         }
 
@@ -110,20 +103,6 @@ namespace Octris\Core {
             $class = get_class($page);
 
             $this->state['__last_page'] = $class;
-        }
-
-        /**
-         * Return instance of main application class.
-         *
-         * @return  \Octris\Core\App                Instance of main application class.
-         */
-        public static function getInstance()
-        {
-            if (is_null(self::$instance)) {
-                self::$instance = new static();
-            }
-
-            return self::$instance;
         }
     }
 
