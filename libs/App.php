@@ -22,14 +22,6 @@ namespace Octris\Core {
     abstract class App
     {
         /**
-         * Used to abstract application context types.
-         */
-        const T_CONTEXT_UNDEFINED = 0;
-        const T_CONTEXT_CLI       = 1;
-        const T_CONTEXT_WEB       = 2;
-        const T_CONTEXT_TEST      = 3;
-
-        /**
          * Application state.
          *
          * @type    \Octris\Core\App\State
