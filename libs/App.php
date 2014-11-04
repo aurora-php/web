@@ -62,9 +62,7 @@ namespace Octris\Core {
          *
          * @abstract
          */
-        protected function initialize()
-        {
-        }
+        abstract protected function initialize();
 
         /**
          * Abstract method definition. Process must be implemented by any subclass.
