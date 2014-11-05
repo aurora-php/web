@@ -113,23 +113,22 @@ abstract class Web extends \Octris\Core\App
      * Create new instance of template engine and setup common stuff needed for templates of a web application.
      *
      * @return  \Octris\Core\Tpl                Instance of template class.
+     * @todo    set correct path (cache, resources, output, ...)
      */
     public function getTemplate()
     {
-        $path_cache = \Octris\Core\App::getPath(\Octris\Core\App::T_PATH_CACHE);
-        $path_host  = \Octris\Core\App::getPath(\Octris\Core\App::T_PATH_HOST);
-        $path_work  = \Octris\Core\App::getPath(\Octris\Core\App::T_PATH_WORK);
+        $registry = registry::getInstance();
 
         $tpl = new \Octris\Core\Tpl();
 
         // setup template engine environment
         $tpl->setL10n(\Octris\Core\L10n::getInstance());
-        $tpl->setOutputPath('tpl', $path_cache . '/templates_c/');
-        $tpl->setOutputPath('css', $path_host . '/styles/');
-        $tpl->setOutputPath('js', $path_host . '/libsjs/');
-        $tpl->setResourcePath('css', $path_work);
-        $tpl->setResourcePath('js', $path_work);
-        $tpl->addSearchPath(\Octris\Core\App::getPath(\Octris\Core\App::T_PATH_WORK_TPL));
+        // $tpl->setOutputPath('tpl', $path_cache . '/templates_c/');
+        // $tpl->setOutputPath('css', $path_host . '/styles/');
+        // $tpl->setOutputPath('js', $path_host . '/libsjs/');
+        // $tpl->setResourcePath('css', $path_work);
+        // $tpl->setResourcePath('js', $path_work);
+        $tpl->addSearchPath($registry->OCTRIS_APP_BASE . '/templates/');
 
         // register common template methods
         $tpl->registerMethod('getState', function (array $data = array()) {
