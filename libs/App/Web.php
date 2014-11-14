@@ -117,18 +117,7 @@ abstract class Web extends \Octris\Core\App
      */
     public function getTemplate()
     {
-        $registry = registry::getInstance();
-
-        $tpl = new \Octris\Core\Tpl();
-
-        // setup template engine environment
-        $tpl->setL10n(\Octris\Core\L10n::getInstance());
-        // $tpl->setOutputPath('tpl', $path_cache . '/templates_c/');
-        // $tpl->setOutputPath('css', $path_host . '/styles/');
-        // $tpl->setOutputPath('js', $path_host . '/libsjs/');
-        // $tpl->setResourcePath('css', $path_work);
-        // $tpl->setResourcePath('js', $path_work);
-        $tpl->addSearchPath($registry->OCTRIS_APP_BASE . '/templates/');
+        $tpl = registry::getInstance()->createTemplate;
 
         // register common template methods
         $tpl->registerMethod('getState', function (array $data = array()) {
