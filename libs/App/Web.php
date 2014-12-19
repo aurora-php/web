@@ -117,7 +117,7 @@ abstract class Web extends \Octris\Core\App
      */
     public function getTemplate()
     {
-        $tpl = Registry::getInstance()->createTemplate;
+        $tpl = \Octris\Core\Registry::getInstance()->createTemplate;
 
         // register common template methods
         $tpl->registerMethod('getState', function (array $data = array()) {
