@@ -40,28 +40,15 @@ abstract class Web extends \Octris\Core\App
     }
 
     /**
-     * Main application processor. This is the only method that needs to be called to
-     * invoke an application. Internally this method determines the last visited page
-     * and handles everything required to determine the next page to display.
+     * Application routing.
      *
-     * The following example shows how to invoke an application, assuming that 'test'
-     * implements an application based on \Octris\Core\App.
-     *
-     * <code>
-     * $app = test::getInstance();
-     * $app->process();
-     * </code>
+     * @param   string                  $action         Routing action.
+     * @return  \Octris\Core\App\Page                   Returns instance of page.
      */
-    public function process()
+    protected function route($action)
     {
-        ob_start();
-
-        // perform initialization
-        $this->initialize();
-
         // page flow control
         $last_page = $this->getLastPage();
-        $action    = $last_page->getAction();
 
         $last_page->validate($action);
 
@@ -90,8 +77,33 @@ abstract class Web extends \Octris\Core\App
         // process with page
         $this->setLastPage($next_page);
 
+        return $next_page;
+    }
+
+    /**
+     * Main application processor. This is the only method that needs to be called to
+     * invoke an application. Internally this method determines the last visited page
+     * and handles everything required to determine the next page to display.
+     *
+     * The following example shows how to invoke an application, assuming that 'test'
+     * implements an application based on \Octris\Core\App.
+     *
+     * <code>
+     * $app = test::getInstance();
+     * $app->process();
+     * </code>
+     */
+    public function process()
+    {
+        ob_start();
+
+        $this->initialize();
+
+        $action = $this->getLastPage()->getAction();
+        $page = $this->route($action);
+
         // $next_page->sendHeaders($this->headers);
-        $next_page->render();
+        $page->render();
 
         header('Content-Type: text/html; charset="UTF-8"');
 
