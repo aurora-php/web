@@ -25,8 +25,8 @@ class Request
     /**
      * Request types.
      */
-    const T_POST = 'post';
-    const T_GET  = 'get';
+    const T_POST = 'POST';
+    const T_GET  = 'GET';
 
     /**
      * Base64 for URLs encoding.
@@ -70,7 +70,7 @@ class Request
             $server = provider::access('server');
 
             if ($server->isExist('REQUEST_METHOD') && $server->isValid('REQUEST_METHOD', validate::T_PRINTABLE)) {
-                $method = strtolower($server->getValue('REQUEST_METHOD'));
+                $method = strtoupper($server->getValue('REQUEST_METHOD'));
 
                 if ($method != self::T_POST && $method != self::T_GET) {
                     $method = self::T_GET;
@@ -115,8 +115,8 @@ class Request
         if ($host === false) {
             $server = provider::access('server');
 
-            if ($server->isExist('HTTP_HOST')) {
-                $host = $server->getValue('HTTP_HOST', validate::T_PRINTABLE);
+            if ($server->isExist('HTTP_HOST') && $server->isValid('HTTP_HOST', validate::T_PRINTABLE)) {
+                $host = $server->getValue('HTTP_HOST');
             }
 
             if ($host === false) {
@@ -150,6 +150,20 @@ class Request
     }
 
     /**
+     * Return URI of request.
+     *
+     * @return  string                                  URI.
+     */
+    public static function getUri()
+    {
+        $server = provider::access('server');
+
+        return ($server->isExist('REQUEST_URI') && $server->isValid('REQUEST_URI', validate::T_PRINTABLE)
+                ? $server->getValue('REQUEST_URI')
+                : '/');
+    }
+
+    /**
      * Determine current URL of application and return it.
      *
      * @todo    This method is not fully tested with all webservers, but it works for apache, lighttpd, nginx and IIS.
@@ -161,19 +175,17 @@ class Request
 
         $server = provider::access('server');
 
-        if ($server->isExist('PHP_SELF') && $server->isExist('REQUEST_URI')) {
+        if ($server->isExist('PHP_SELF') && $server->isExist('REQUEST_URI') && $server->isValid('REQUEST_URI', validate::T_PRINTABLE)) {
             // for 'good' servers
-            if (($tmp = $server->getValue('REQUEST_URI', validate::T_PRINTABLE)) !== false) {
-                $uri .= $tmp;
-            }
+            $uri .= $server->getValue('REQUEST_URI');
         } else {
             // for IIS
-            if (($tmp = $server->getValue('SCRIPT_NAME', validate::T_PRINTABLE)) !== false) {
-                $uri .= $tmp;
+            if ($server->isValid('SCRIPT_NAME', validate::T_PRINTABLE)) {
+                $uri .= $server->getValue('SCRIPT_NAME');
             }
 
-            if (($tmp = $server->getValue('QUERY_STRING', validate::T_PRINTABLE)) !== '') {
-                $uri .= '?' . $tmp;
+            if ($server->isValid('QUERY_STRING', validate::T_PRINTABLE)) {
+                $uri .= '?' . $server->getValue('QUERY_STRING');
             }
         }
 
