@@ -132,7 +132,7 @@ class Request
      *
      * @return  string                                  Host.
      */
-    public function getHost()
+    public static function getHost()
     {
         $host = static::getHostname();
 
