@@ -71,10 +71,6 @@ class Request
 
             if ($server->isExist('REQUEST_METHOD') && $server->isValid('REQUEST_METHOD', validate::T_PRINTABLE)) {
                 $method = strtoupper($server->getValue('REQUEST_METHOD'));
-
-                if ($method != self::T_POST && $method != self::T_GET) {
-                    $method = self::T_GET;
-                }
             }
         }
 
