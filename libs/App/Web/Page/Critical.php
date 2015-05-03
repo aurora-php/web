@@ -45,10 +45,12 @@ abstract class Critical extends \Octris\Core\App\Web\Page
 
     /**
      * Constructor.
+     *
+     * @param   \Octris\Core\App                        Application instance.
      */
-    public function __construct()
+    public function __construct(\Octris\Core\App\Web $app)
     {
-        parent::__construct();
+        parent::__construct($app);
     }
 
     /**
