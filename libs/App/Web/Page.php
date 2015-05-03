@@ -151,7 +151,7 @@ abstract class Page extends \Octris\Core\App\Page
      */
     protected function verifyCsrfToken($scope)
     {
-        $state = \Octris\Core\App::getInstance()->getState();
+        $state = $this->app->getState();
 
         if (!($is_valid = isset($state['__csrf_token']))) {
             // CSRF token is not in state
@@ -192,7 +192,7 @@ abstract class Page extends \Octris\Core\App\Page
     public function getTemplate()
     {
         if (is_null($this->template)) {
-            $this->template = \Octris\Core\App::getInstance()->getTemplate();
+            $this->template = $this->app->getTemplate();
 
             $this->template->registerMethod('getBreadcrumb', function () {
                 return $this->breadcrumb;
