@@ -81,7 +81,7 @@ abstract class Web extends \Octris\Core\App
         $secure = $next_page->isSecure();
 
         if ($secure != request::isSSL() && request::getRequestMethod() == 'GET') {
-            $this->redirectHttp(($secure ? request::getSSLUrl() : request::getNonSSLUrl()));
+            header('Location: ' . ($secure ? request::getSSLUrl() : request::getNonSSLUrl()));
             exit;
         }
 
