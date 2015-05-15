@@ -24,6 +24,14 @@ use \Octris\Core\Provider as provider;
 abstract class Web extends \Octris\Core\App
 {
     /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
      * Initialization of web application.
      */
     protected function initialize()
