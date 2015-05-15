@@ -46,7 +46,7 @@ abstract class Critical extends \Octris\Core\App\Web\Page
     /**
      * Constructor.
      *
-     * @param   \Octris\Core\App                        Application instance.
+     * @param   \Octris\Core\App        $app             Application instance.
      */
     public function __construct(\Octris\Core\App\Web $app)
     {
