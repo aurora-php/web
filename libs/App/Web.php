@@ -134,9 +134,10 @@ abstract class Web extends \Octris\Core\App
 
         // fix security context
         $secure = $next_page->isSecure();
+        $request = $this->getRequest();
 
-        if ($secure != request::isSSL() && request::getRequestMethod() == 'GET') {
-            header('Location: ' . ($secure ? request::getSSLUrl() : request::getNonSSLUrl()));
+        if ($secure != $request->isSSL() && $request->getRequestMethod() == request::METHOD_GET) {
+            header('Location: ' . ($secure ? $request->getSSLUrl() : $request->getNonSSLUrl()));
             exit;
         }
 

@@ -109,11 +109,11 @@ abstract class Page extends \Octris\Core\App\Page
             return $action;
         }
 
-        $method  = request::getRequestMethod();
+        $method  = $this->app->getRequest()->getRequestMethod();
         $request = null;
 
-        if ($method == request::T_POST || $method == request::T_GET) {
-            $method = ($method == request::T_POST
+        if ($method == request::METHOD_POST || $method == request::METHOD_GET) {
+            $method = ($method == request::METHOD_POST
                         ? 'post'
                         : 'get');
 
@@ -176,6 +176,15 @@ abstract class Page extends \Octris\Core\App\Page
     public function validate($action)
     {
         $is_valid = parent::validate($action);
+
+        if ($is_valid && $action != '') {
+            $method = $this->app->getRequest()->getRequestMethod();
+
+            list($is_valid, , $errors, $validator) = $this->applyValidator($method, $action);
+
+            $this->addErrors($errors);
+        }
+
 
         if (array_key_exists($action, $this->csrf_protection)) {
             $is_valid = ($this->verifyCsrfToken($this->csrf_protection[$action]) && $is_valid);

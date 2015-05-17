@@ -17,7 +17,7 @@ use \Octris\Core\Provider as provider;
 /**
  * Request helper functions
  *
- * @copyright   copyright (c) 2010-2014 by Harald Lapp
+ * @copyright   copyright (c) 2010-2015 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
 class Request
@@ -25,8 +25,44 @@ class Request
     /**
      * Request types.
      */
-    const T_POST = 'POST';
-    const T_GET  = 'GET';
+    const METHOD_CONNECT = 'CONNECT';
+    const METHOD_DELETE = 'DELETE';
+    const METHOD_GET  = 'GET';
+    const METHOD_HEAD = 'HEAD';
+    const METHOD_OPTIONS = 'OPTIONS';
+    const METHOD_PATCH = 'PATCH';
+    const METHOD_POST = 'POST';
+    const METHOD_PURGE = 'PURGE';
+    const METHOD_PUT = 'PUT';
+    const METHOD_TRACE = 'TRACE';
+
+    /**
+     * Request method.
+     *
+     * @type    string
+     */
+    protected $method = null;
+
+    /**
+     * Whether request is SSL secured.
+     *
+     * @type    bool
+     */
+    protected $is_ssl = null;
+
+    /**
+     * Name of host of request.
+     *
+     * @type    string
+     */
+    protected $hostname = null;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+    }
 
     /**
      * Base64 for URLs encoding.
@@ -62,19 +98,17 @@ class Request
      *
      * @return  string                                  Type of request.
      */
-    public static function getRequestMethod()
+    public function getRequestMethod()
     {
-        static $method = null;
-
-        if (is_null($method)) {
+        if (is_null($this->method)) {
             $server = provider::access('server');
 
             if ($server->isExist('REQUEST_METHOD') && $server->isValid('REQUEST_METHOD', validate::T_PRINTABLE)) {
-                $method = strtoupper($server->getValue('REQUEST_METHOD'));
+                $this->method = strtoupper($server->getValue('REQUEST_METHOD'));
             }
         }
 
-        return $method;
+        return $this->method;
     }
 
     /**
@@ -82,21 +116,19 @@ class Request
      *
      * @return  bool                                    Returns true if request is SSL secured.
      */
-    public static function isSSL()
+    public function isSSL()
     {
-        static $isSSL = null;
-
-        if (is_null($isSSL)) {
+        if (is_null($this->is_ssl)) {
             $server = provider::access('server');
 
-            $isSSL = (
+            $this->is_ssl = (
                 $server->isExist('HTTP_HOST') &&
                 $server->isExist('HTTPS') &&
                 $server->isValid('HTTPS', validate::T_PATTERN, array('pattern' => '/on/i'))
             );
         }
 
-        return $isSSL;
+        return $this->is_ssl;
     }
 
     /**
@@ -104,23 +136,21 @@ class Request
      *
      * @return  string                                  Hostname.
      */
-    public static function getHostname()
+    public function getHostname()
     {
-        static $host = false;
-
-        if ($host === false) {
+        if (is_null($this->hostname)) {
             $server = provider::access('server');
 
             if ($server->isExist('HTTP_HOST') && $server->isValid('HTTP_HOST', validate::T_PRINTABLE)) {
-                $host = $server->getValue('HTTP_HOST');
+                $this->hostname = $server->getValue('HTTP_HOST');
             }
 
-            if ($host === false) {
-                $host = '';
+            if ($this->hostname === false) {
+                $this->hostname = '';
             }
         }
 
-        return $host;
+        return $this->hostname;
     }
 
     /**
@@ -128,11 +158,11 @@ class Request
      *
      * @return  string                                  Host.
      */
-    public static function getHost()
+    public function getHost()
     {
-        $host = static::getHostname();
+        $host = $this->getHostname();
 
-        return sprintf('http%s://%s', (static::isSSL() ? 's' : ''), $host);
+        return sprintf('http%s://%s', ($this->isSSL() ? 's' : ''), $host);
     }
 
     /**
@@ -140,9 +170,9 @@ class Request
      *
      * @param   string                                  SSL secured host.
      */
-    public static function getSSLHost()
+    public function getSSLHost()
     {
-        return preg_replace('|^http://|i', 'https://', static::getHost());
+        return preg_replace('|^http://|i', 'https://', $this->getHost());
     }
 
     /**
@@ -150,7 +180,7 @@ class Request
      *
      * @return  string                                  URI.
      */
-    public static function getUri()
+    public function getUri()
     {
         $server = provider::access('server');
 
@@ -165,9 +195,9 @@ class Request
      * @todo    This method is not fully tested with all webservers, but it works for apache, lighttpd, nginx and IIS.
      * @return  string                                  URL.
      */
-    public static function getUrl()
+    public function getUrl()
     {
-        $uri = static::getHost();
+        $uri = $this->getHost();
 
         $server = provider::access('server');
 
@@ -193,9 +223,9 @@ class Request
      *
      * @return  string                                  SSL secured URL.
      */
-    public static function getSSLUrl()
+    public function getSSLUrl()
     {
-        return preg_replace('|^http://|i', 'https://', static::getUrl());
+        return preg_replace('|^http://|i', 'https://', $this->getUrl());
     }
 
     /**
@@ -203,9 +233,9 @@ class Request
      *
      * @return  string                                  Non-SSL secured URL.
      */
-    public static function getNonSSLHost()
+    public function getNonSSLHost()
     {
-        return preg_replace('|^https://|i', 'http://', static::getUrl());
+        return preg_replace('|^https://|i', 'http://', $this->getUrl());
     }
 
     /**
@@ -215,7 +245,7 @@ class Request
      * @param   string          $default                Optional default language to use if no accepted language matches.
      * @return  string                                  Determined language.
      */
-    public static function negotiateLanguage(array $supported = array(), $default = '')
+    public function negotiateLanguage(array $supported = array(), $default = '')
     {
         $server = provider::access('server');
 
