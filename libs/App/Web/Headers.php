@@ -94,7 +94,11 @@ class Headers implements \IteratorAggregate, \Countable {
      */
     public function getIterator()
     {
-        return new \ArrayIterator($this->headers);
+        foreach ($this->headers as $name => $values) {
+            foreach ($values as $value) {
+                yield $name => $value;
+            }
+        }
     }
 
     /**
