@@ -32,11 +32,53 @@ provider::setIfUnset('files', $_FILES, provider::T_READONLY);
 abstract class Web extends \Octris\Core\App
 {
     /**
+     * Instance of request object.
+     *
+     * @type    \Octris\Core\App\Web\Request.
+     */
+    protected $request = null;
+
+    /**
+     * Instance of response object.
+     *
+     * @type    \Octris\Core\App\Web\Response.
+     */
+    protected $response = null;
+
+    /**
      * Constructor.
      */
     public function __construct()
     {
         parent::__construct();
+    }
+
+    /**
+     * Returns instance of request object.
+     *
+     * @return  \Octris\Core\App\Web\Request                Instance of request object.
+     */
+    public function getRequest()
+    {
+        if (is_null($this->request)) {
+            $this->request = new \Octris\Core\App\Web\Request();
+        }
+
+        return $this->request;
+    }
+
+    /**
+     * Returns instance of response object.
+     *
+     * @return  \Octris\Core\App\Web\Response               Instance of response object.
+     */
+    public function getResponse()
+    {
+        if (is_null($this->response)) {
+            $this->response = new \Octris\Core\App\Web\Response();
+        }
+
+        return $this->response;
     }
 
     /**
@@ -116,33 +158,23 @@ abstract class Web extends \Octris\Core\App
      */
     public function process()
     {
-        ob_start();
+        $response = $this->getResponse();
+
+        $response->headers->setHeader(
+            'Content-Type',
+            'text/html; charset="UTF-8"'
+        );
 
         $this->initialize();
 
         $next_page = $this->routing()
         $next_page = $this->rerouting($next_page);
 
-        // process with page
         $this->setLastPage($next_page);
 
-        // $next_page->sendHeaders($this->headers);
-        $next_page->render();
+        $response->setContent($next_page->render());
 
-        header('Content-Type: text/html; charset="UTF-8"');
-
-        ob_end_flush();
-    }
-
-    /**
-     * Adds header to output when rendering web site.
-     *
-     * @param   string          $name               Name of header to add.
-     * @param   string          $value              Value to set for header.
-     */
-    public function addHeader($name, $value)
-    {
-        $this->headers[$name] = $value;
+        $response->send();
     }
 
     /**
