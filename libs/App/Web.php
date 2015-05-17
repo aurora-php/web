@@ -48,31 +48,28 @@ abstract class Web extends \Octris\Core\App
     }
 
     /**
-     * Main application processor. This is the only method that needs to be called to
-     * invoke an application. Internally this method determines the last visited page
-     * and handles everything required to determine the next page to display.
+     * Main application routing.
      *
-     * The following example shows how to invoke an application, assuming that 'test'
-     * implements an application based on \Octris\Core\App.
-     *
-     * <code>
-     * $app = test::getInstance();
-     * $app->process();
-     * </code>
+     * @return  \Octris\Core\App\Page           Returns instance of next page to render.
      */
-    public function process()
+    protected function routing()
     {
-        ob_start();
-
-        $this->initialize();
-
         $last_page = $this->getLastPage();
         $action = $last_page->getAction();
 
         $last_page->validate($action);
 
         $next_page = $last_page->getNextPage($action, $this->entry_page);
+    }
 
+    /**
+     * Application rerouting.
+     *
+     * @param   \Octris\Core\App\Page           Expected page to render.
+     * @return  \Octris\Core\App\Page           Actual page to render.
+     */
+    protected function rerouting($next_page)
+    {
         $max = 3;
 
         do {
@@ -92,6 +89,31 @@ abstract class Web extends \Octris\Core\App
             header('Location: ' . ($secure ? request::getSSLUrl() : request::getNonSSLUrl()));
             exit;
         }
+
+        return $next_page;
+    }
+
+    /**
+     * Main application processor. This is the only method that needs to be called to
+     * invoke an application. Internally this method determines the last visited page
+     * and handles everything required to determine the next page to display.
+     *
+     * The following example shows how to invoke an application, assuming that 'test'
+     * implements an application based on \Octris\Core\App.
+     *
+     * <code>
+     * $app = test::getInstance();
+     * $app->process();
+     * </code>
+     */
+    public function process()
+    {
+        ob_start();
+
+        $this->initialize();
+
+        $next_page = $this->routing()
+        $next_page = $this->rerouting($next_page);
 
         // process with page
         $this->setLastPage($next_page);
