@@ -37,6 +37,13 @@ class Request
     const METHOD_TRACE = 'TRACE';
 
     /**
+     * Instance of headers object.
+     *
+     * @type    \Octris\Core\App\Web\Headers
+     */
+    protected $headers;
+
+    /**
      * Request method.
      *
      * @type    string
@@ -62,6 +69,24 @@ class Request
      */
     public function __construct()
     {
+        $this->headers = new Headers(getallheaders());
+    }
+
+    /**
+     * Access protected/private properties.
+     *
+     * @param   string                  $name               Name of property to access.
+     * @return  mixed                                       Value of property.
+     */
+    public function __get($name)
+    {
+        switch ($name) {
+            case 'headers':
+                $return = $this->headers;
+                break;
+            default:
+                throw new \Exception('Invalid access to property "' . $name . '"');
+        }
     }
 
     /**
