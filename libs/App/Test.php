@@ -16,6 +16,14 @@ require_once(__DIR__ . '/Autoloader.php');
 use \Octris\Core\Validate as validate;
 use \Octris\Core\Provider as provider;
 
+provider::setIfUnset('server', $_SERVER, provider::T_READONLY);
+provider::setIfUnset('env', $_ENV, provider::T_READONLY);
+provider::setIfUnset('request', $_REQUEST, provider::T_READONLY);
+provider::setIfUnset('post', $_POST, provider::T_READONLY);
+provider::setIfUnset('get', $_GET, provider::T_READONLY);
+provider::setIfUnset('cookie', $_COOKIE, provider::T_READONLY);
+provider::setIfUnset('files', $_FILES, provider::T_READONLY);
+
 /**
  * Test base class. The main purpose of this class is to include the
  * OCTRiS autoloader and to provide some helper methods useful for
@@ -62,11 +70,3 @@ class Test
         return $property;
     }
 }
-
-provider::set('server', $_SERVER, provider::T_READONLY);
-provider::set('env', $_ENV, provider::T_READONLY);
-provider::set('request', $_REQUEST, provider::T_READONLY);
-provider::set('post', $_POST, provider::T_READONLY);
-provider::set('get', $_GET, provider::T_READONLY);
-provider::set('cookie', $_COOKIE, provider::T_READONLY);
-provider::set('files', $_FILES, provider::T_READONLY);
