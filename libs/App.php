@@ -71,7 +71,7 @@ namespace Octris\Core {
          * last visited page can't be determined (eg.: when entering the application),
          * a new instance of the applications' entry page is created.
          *
-         * @return  \Octris\Core\App\Page           Returns instance of determined last visit page or instance of entry page.
+         * @return  \Octris\Core\App\Page           Returns instance of determined last visited page or instance of entry page.
          */
         protected function getLastPage()
         {
