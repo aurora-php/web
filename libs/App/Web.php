@@ -48,7 +48,7 @@ abstract class Web extends \Octris\Core\App
     }
 
     /**
-     * Main application routing.
+     * Application initial routing.
      *
      * @return  \Octris\Core\App\Page           Returns instance of next page to render.
      */
