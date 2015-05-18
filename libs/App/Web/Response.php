@@ -176,6 +176,16 @@ class Response {
     }
 
     /**
+     * Return currently set status text.
+     * 
+     * @return  string                                      Status text.
+     */
+    public function getStatusText()
+    {
+        return static::$status_phrases[$this->status_code];
+    }
+
+    /**
      * Set content of response.
      *
      * @param   string                  $content            Content of response.
