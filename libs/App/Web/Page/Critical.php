@@ -107,6 +107,7 @@ abstract class Critical extends \Octris\Core\App\Web\Page
     {
         $tpl = $this->getTemplate();
         $tpl->setValue('identifier', $this->identifier);
-        $tpl->render($this->template);
+        
+        return $tpl->fetch($this->template);
     }
 }
