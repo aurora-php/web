@@ -22,10 +22,17 @@ class Error extends \Octris\Core\App\Web\Page
     /**
      * Status code.
      *
+     * @type    int
+     */
+    protected $status_code;
+    
+    /**
+     * Status text.
+     *
      * @type    string
      */
-    protected $status = '200';
-
+    protected $status_text;
+    
     /**
      * Instance of a logger.
      *
@@ -62,7 +69,10 @@ class Error extends \Octris\Core\App\Web\Page
      */
     public function prepare(\Octris\Core\App\Page $last_page, $action)
     {
-        $this->status = $action;
+        $response = $this->app->getResponse();
+        
+        $this->status_code = $response->getStatusCode();
+        $this->status_text = $response->getStatusText();
     }
 
     /**
@@ -70,9 +80,16 @@ class Error extends \Octris\Core\App\Web\Page
      */
     public function render()
     {
-        http_response_code((int)$this->status);
-
+        $filename = 'error/' . $this->status_code . '.html';
+    
         $tpl = $this->getTemplate();
-        $tpl->render('error/' . $this->status . '.html');
+        
+        if ($tpl->templateExists($filename)) {
+            $return = $tpl->fetch('error/' . $this->status . '.html');
+        } else {
+            $return = sprintf('<h1>%d -- %s</h1>', $this->status_code, $this->status_text);
+        }
+        
+        return $return;
     }
 }
