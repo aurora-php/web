@@ -40,7 +40,7 @@ class Response {
         207 => 'Multi-Status',                     // [RFC4918]
         208 => 'Already Reported',                 // [RFC5842]
         226 => 'IM Used',                          // [RFC3229]
-        
+
         // Redirection - Further action must be taken in order to complete the request
         300 => 'Multiple Choices',                 // [RFC7231, Section 6.4.1]
         301 => 'Moved Permanently',                // [RFC7231, Section 6.4.2]
@@ -97,14 +97,14 @@ class Response {
         510 => 'Not Extended',                     // [RFC2774]
         511 => 'Network Authentication Required'   // [RFC6585]
     );
-    
+
     /**
      * Default HTTP version.
      *
      * @type    string
      */
     protected $http_version = '1.0';
-    
+
     /**
      * Default status code.
      *
@@ -153,7 +153,7 @@ class Response {
 
     /**
      * Set status code.
-     * 
+     *
      * @param   int                     $code               Status code to set.
      */
     public function setStatusCode($code)
@@ -161,13 +161,13 @@ class Response {
         if (!isset(static::$status_phrases[$code])) {
             throw new \InvalidArgumentException('Invalid status code "' . $code . '"');
         }
-        
+
         $this->status_code = $code;
     }
 
     /**
      * Return currently set status code.
-     * 
+     *
      * @return  int                                         Status code.
      */
     public function getStatusCode()
@@ -177,7 +177,7 @@ class Response {
 
     /**
      * Return currently set status text.
-     * 
+     *
      * @return  string                                      Status text.
      */
     public function getStatusText()
@@ -196,6 +196,30 @@ class Response {
     }
 
     /**
+     * Set HTTP version.
+     *
+     * @param   string                  $version            HTTP Version to set.
+     */
+    public function setVersion($version)
+    {
+        if ($version != '1.0' && $version != '1.1') {
+            throw new \InvalidArgumentException('Invalid HTTP version "' . $version . '"');
+        }
+
+        $this->http_version = $version;
+    }
+
+    /**
+     * Return currently set HTTP version.
+     *
+     * @return  string                                      HTTP Version.
+     */
+    public function getVersion()
+    {
+        return $this->http_version;
+    }
+
+    /**
      * Send headers.
      */
     public function sendHeaders()
@@ -204,14 +228,14 @@ class Response {
             header(
                 sprintf(
                     'HTTP/%s %s %s',
-                    $this->http_version, 
-                    $this->status_code, 
+                    $this->http_version,
+                    $this->status_code,
                     static::$status_phrases[$this->status_code]
                 ),
                 true,
                 $this->status_code
             );
-            
+
             foreach ($this->headers as $name => $value) {
                 header($name, $value);
             }
@@ -233,7 +257,7 @@ class Response {
     {
         $this->sendHeaders();
         $this->sendContent();
-        
+
         if (function_exists('fastcgi_finish_request')) {
             fastcgi_finish_request();
         }
