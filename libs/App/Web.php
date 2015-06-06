@@ -168,7 +168,7 @@ abstract class Web extends \Octris\Core\App
 
         $this->initialize();
 
-        $next_page = $this->routing()
+        $next_page = $this->routing();
         $next_page = $this->rerouting($next_page);
 
         $this->setLastPage($next_page);
