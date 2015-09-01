@@ -46,10 +46,28 @@ abstract class Web extends \Octris\Core\App
     protected $response = null;
 
     /**
+     * Instance of fastroute dispatcher.
+     *
+     * @type    \FastRoute\Dispatcher|null
+     */
+    protected $router_dispatcher = null;
+
+    /**
+     * Storage container for GET request data.
+     *
+     * @type    \ArrayObject
+     */
+    protected $router_storage;
+
+    /**
      * Constructor.
      */
     public function __construct()
     {
+        $this->router_storage = new ArrayObject();
+
+        provider::setIfUnset('get', $_GET, provider::T_READONLY, $this->router_storage);
+
         parent::__construct();
     }
 
@@ -82,6 +100,32 @@ abstract class Web extends \Octris\Core\App
     }
 
     /**
+     * Setup router.
+     *
+     * @param   callable            $cb                 A callback for defining the router definitions.
+     * @param   string|null         $file               Optional filename for route caching.
+     */
+    public function setupRouter(callable $cb, $file = null)
+    {
+        if (is_null($file)) {
+            $this->router_dispatcher = \FastRoute\simpleDispatcher(
+                $cb,
+                [
+                    'routeCollector' => '\\Octris\\Core\\App\\Web\\RuleCollector'
+                ]
+            );
+        } else {
+            $this->router_dispatcher = \FastRoute\cachedDispatcher(
+                $cb,
+                [
+                    'cacheFile' => $file,
+                    'routeCollector' => '\\Octris\\Core\\App\\Web\\RuleCollector'
+                ]
+            );
+        }
+    }
+
+    /**
      * Initialization of web application.
      */
     protected function initialize()
@@ -98,11 +142,11 @@ abstract class Web extends \Octris\Core\App
     }
 
     /**
-     * Application initial routing.
+     * Page-based routing.
      *
      * @return  \Octris\Core\App\Page           Returns instance of next page to render.
      */
-    protected function routing()
+    protected function pageRouter()
     {
         $last_page = $this->getLastPage();
         $action = $last_page->getAction();
@@ -110,6 +154,73 @@ abstract class Web extends \Octris\Core\App
         $last_page->validate($action);
 
         $next_page = $last_page->getNextPage($action, $this->entry_page);
+
+        return $next_page;
+    }
+
+    /**
+     * URL-based routing.
+     *
+     * @return  \Octris\Core\App\Page           Returns instance of next page to render.
+     */
+    public function urlRouter()
+    {
+        do {
+            $result = $this->router_dispatcher->dispatch($this->request->getRequestMethod(), $this->request->getUri());
+
+            switch ($result[0]) {
+                case \FastRoute\Dispatcher::NOT_FOUND:
+                    $next_page = new \Octris\Core\App\Web\Page\Error($this, '404');
+                    break;
+                case \FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
+                    $next_page = new \Octris\Core\App\Web\Page\Error($this, '405');
+                    break;
+                case \FastRoute\Dispatcher::FOUND:
+                    $handler = $result[1];
+                    $vars = $result[2];
+
+                    foreach ($vars as $name => $var) {
+                        $this->router_storage[$name] = $var;
+                    }
+
+                    if (is_null($handler[1])) {
+                        // no handler provided use default routing
+                        $next_page = $this->pageRouter();
+                    } elseif (is_callable($handler)) {
+                        // handler is callable, directly call it and provide router arguments as parameter.
+                        $next_page = $handler($this, $vars);
+
+                        if (!($next_page instanceof \Octris\Core\App\Page)) {
+                            // callback did not return any page to route to, exit silently.
+                            exit();
+                        }
+                    } elseif (class_exists($handler) && is_subclass_of($handler, '\Octris\Core\App\Web\Page')) {
+                        // handler is a page class
+                        $next_page = new $handler($this);
+                    } else {
+                        throw new \Exception('Either a callable or a page is required as route handler');
+                    }
+
+                    break;
+            }
+        } while (false);
+    }
+
+    /**
+     * Application initial routing.
+     *
+     * @return  \Octris\Core\App\Page           Returns instance of next page to render.
+     */
+    protected function routing()
+    {
+        if (!is_null($this->router_dispatcher)) {
+            $next_page = $this->urlRouter();
+        } else {
+            // fall-back to default routing if router is not configured
+            $next_page = $this->pageRouter();
+        }
+
+        return $next_page;
     }
 
     /**
