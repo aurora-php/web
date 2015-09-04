@@ -69,10 +69,10 @@ class UrlBased extends PageBased
 
             switch ($result[0]) {
                 case \FastRoute\Dispatcher::NOT_FOUND:
-                    $next_page = new \Octris\Core\App\Web\Page\Error($this, '404');
+                    $next_page = new \Octris\Core\App\Web\Page\Error($app, '404');
                     break;
                 case \FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
-                    $next_page = new \Octris\Core\App\Web\Page\Error($this, '405');
+                    $next_page = new \Octris\Core\App\Web\Page\Error($app, '405');
                     break;
                 case \FastRoute\Dispatcher::FOUND:
                     $handler = $result[1];
