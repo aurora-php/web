@@ -53,12 +53,21 @@ abstract class Web extends \Octris\Core\App
     protected $state = null;
 
     /**
+     * Instance of router.
+     *
+     * @type    \Octris\Core\App\Web\IRouter
+     */
+    protected $router;
+
+    /**
      * Constructor.
      *
      * @param   \Octris\Core\App\Web\IRouter    $router     Instance of router to use.
      */
     public function __construct(\Octris\Core\App\Web\IRouter $router)
     {
+        $this->router = $router;
+
         parent::__construct();
     }
 
