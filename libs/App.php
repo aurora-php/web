@@ -22,20 +22,6 @@ namespace Octris\Core {
     abstract class App
     {
         /**
-         * Application state.
-         *
-         * @type    \Octris\Core\App\State
-         */
-        protected $state = null;
-
-        /**
-         * Entry page to use if no other page is loaded. To be overwritten by applications' main class.
-         *
-         * @type    string
-         */
-        protected $entry_page = '';
-
-        /**
          * Constructor.
          */
         public function __construct()
@@ -55,47 +41,6 @@ namespace Octris\Core {
          * @abstract
          */
         abstract public function process();
-
-        /**
-         * Return application state.
-         *
-         * @return  \Octris\Core\App\State          State of application.
-         */
-        public function getState()
-        {
-            return $this->state;
-        }
-
-        /**
-         * Try to determine the last visited page supplied by the application state. If
-         * last visited page can't be determined (eg.: when entering the application),
-         * a new instance of the applications' entry page is created.
-         *
-         * @return  \Octris\Core\App\Page           Returns instance of determined last visited page or instance of entry page.
-         */
-        protected function getLastPage()
-        {
-            $class = (isset($this->state['__last_page'])
-                      ? $this->state['__last_page']
-                      : $this->entry_page);
-
-            $page = new $class($this);
-
-            return $page;
-        }
-
-        /**
-         * Make a page the last visited page. This method is called internally by the 'process' method
-         * before aquiring an other application page.
-         *
-         * @param   \Octris\Core\App\Page       $page           Page object to set as last visited page.
-         */
-        protected function setLastPage(\Octris\Core\App\Page $page)
-        {
-            $class = get_class($page);
-
-            $this->state['__last_page'] = $class;
-        }
     }
 
 }
