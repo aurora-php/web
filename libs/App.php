@@ -29,18 +29,18 @@ namespace Octris\Core {
         }
 
         /**
-         * Abstract method definition. Initialize must be implemented by any subclass.
+         * Initialize must be implemented by any subclass.
          *
          * @abstract
          */
         abstract protected function initialize();
 
         /**
-         * Abstract method definition. Process must be implemented by any subclass.
+         * Run must be implemented by any subclass.
          *
          * @abstract
          */
-        abstract public function process();
+        abstract public function run();
     }
 
 }
