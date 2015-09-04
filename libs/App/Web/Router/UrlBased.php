@@ -85,7 +85,7 @@ class UrlBased extends PageBased
                     $handler = $result[1];
                     $vars = $result[2];
 
-                    $provider = provider::access('get');
+                    $provider = \Octris\Core\Provider::access('get');
 
                     foreach ($vars as $name => $value) {
                         $provider->setValue($name, $value);
