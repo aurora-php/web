@@ -39,7 +39,7 @@ class UrlBased extends PageBased
             $this->router_dispatcher = \FastRoute\simpleDispatcher(
                 $setup,
                 [
-                    'routeCollector' => '\Octris\Core\App\Web\RuleCollector'
+                    'routeCollector' => '\Octris\Core\App\Web\Router\RuleCollector'
                 ]
             );
         } else {
@@ -47,7 +47,7 @@ class UrlBased extends PageBased
                 $setup,
                 [
                     'cacheFile' => $file,
-                    'routeCollector' => '\Octris\Core\App\Web\RuleCollector'
+                    'routeCollector' => '\Octris\Core\App\Web\Router\RuleCollector'
                 ]
             );
         }

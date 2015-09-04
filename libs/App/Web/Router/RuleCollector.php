@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Core\App\Web;
+namespace Octris\Core\App\Web\Router;
 
 /**
  * Collector for routing and rewriting rules.
