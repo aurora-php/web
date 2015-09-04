@@ -40,16 +40,11 @@ class PageBased implements \Octris\Core\App\Web\IRouter
      * Application initial routing.
      *
      * @param   \Octris\Core\App\Web        $app            Instance of application.
+     * @param   \Octris\Core\App\Page       $last_page      Last page.
      * @return  \Octris\Core\App\Page                       Returns instance of next page to render.
      */
-    protected function routing(\Octris\Core\App\Web $app)
+    protected function routing(\Octris\Core\App\Web $app, \Octris\Core\App\Page $last_page)
     {
-        $state = $app->getState();
-        $class = (isset($state['__last_page'])
-                  ? $state['__last_page']
-                  : $this->entry_page);
-
-        $last_page = new $class($app);
         $action = $last_page->getAction();
 
         $last_page->validate($action);
@@ -63,10 +58,11 @@ class PageBased implements \Octris\Core\App\Web\IRouter
      * Application rerouting.
      *
      * @param   \Octris\Core\App\Web        $app            Instance of application.
+     * @param   \Octris\Core\App\Page       $last_page      Last page.
      * @param   \Octris\Core\App\Page       $next_page      Expected page to render.
      * @return  \Octris\Core\App\Page                       Actual page to render.
      */
-    protected function rerouting(\Octris\Core\App\Web $app, \Octris\Core\App\Page $next_page)
+    protected function rerouting(\Octris\Core\App\Web $app, \Octris\Core\App\Page $last_page, \Octris\Core\App\Page $next_page)
     {
         $max = 3;
 
@@ -100,11 +96,21 @@ class PageBased implements \Octris\Core\App\Web\IRouter
      */
     public function route(\Octris\Core\App\Web $app)
     {
-        $next_page = $this->routing($app);
-        $next_page = $this->rerouting($app, $next_page);
+        // determine last page
+        $state = $app->getState();
+        $class = (isset($state['__last_page'])
+                  ? $state['__last_page']
+                  : $this->entry_page);
 
-        $app->getState()['__last_page'] = get_class($next_page);
+        $last_page = new $class($app);
 
+        // routing
+        $next_page = $this->routing($app, $last_page);
+        $next_page = $this->rerouting($app, $last_page, $next_page);
+
+        $state['__last_page'] = get_class($next_page);
+
+        // render content and return
         $content = $next_page->render();
 
         return $content;
