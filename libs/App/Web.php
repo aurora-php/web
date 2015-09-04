@@ -111,11 +111,11 @@ abstract class Web extends \Octris\Core\App
             $request = provider::access('request');
 
             if ($request->isExist('state') && $request->isValid('state', validate::T_BASE64)) {
-                $this->state = state::thaw($request->getValue('state', validate::T_BASE64));
+                $this->state = Web\State::thaw($request->getValue('state', validate::T_BASE64));
             }
 
             if (!is_object($this->state)) {
-                $this->state = new state();
+                $this->state = new Web\State();
             }
         }
 
