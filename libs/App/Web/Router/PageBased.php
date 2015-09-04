@@ -64,6 +64,8 @@ class PageBased implements \Octris\Core\App\Web\IRouter
      */
     protected function rerouting(\Octris\Core\App\Web $app, \Octris\Core\App\Page $last_page, \Octris\Core\App\Page $next_page)
     {
+        $action = $last_page->getAction();
+
         $max = 3;
 
         do {
