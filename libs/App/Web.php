@@ -34,14 +34,14 @@ abstract class Web extends \Octris\Core\App
     /**
      * Instance of request object.
      *
-     * @type    \Octris\Core\App\Web\Request.
+     * @type    \Octris\Core\App\Web\Request|null
      */
     protected $request = null;
 
     /**
      * Instance of response object.
      *
-     * @type    \Octris\Core\App\Web\Response.
+     * @type    \Octris\Core\App\Web\Response|null
      */
     protected $response = null;
 
