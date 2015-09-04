@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Core\App;
+namespace Octris\Core\App\Web;
 
 /**
  * The state class is used to transfer page/action specific data between two
@@ -136,7 +136,7 @@ class State extends \Octris\Core\Type\Collection
      * Thaw frozen state object.
      *
      * @param   string          $state              State to thaw.
-     * @return  \Octris\Core\App\State          Instance of state object.
+     * @return  \Octris\Core\App\Web\State          Instance of state object.
      */
     public static function thaw($state)
     {
