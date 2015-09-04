@@ -75,12 +75,12 @@ class Response {
         422 => 'Unprocessable Entity',             // [RFC4918]
         423 => 'Locked',                           // [RFC4918]
         424 => 'Failed Dependency',                // [RFC4918]
-        425 => 'Unassigned'
+        425 => 'Unassigned',
         426 => 'Upgrade Required',                 // [RFC7231, Section 6.5.15]
-        427 => 'Unassigned'
+        427 => 'Unassigned',
         428 => 'Precondition Required',            // [RFC6585]
         429 => 'Too Many Requests',                // [RFC6585]
-        430 => 'Unassigned'
+        430 => 'Unassigned',
         431 => 'Request Header Fields Too Large',  // [RFC6585]
 
         // Server Error - The server failed to fulfill an apparently valid request
@@ -93,7 +93,7 @@ class Response {
         506 => 'Variant Also Negotiates',          // [RFC2295]
         507 => 'Insufficient Storage',             // [RFC4918]
         508 => 'Loop Detected',                    // [RFC5842]
-        509 => 'Unassigned'
+        509 => 'Unassigned',
         510 => 'Not Extended',                     // [RFC2774]
         511 => 'Network Authentication Required'   // [RFC6585]
     );
