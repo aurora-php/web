@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Core\App\Web\Session;
+namespace Octris\Core\App\Web;
 
 /**
  * Interface for implementing routers.
