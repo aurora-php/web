@@ -16,13 +16,13 @@ require_once(__DIR__ . '/Autoloader.php');
 use \Octris\Core\Validate as validate;
 use \Octris\Core\Provider as provider;
 
-provider::setIfUnset('server', $_SERVER, provider::T_READONLY);
-provider::setIfUnset('env', $_ENV, provider::T_READONLY);
-provider::setIfUnset('request', $_REQUEST, provider::T_READONLY);
-provider::setIfUnset('post', $_POST, provider::T_READONLY);
-provider::setIfUnset('get', $_GET, provider::T_READONLY);
-provider::setIfUnset('cookie', $_COOKIE, provider::T_READONLY);
-provider::setIfUnset('files', $_FILES, provider::T_READONLY);
+provider::set('server', $_SERVER);
+provider::set('env', $_ENV);
+provider::set('request', $_REQUEST);
+provider::set('post', $_POST);
+provider::set('get', $_GET);
+provider::set('cookie', $_COOKIE);
+provider::set('files', $_FILES);
 
 /**
  * Test base class. The main purpose of this class is to include the
