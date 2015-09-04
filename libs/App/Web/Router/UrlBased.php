@@ -66,14 +66,20 @@ class UrlBased extends PageBased
     {
         do {
             $request = $app->getRequest();
+            $response = $app->getResponse();
+
             $result = $this->router_dispatcher->dispatch($request->getRequestMethod(), $request->getUri());
 
             switch ($result[0]) {
                 case \FastRoute\Dispatcher::NOT_FOUND:
-                    $next_page = new \Octris\Core\App\Web\Page\Error($app, '404');
+                    $response->setStatusCode(404);
+
+                    $next_page = new \Octris\Core\App\Web\Page\Error($app);
                     break;
                 case \FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
-                    $next_page = new \Octris\Core\App\Web\Page\Error($app, '405');
+                    $response->setStatusCode(405);
+
+                    $next_page = new \Octris\Core\App\Web\Page\Error($app);
                     break;
                 case \FastRoute\Dispatcher::FOUND:
                     $handler = $result[1];
