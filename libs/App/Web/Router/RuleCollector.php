@@ -27,7 +27,7 @@ class RuleCollector extends \FastRoute\RouteCollector
      */
     public function addRewrite($httpMethod, $route)
     {
-        $this->addRoute($httpMethod, $route, null);
+        $this->addRoute($httpMethod, $route, '');
     }
 
     /**

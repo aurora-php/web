@@ -91,7 +91,7 @@ class UrlBased extends PageBased
                         $provider->setValue($name, $value);
                     }
 
-                    if (is_null($handler)) {
+                    if ($handler === '') {
                         // no handler provided use default routing
                         $next_page = parent::routing($app, $last_page);
                     } elseif (is_callable($handler)) {
