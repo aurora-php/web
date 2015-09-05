@@ -106,7 +106,7 @@ abstract class Page
      */
     final public function __toString()
     {
-        return get_class();
+        return get_called_class();
     }
 
     /**
