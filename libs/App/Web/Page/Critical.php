@@ -92,11 +92,11 @@ abstract class Critical extends \Octris\Core\App\Web\Page
     /**
      * Implements abstract prepare methof of parent class.
      *
-     * @param   \Octris\Core\App\Page       $last_page      Instance of last called page.
+     * @param   \Octris\Core\App\Web\Page       $last_page      Instance of last called page.
      * @param   string                          $action         Action that led to current page.
      * @return  mixed                                           Returns either page to redirect to or null.
      */
-    public function prepare(\Octris\Core\App\Page $last_page, $action)
+    public function prepare(\Octris\Core\App\Web\Page $last_page, $action)
     {
     }
 
@@ -107,7 +107,7 @@ abstract class Critical extends \Octris\Core\App\Web\Page
     {
         $tpl = $this->getTemplate();
         $tpl->setValue('identifier', $this->identifier);
-        
+
         return $tpl->fetch($this->template);
     }
 }
