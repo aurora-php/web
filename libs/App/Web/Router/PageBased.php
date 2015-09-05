@@ -40,10 +40,10 @@ class PageBased implements \Octris\Core\App\Web\IRouter
      * Application initial routing.
      *
      * @param   \Octris\Core\App\Web        $app            Instance of application.
-     * @param   \Octris\Core\App\Page       $last_page      Last page.
-     * @return  \Octris\Core\App\Page                       Returns instance of next page to render.
+     * @param   \Octris\Core\App\Web\Page   $last_page      Last page.
+     * @return  \Octris\Core\App\Web\Page                   Returns instance of next page to render.
      */
-    protected function routing(\Octris\Core\App\Web $app, \Octris\Core\App\Page $last_page)
+    protected function routing(\Octris\Core\App\Web $app, \Octris\Core\App\Web\Page $last_page)
     {
         $action = $last_page->getAction();
 
@@ -58,11 +58,11 @@ class PageBased implements \Octris\Core\App\Web\IRouter
      * Application rerouting.
      *
      * @param   \Octris\Core\App\Web        $app            Instance of application.
-     * @param   \Octris\Core\App\Page       $last_page      Last page.
-     * @param   \Octris\Core\App\Page       $next_page      Expected page to render.
-     * @return  \Octris\Core\App\Page                       Actual page to render.
+     * @param   \Octris\Core\App\Web\Page   $last_page      Last page.
+     * @param   \Octris\Core\App\Web\Page   $next_page      Expected page to render.
+     * @return  \Octris\Core\App\Web\Page                   Actual page to render.
      */
-    protected function rerouting(\Octris\Core\App\Web $app, \Octris\Core\App\Page $last_page, \Octris\Core\App\Page $next_page)
+    protected function rerouting(\Octris\Core\App\Web $app, \Octris\Core\App\Web\Page $last_page, \Octris\Core\App\Web\Page $next_page)
     {
         $action = $last_page->getAction();
 

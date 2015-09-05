@@ -20,7 +20,7 @@ use \Octris\Core\Validate as validate;
  * @copyright   copyright (c) 2010-2014 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-abstract class Page extends \Octris\Core\App\Page
+abstract class Page
 {
     /**
      * Template instance.
@@ -51,13 +51,62 @@ abstract class Page extends \Octris\Core\App\Page
     protected $csrf_protection = array();
 
     /**
+     * Next valid actions and their view pages.
+     *
+     * @type    array
+     */
+    protected $next_pages = array();
+
+    /**
+     * Stored error Messages occured during execution of the current page.
+     *
+     * @type    array
+     */
+    protected $errors = array();
+
+    /**
+     * Stored notification messages collected during execution of the current page.
+     *
+     * @type    array
+     */
+    protected $messages = array();
+
+    /**
+     * Application instance.
+     *
+     * @type    \Octris\Core\App
+     */
+    protected $app;
+
+    /**
      * Constructor.
      *
      * @param   \Octris\Core\App\Web                    Application instance.
      */
     public function __construct(\Octris\Core\App\Web $app)
     {
-        parent::__construct($app);
+        $this->app = $app;
+    }
+
+    /**
+     * Added magic getter to provide readonly access to protected properties.
+     *
+     * @param   string          $name                   Name of property to return.
+     * @return  mixed                                   Value of property.
+     */
+    public function __get($name)
+    {
+        return (isset($this->{$name}) ? $this->{$name} : null);
+    }
+
+    /**
+     * Returns name of page class if page instance is casted to a string.
+     *
+     * @param   string                                  Returns name of class.
+     */
+    final public function __toString()
+    {
+        return get_class();
     }
 
     /**
@@ -68,6 +117,106 @@ abstract class Page extends \Octris\Core\App\Page
     final public function isSecure()
     {
         return $this->secure;
+    }
+
+    /**
+     * Add a validator for the page.
+     *
+     * @param   string                          $type           Name of data to access through data provider.
+     * @param   string                          $action         Action that triggers the validator.
+     * @param   array                           $schema         Validation schema.
+     * @param   int                             $mode           Validation mode.
+     */
+    protected function addValidator($type, $action, array $schema, $mode = \Octris\Core\Validate\Schema::T_IGNORE)
+    {
+        provider::access($type)->addValidator((string)$this . ':' . $action, $schema);
+    }
+
+    /**
+     * Apply a configured validator.
+     *
+     * @param   string                          $type           Name of data to access through data provider.
+     * @param   string                          $action         Action to apply validator for.
+     * @return  mixed                           Returns true, if valid otherwise an array with error messages.
+     */
+    protected function applyValidator($type, $action)
+    {
+        $provider = provider::access($type);
+        $key      = (string)$this . ':' . $action;
+
+        return ($provider->hasValidator($key)
+                ? $provider->applyValidator($key)
+                : array(true, null, array(), null));
+    }
+
+    /**
+     * Gets next page from action and next_pages array of last page
+     *
+     * @param   string                          $action         Action to get next page for.
+     * @param   string                          $entry_page     Name of the entry page for possible fallback.
+     * @return  \Octris\Core\App\Web\Page                       Next page.
+     */
+    public function getNextPage($action, $entry_page)
+    {
+        $next = $this;
+
+        if (count($this->errors) == 0) {
+            if (isset($this->next_pages[$action])) {
+                // lookup next page from current page's next_page array
+                $class = $this->next_pages[$action];
+                $next  = new $class($this->app);
+            } else {
+                // lookup next page from entry page's next_page array
+                $entry = new $entry_page($this->app);
+
+                if (isset($entry->next_pages[$action])) {
+                    $class = $entry->next_pages[$action];
+                    $next  = new $class($this->app);
+                }
+            }
+        }
+
+        return $next;
+    }
+
+    /**
+     * Add error message for current page.
+     *
+     * @param   string          $err                        Error message to add.
+     */
+    public function addError($err)
+    {
+        $this->errors[] = $err;
+    }
+
+    /**
+     * Add multiple errors for current page.
+     *
+     * @param   array           $err                        Array of error messages.
+     */
+    public function addErrors(array $err)
+    {
+        $this->errors = array_merge($this->errors, $err);
+    }
+
+    /**
+     * Add message for current page.
+     *
+     * @param   string          $msg                        Message to add.
+     */
+    public function addMessage($msg)
+    {
+        $this->messages[] = $msg;
+    }
+
+    /**
+     * Add multiple messages for current page.
+     *
+     * @param   array           $msg                        Array of messages.
+     */
+    public function addMessages(array $msg)
+    {
+        $this->messages = array_merge($this->messages, $msg);
     }
 
     /**
@@ -175,9 +324,9 @@ abstract class Page extends \Octris\Core\App\Page
      */
     public function validate($action)
     {
-        $is_valid = parent::validate($action);
+        $is_valid = true;
 
-        if ($is_valid && $action != '') {
+        if ($action != '') {
             $method = $this->app->getRequest()->getRequestMethod();
 
             list($is_valid, , $errors, $validator) = $this->applyValidator($method, $action);
@@ -201,22 +350,49 @@ abstract class Page extends \Octris\Core\App\Page
     public function getTemplate()
     {
         if (is_null($this->template)) {
-            $this->template = $this->app->getTemplate();
+            $tpl = \Octris\Core\Registry::getInstance()->createTemplate;
 
-            $this->template->registerMethod('getBreadcrumb', function () {
+            // register common template methods
+            $tpl->registerMethod('getState', function (array $data = array()) {
+                return $this->app->getState()->freeze($data);
+            }, array('min' => 0, 'max' => 1));
+            $tpl->registerMethod('isAuthenticated', function () {
+                return \Octris\Core\Auth::getInstance()->isAuthenticated();
+            }, array('min' => 0, 'max' => 0));
+            $tpl->registerMethod('getBreadcrumb', function () {
                 return $this->breadcrumb;
             }, array('max' => 0));
-            $this->template->registerMethod('getCsrfToken', function ($scope = '') {
+            $tpl->registerMethod('getCsrfToken', function ($scope = '') {
                 $csrf = new \Octris\Core\App\Web\Csrf();
 
                 return $csrf->createToken($scope);
             }, array('max' => 1));
 
             // values
-            $this->template->setValue('errors', $this->errors);
-            $this->template->setValue('messages', $this->messages);
+            $tpl->setValue('errors', $this->errors);
+            $tpl->setValue('messages', $this->messages);
+
+            $this->template = $tpl;
         }
 
         return $this->template;
     }
+
+    /**
+     * Abstract method definition.
+     *
+     * @param   \Octris\Core\App\Web\Page       $last_page      Instance of last called page.
+     * @param   string                          $action         Action that led to current page.
+     * @return  mixed                                           Returns either page to redirect to or null.
+     * @abstract
+     */
+    abstract public function prepare(\Octris\Core\App\Web\Page $last_page, $action);
+
+    /**
+     * Abstract method definition.
+     *
+     * @abstract
+     */
+    abstract public function render();
+    /**/
 }

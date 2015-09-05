@@ -59,10 +59,10 @@ class UrlBased extends PageBased
      * Routing.
      *
      * @param   \Octris\Core\App\Web        $app            Instance of application.
-     * @param   \Octris\Core\App\Page       $last_page      Last page.
-     * @return  \Octris\Core\App\Page                       Returns instance of next page to render.
+     * @param   \Octris\Core\App\Web\Page   $last_page      Last page.
+     * @return  \Octris\Core\App\Web\Page                   Returns instance of next page to render.
      */
-    protected function routing(\Octris\Core\App\Web $app, \Octris\Core\App\Page $last_page)
+    protected function routing(\Octris\Core\App\Web $app, \Octris\Core\App\Web\Page $last_page)
     {
         do {
             $request = $app->getRequest();
@@ -98,7 +98,7 @@ class UrlBased extends PageBased
                         // handler is callable, directly call it and provide router arguments as parameter.
                         $next_page = $handler($this, $vars);
 
-                        if (!($next_page instanceof \Octris\Core\App\Page)) {
+                        if (!($next_page instanceof \Octris\Core\App\Web\Page)) {
                             // callback did not return any page to route to, exit silently.
                             exit();
                         }
