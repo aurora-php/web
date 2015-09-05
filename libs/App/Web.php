@@ -154,25 +154,4 @@ abstract class Web extends \Octris\Core\App
 
         $response->send();
     }
-
-    /**
-     * Create new instance of template engine and setup common stuff needed for templates of a web application.
-     *
-     * @return  \Octris\Core\Tpl                Instance of template class.
-     * @todo    set correct path (cache, resources, output, ...)
-     */
-    public function getTemplate()
-    {
-        $tpl = \Octris\Core\Registry::getInstance()->createTemplate;
-
-        // register common template methods
-        $tpl->registerMethod('getState', function (array $data = array()) {
-            return $this->getState()->freeze($data);
-        }, array('min' => 0, 'max' => 1));
-        $tpl->registerMethod('isAuthenticated', function () {
-            return \Octris\Core\Auth::getInstance()->isAuthenticated();
-        }, array('min' => 0, 'max' => 0));
-
-        return $tpl;
-    }
 }

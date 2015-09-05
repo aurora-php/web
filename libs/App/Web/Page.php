@@ -350,8 +350,15 @@ abstract class Page
     public function getTemplate()
     {
         if (is_null($this->template)) {
-            $this->template = $this->app->getTemplate();
+            $this->template = \Octris\Core\Registry::getInstance()->createTemplate;
 
+            // register common template methods
+            $tpl->registerMethod('getState', function (array $data = array()) {
+                return $this->app->getState()->freeze($data);
+            }, array('min' => 0, 'max' => 1));
+            $tpl->registerMethod('isAuthenticated', function () {
+                return \Octris\Core\Auth::getInstance()->isAuthenticated();
+            }, array('min' => 0, 'max' => 0));
             $this->template->registerMethod('getBreadcrumb', function () {
                 return $this->breadcrumb;
             }, array('max' => 0));
