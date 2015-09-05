@@ -95,8 +95,8 @@ class UrlBased extends PageBased
                         // no handler provided use default routing
                         $next_page = parent::routing($app, $last_page);
                     } elseif (is_callable($handler)) {
-                        // handler is callable, directly call it and provide router arguments as parameter.
-                        $next_page = $handler($this, $vars);
+                        // handler is callable, directly call it
+                        $next_page = $handler($app, $last_page);
 
                         if (!($next_page instanceof \Octris\Core\App\Web\Page)) {
                             // callback did not return any page to route to, exit silently.
