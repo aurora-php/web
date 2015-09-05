@@ -334,7 +334,6 @@ abstract class Page
             $this->addErrors($errors);
         }
 
-
         if (array_key_exists($action, $this->csrf_protection)) {
             $is_valid = ($this->verifyCsrfToken($this->csrf_protection[$action]) && $is_valid);
         }
