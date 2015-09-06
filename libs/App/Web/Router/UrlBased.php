@@ -106,6 +106,7 @@ class UrlBased extends PageBased
                         // handler is the instance of a page class
                         $next_page = $handler;
                     } elseif (class_exists($handler) && is_subclass_of($handler, '\Octris\Core\App\Web\Page')) {
+                    } elseif (is_string($handler) && class_exists($handler) && is_subclass_of($handler, '\Octris\Core\App\Web\Page')) {
                         // handler is the name of a page class
                         $next_page = new $handler($this);
                     } else {
