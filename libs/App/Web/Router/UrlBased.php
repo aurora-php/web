@@ -109,7 +109,7 @@ class UrlBased extends PageBased
                         // handler is the name of a page class
                         $next_page = new $handler($this);
                     } else {
-                        throw new \Exception('Either a callable or a page name or instance is required as route handler');
+                        throw new \InvalidArgumentException('Either a callable or a page name or instance is required as route handler');
                     }
 
                     break;
