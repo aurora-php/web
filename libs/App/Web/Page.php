@@ -74,14 +74,14 @@ abstract class Page
     /**
      * Application instance.
      *
-     * @type    \Octris\Core\App
+     * @type    \Octris\Core\App\Web
      */
     protected $app;
 
     /**
      * Constructor.
      *
-     * @param   \Octris\Core\App\Web                    Application instance.
+     * @param   \Octris\Core\App\Web        $app        Application instance.
      */
     public function __construct(\Octris\Core\App\Web $app)
     {
@@ -106,7 +106,7 @@ abstract class Page
      */
     final public function __toString()
     {
-        return get_class();
+        return get_called_class();
     }
 
     /**
@@ -333,7 +333,6 @@ abstract class Page
 
             $this->addErrors($errors);
         }
-
 
         if (array_key_exists($action, $this->csrf_protection)) {
             $is_valid = ($this->verifyCsrfToken($this->csrf_protection[$action]) && $is_valid);

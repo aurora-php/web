@@ -95,18 +95,21 @@ class UrlBased extends PageBased
                         // no handler provided use default routing
                         $next_page = parent::routing($app, $last_page);
                     } elseif (is_callable($handler)) {
-                        // handler is callable, directly call it and provide router arguments as parameter.
-                        $next_page = $handler($this, $vars);
+                        // handler is callable, directly call it
+                        $next_page = $handler($app, $last_page);
 
                         if (!($next_page instanceof \Octris\Core\App\Web\Page)) {
                             // callback did not return any page to route to, exit silently.
                             exit();
                         }
-                    } elseif (class_exists($handler) && is_subclass_of($handler, '\Octris\Core\App\Web\Page')) {
-                        // handler is a page class
+                    } elseif (is_object($handler) && $handler instanceof \Octris\Core\App\Web\Page) {
+                        // handler is the instance of a page class
+                        $next_page = $handler;
+                    } elseif (is_string($handler) && class_exists($handler) && is_subclass_of($handler, '\Octris\Core\App\Web\Page')) {
+                        // handler is the name of a page class
                         $next_page = new $handler($this);
                     } else {
-                        throw new \Exception('Either a callable or a page is required as route handler');
+                        throw new \InvalidArgumentException('Either a callable or a page name or instance is required as route handler');
                     }
 
                     break;
