@@ -74,14 +74,14 @@ abstract class Page
     /**
      * Application instance.
      *
-     * @type    \Octris\Core\App
+     * @type    \Octris\Core\App\Web
      */
     protected $app;
 
     /**
      * Constructor.
      *
-     * @param   \Octris\Core\App\Web                    Application instance.
+     * @param   \Octris\Core\App\Web        $app        Application instance.
      */
     public function __construct(\Octris\Core\App\Web $app)
     {
