@@ -94,12 +94,12 @@ class UrlBased extends PageBased
                     if ($handler === '') {
                         // no handler provided use default routing
                         $next_page = parent::routing($app, $last_page);
-                    } elseif (is_callable($handler)) {
-                        // handler is callable, directly call it
-                        $next_page = $handler($app, $last_page);
+                    } elseif (is_callable($handler) && $handler instanceof \Octris\Core\App\Web\Router\ICallbackHandler) {
+                        // an instance of a calback handler
+                        $next_page = $handler($app);
 
-                        if (!($next_page instanceof \Octris\Core\App\Web\Page)) {
-                            // callback did not return any page to route to, exit silently.
+                        if (!(is_object($handler) && $handler instanceof \Octris\Core\App\Web\Page)) {
+                            // callback did not return an instance of a page class, exit application
                             exit();
                         }
                     } elseif (is_object($handler) && $handler instanceof \Octris\Core\App\Web\Page) {
