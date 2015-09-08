@@ -80,6 +80,8 @@ class Request
      */
     public function __get($name)
     {
+        $return = null;
+
         switch ($name) {
             case 'headers':
                 $return = $this->headers;
@@ -88,7 +90,7 @@ class Request
                 throw new \Exception('Invalid access to property "' . $name . '"');
         }
 
-        return $headers;
+        return $return;
     }
 
     /**

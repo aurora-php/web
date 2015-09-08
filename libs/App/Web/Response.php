@@ -142,6 +142,8 @@ class Response {
      */
     public function __get($name)
     {
+        $return = null;
+
         switch ($name) {
             case 'headers':
                 $return = $this->headers;
