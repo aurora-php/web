@@ -107,7 +107,7 @@ class UrlBased extends PageBased
                         $next_page = $handler;
                     } elseif (is_string($handler) && class_exists($handler) && is_subclass_of($handler, '\Octris\Core\App\Web\Page')) {
                         // handler is the name of a page class
-                        $next_page = new $handler($this);
+                        $next_page = new $handler($app);
                     } else {
                         throw new \InvalidArgumentException('Either a callable or a page name or instance is required as route handler');
                     }
