@@ -20,6 +20,13 @@ namespace Octris\Core\App\Web\Router;
 interface ICallbackHandler
 {
     /**
+     * Recreate state of class instance.
+     *
+     * @param   array                               $properties      Properties values.
+     */
+    public static function __set_state(array $properties);
+
+    /**
      * Make class instance a callable.
      *
      * @param   \Octris\Core\App\Web                $app            Instance of application.
