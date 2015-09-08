@@ -87,6 +87,8 @@ class Request
             default:
                 throw new \Exception('Invalid access to property "' . $name . '"');
         }
+
+        return $headers;
     }
 
     /**
