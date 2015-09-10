@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Service;
+namespace Octris\Core\App\Web\Service;
 
 /**
  * Service delegator.
