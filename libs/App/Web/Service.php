@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'octris/readline' package.
+ * This file is part of the 'octris/core' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
