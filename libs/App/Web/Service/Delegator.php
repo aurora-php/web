@@ -100,7 +100,7 @@ class Delegator implements \Octris\Core\App\Web\Router\ICallbackHandler
 
             $class = $this->services[$service];
 
-            if (!(class_exists($class) && is_subclass_of($class, '\Octris\Service'))) {
+            if (!(class_exists($class) && is_subclass_of($class, '\Octris\Core\App\Web\Service'))) {
                 $result['error'][] = sprintf('Service implementation missing "%s"!', $class);
                 break;
             }
