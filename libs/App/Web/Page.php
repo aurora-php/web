@@ -254,7 +254,7 @@ abstract class Page
     {
         static $action = null;
 
-        if (!is_null($action) != '') {
+        if (!is_null($action)) {
             return $action;
         }
 
