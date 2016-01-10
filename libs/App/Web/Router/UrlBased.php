@@ -68,7 +68,13 @@ class UrlBased extends PageBased
             $request = $app->getRequest();
             $response = $app->getResponse();
 
-            $result = $this->router_dispatcher->dispatch($request->getRequestMethod(), $request->getUri());
+            $result = $this->router_dispatcher->dispatch(
+                $request->getRequestMethod(),
+                parse_url(  // https://github.com/nikic/FastRoute/issues/19
+                    $request->getUri(),
+                    PHP_URL_PATH
+                )
+            );
 
             switch ($result[0]) {
                 case \FastRoute\Dispatcher::NOT_FOUND:
