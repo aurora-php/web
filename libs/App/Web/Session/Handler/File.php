@@ -27,6 +27,18 @@ class File implements \Octris\Core\App\Web\Session\IHandler
     protected $session_path;
 
     /**
+     * Constructor.
+     * 
+     * @param   array           $options            Options for session handler.
+     */
+    public function __construct(array $options = array())
+    {
+        $this->session_path = rtrim((isset($options['session_path'])
+                                    ? $options['session_path']
+                                    : session_save_path()), '/');
+    }
+
+    /**
      * Open session.
      *
      * @param   string          $path               Session starage path.
@@ -34,8 +46,6 @@ class File implements \Octris\Core\App\Web\Session\IHandler
      */
     public function open($path, $name)
     {
-        $this->session_path = rtrim($path, '/');
-
         if (!is_dir($this->session_path) || !is_writable($this->session_path)) {
             throw new \Exception(sprintf('Session path "%s/" is not writeable', $this->session_path));
         }
