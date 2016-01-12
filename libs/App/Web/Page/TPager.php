@@ -68,7 +68,17 @@ trait TPager
      * @type    string
      */
     protected $filler_char = '...';
-    
+
+    /**
+     * Set the total items of the page.
+     *
+     * @param   int         $total              Total items of the page.
+     */
+    public function setTotalItems($total)
+    {
+        $this->total_items = $total;
+    }
+
     /**
      * Return the number of the current page.
      *
