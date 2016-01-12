@@ -116,7 +116,7 @@ class Session
     /**
      * Set session handler.
      *
-     * @param   \Octris\Core\App\Web\Session\IHandler     $handler        Instance of session handler.
+     * @param   \Octris\Core\App\Web\Session\IHandler           $handler        Instance of session handler.
      * @param   array                                           $options        Optional options overwrite settings from php.ini.
      */
     public static function setHandler(\Octris\Core\App\Web\Session\IHandler $handler, array $options = array())
