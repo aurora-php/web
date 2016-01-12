@@ -25,35 +25,35 @@ trait TPager
      * @type    int
      */
     protected $page = 1;
-    
+
     /**
      * Total number of "items" the pager should create pages for.
      *
      * @type    int
      */
     protected $total_items = 0;
-    
+
     /**
      * Number of "items" the application should display per page.
      *
      * @type    int
      */
     protected $items_per_page = 20;
-    
+
     /**
      * Total number of pages.
      *
      * @type    int
      */
     protected $total_pages = 1;
-    
+
     /**
      * Number of "positions" the the pager contains.
      *
      * @type    int
      */
     protected $pager_positions = 9;
-    
+
     /**
      * Where to insert a filler, if the number of pages are more than the pager has
      * positions to show buttons for them.
@@ -61,7 +61,7 @@ trait TPager
      * @type    int
      */
     protected $filler_position = 2;
-    
+
     /**
      * Character to use as filler.
      *
@@ -90,7 +90,9 @@ trait TPager
 
         if (is_null($page)) {
             // either import or use default on first call
-            $request = provider::access('request');
+            $method  = $this->app->getRequest()->getRequestMethod();
+
+            $request = \Octris\Core\Provider::access(strtolower($method));
 
             if ($request->isExist('page')) {
                 $page = $request->getValue('page', validate::T_DIGIT);
@@ -114,7 +116,9 @@ trait TPager
 
         if (is_null($ipp)) {
             // either import or use default on first call
-            $request = provider::access('request');
+            $method  = $this->app->getRequest()->getRequestMethod();
+
+            $request = \Octris\Core\Provider::access(strtolower($method));
 
             if ($request->isExist('ipp')) {
                 $ipp = $request->getValue('ipp', validate::T_DIGIT);
