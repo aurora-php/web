@@ -123,13 +123,17 @@ abstract class Page
      * Add a validator for the page.
      *
      * @param   string                          $type           Name of data to access through data provider.
-     * @param   string                          $action         Action that triggers the validator.
+     * @param   string|array                    $action         Action(s) that trigger(s) the validator.
      * @param   array                           $schema         Validation schema.
      * @param   int                             $mode           Validation mode.
      */
     protected function addValidator($type, $action, array $schema, $mode = \Octris\Core\Validate\Schema::T_IGNORE)
     {
-        provider::access($type)->addValidator((string)$this . ':' . $action, $schema);
+        $actions = (array)$action;
+
+        foreach ($actions as $action) {
+            provider::access($type)->addValidator((string)$this . ':' . $action, $schema);
+        }
     }
 
     /**
