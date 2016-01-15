@@ -72,6 +72,13 @@ abstract class Page
     protected $messages = array();
 
     /**
+     * Defined validator(s), only available after 'validate' method was called.
+     *
+     * @type    array
+     */
+    private $validators = array();
+
+    /**
      * Application instance.
      *
      * @type    \Octris\Core\App\Web
@@ -151,6 +158,28 @@ abstract class Page
         return ($provider->hasValidator($key)
                 ? $provider->applyValidator($key)
                 : array(true, null, array(), null));
+    }
+
+    /**
+     * Return an array of data sent by a request of the specified action. Note, that request data can only be
+     * available as soon as the method 'validate' was called. Otherwise the method returns an empty array.
+     * This method is probably only of use for child classes to access request data in case of a
+     * validation error to pre-fill form fields when re-building the form template to re-enter the data.
+     *
+     * The second argument takes an array of key=>value pairs: the key specified the data fields that will
+     * be returned. The value acts as default data, if no request data of the specified key exists.
+     *
+     * @param   string                          $action         Action to return data for.
+     * @param   array                           $input_data     Input data, see method description for details.
+     * @return  array                                           Data.
+     */
+    protected function getRequestData($action, array $input_data)
+    {
+        $data = (isset($this->validators[$action])
+                    ? $this->validators[$action]->getData()
+                    : []);
+
+        return ($data + $input_data);
     }
 
     /**
@@ -335,7 +364,11 @@ abstract class Page
 
             list($is_valid, , $errors, $validator) = $this->applyValidator($method, $action);
 
-            $this->addErrors($errors);
+            if (!$is_valid) {
+                $this->validators[$action] = $validator;
+
+                $this->addErrors($errors);
+            }
         }
 
         if (array_key_exists($action, $this->csrf_protection)) {
