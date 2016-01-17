@@ -14,7 +14,7 @@ namespace Octris\Core\App\Web\Page;
 /**
  * Custom error pages.
  *
- * @copyright   copyright (c) 2015 by Harald Lapp
+ * @copyright   copyright (c) 2015-2016 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
 class Error extends \Octris\Core\App\Web\Page
@@ -36,7 +36,7 @@ class Error extends \Octris\Core\App\Web\Page
     /**
      * Instance of a logger.
      *
-     * @type    \Octris\Core\Logger
+     * @type    \Psr\Log\LoggerInterface
      */
     private $logger = null;
 
@@ -53,9 +53,9 @@ class Error extends \Octris\Core\App\Web\Page
     /**
      * Configure a logger instance to log critical exception to.
      *
-     * @param   \Octris\Core\Logger             $logger         Logger instance.
+     * @param   \Psr\Log\LoggerInterface        $logger         Logger instance.
      */
-    public function setLogger(\Octris\Core\Logger $logger)
+    public function setLogger(\Psr\Log\LoggerInterface $logger)
     {
         $this->logger = $logger;
     }

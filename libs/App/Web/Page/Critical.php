@@ -14,7 +14,7 @@ namespace Octris\Core\App\Web\Page;
 /**
  * Special page for handling critical errors.
  *
- * @copyright   copyright (c) 2011-2014 by Harald Lapp
+ * @copyright   copyright (c) 2011-2016 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
 abstract class Critical extends \Octris\Core\App\Web\Page
@@ -29,7 +29,7 @@ abstract class Critical extends \Octris\Core\App\Web\Page
     /**
      * Instance of a logger.
      *
-     * @type    \Octris\Core\Logger
+     * @type    \Psr\Log\LoggerInterface
      */
     private $logger = null;
 
@@ -56,9 +56,9 @@ abstract class Critical extends \Octris\Core\App\Web\Page
     /**
      * Configure a logger instance to log critical exception to.
      *
-     * @param   \Octris\Core\Logger     $logger         Logger instance.
+     * @param   \Psr\Log\LoggerInterface    $logger         Logger instance.
      */
-    public function setLogger(\Octris\Core\Logger $logger)
+    public function setLogger(\Psr\Log\LoggerInterface $logger)
     {
         $this->logger = $logger;
     }
@@ -73,20 +73,19 @@ abstract class Critical extends \Octris\Core\App\Web\Page
     {
         $this->identifier = base64_encode(uniqid(gethostname() . '.', true));
 
-        throw $exception;
-
         if (!is_null($this->logger)) {
             try {
-                $this->logger->log(
-                    \Octris\Core\Logger::T_CRITICAL,
+                $this->logger->emergency(
                     $exception,
                     array(
-                        '_identifier' => $this->identifier
+                        'identifier' => $this->identifier
                     )
                 );
             } catch (\Exception $e) {
             }
         }
+
+        throw $exception;
     }
 
     /**
