@@ -14,7 +14,7 @@ namespace Octris\Core\App\Web\Router;
 /**
  * Collector for routing and rewriting rules.
  *
- * @copyright   copyright (c) 2015 by Harald Lapp
+ * @copyright   copyright (c) 2015-2016 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
 class RuleCollector extends \FastRoute\RouteCollector
@@ -37,7 +37,8 @@ class RuleCollector extends \FastRoute\RouteCollector
      * @param   string            $route              Route.
      * @param   string|callable   $handler            Either a page name or a callable.
      */
-    public function addRoute($httpMethod, $route, $handler) {
+    public function addRoute($httpMethod, $route, $handler)
+    {
         parent::addRoute($httpMethod, $route, $handler);
     }
 }

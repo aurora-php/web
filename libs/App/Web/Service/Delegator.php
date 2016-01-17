@@ -114,7 +114,7 @@ class Delegator implements \Octris\Core\App\Web\Router\ICallbackHandler
             } else {
                 $result['data'] = $instance->run();
             }
-        } while(false);
+        } while (false);
 
         // return result to client
         $response = $app->getResponse();
@@ -175,7 +175,7 @@ class Delegator implements \Octris\Core\App\Web\Router\ICallbackHandler
                     break;
                 }
             }
-        } while(false);
+        } while (false);
 
         return array($is_valid, $errors);
     }

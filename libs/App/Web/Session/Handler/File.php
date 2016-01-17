@@ -28,7 +28,7 @@ class File implements \Octris\Core\App\Web\Session\IHandler
 
     /**
      * Constructor.
-     * 
+     *
      * @param   array           $options            Options for session handler.
      */
     public function __construct(array $options = array())

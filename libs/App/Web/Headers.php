@@ -14,10 +14,11 @@ namespace Octris\Core\App\Web;
 /**
  * Headers storage class.
  *
- * @copyright   copyright (c) 2015 by Harald Lapp
+ * @copyright   copyright (c) 2015-2016 by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-class Headers implements \IteratorAggregate, \Countable {
+class Headers implements \IteratorAggregate, \Countable
+{
     /**
      * Header storage.
      *
