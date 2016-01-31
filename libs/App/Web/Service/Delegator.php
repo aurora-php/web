@@ -86,7 +86,8 @@ class Delegator implements \Octris\Core\App\Web\Router\ICallbackHandler
                 break;
             }
 
-            if (!($get->isExist('SERVICE') && $get->isValid('SERVICE', \Octris\Core\Validate::T_ALPHANUM))) {
+            if (!($get->isExist('SERVICE') &&
+                    $get->isValid('SERVICE', \Octris\Core\Validate::T_PATTERN, ['pattern' => '/^[a-zA-Z_][a-zA-Z0-9_]*$/']))) {
                 $result['error'][] = 'Invalid service name or service name not provided!';
                 break;
             }
