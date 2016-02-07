@@ -39,6 +39,14 @@ class Headers implements \IteratorAggregate, \Countable
     }
 
     /**
+     * Return set headers for var_dump.
+     */
+    public function __debugInfo()
+    {
+        return $this->headers;
+    }
+
+    /**
      * Set a header.
      *
      * @param   string              $name                   Name of header to set.
