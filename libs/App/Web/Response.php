@@ -242,7 +242,7 @@ class Response
             );
 
             foreach ($this->headers as $name => $value) {
-                header($name, $value);
+                header(sprintf('%s: %s', $name, $value));
             }
         }
     }
