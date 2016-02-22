@@ -108,13 +108,11 @@ class Delegator implements \Octris\Core\App\Web\Router\ICallbackHandler
 
             $instance = new $class($app);
 
-            list($is_valid, $errors) = $instance->validate();
-
-            if (!$is_valid) {
-                $result['error'] = array_merge($result['error'], $errors);
-            } else {
+            if ($instance->validate()) {
                 $result['data'] = $instance->run();
             }
+
+            $result['error'] = array_merge($result['error'], $instance->getErrors());
         } while (false);
 
         // return result to client

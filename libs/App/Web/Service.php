@@ -37,6 +37,13 @@ abstract class Service
     );
 
     /**
+     * Stored errors.
+     *
+     * @param   array
+     */
+    protected $errors = array();
+
+    /**
      * Allowed request method.
      *
      * @type    string
@@ -54,27 +61,59 @@ abstract class Service
     }
 
     /**
+     * Add an error for service.
+     *
+     * @param   string                      $msg        Error message to add.
+     */
+    protected function addError($msg)
+    {
+        $this->errors[] = $msg;
+    }
+
+    /**
+     * Add multiple errors for service.
+     *
+     * @param   array           $err                        Array of error messages.
+     */
+    protected function addErrors(array $err)
+    {
+        $this->errors = array_merge($this->errors, $err);
+    }
+
+    /**
+     * Return error messages stored for service.
+     *
+     * @return  array                                   Stored error messages.
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+
+    /**
      * Validate.
      *
-     * @return  array                                   Returns am array (is_valid, errors).
+     * @return  bool                                    Returns true if validation suceeded, otherwise false.
      */
     public function validate()
     {
-        $errors = array();
-
         // check if request method is valid for service
         if (!($is_valid = ($this->method == $this->app->getRequest()->getRequestMethod()))) {
-            $errors[] = 'Invalid request method';
+            $this->addError('Invalid request method');
         }
 
         if ($is_valid) {
             // check arguments
             $provider = \Octris\Core\Provider::access($this->method);
 
-            list($is_valid, , $errors, $validator) = $provider->doValidate($this->schema);
+            list($is_valid, , $errors, ) = $provider->doValidate($this->schema);
+
+            if (!$is_valid) {
+                $this->addErrors($errors);
+            }
         }
 
-        return array($is_valid, $errors);
+        return $is_valid;
     }
 
     /**
