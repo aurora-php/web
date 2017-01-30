@@ -67,7 +67,6 @@ class Delegator implements \Octris\Core\App\Web\Router\ICallbackHandler
      * Invoke service delegator.
      *
      * @param   \Octris\Core\App\Web        $app            Instance of application.
-     * @return  \Octris\Core\App\Web\Page|null              Can either return a page or null.
      */
     public function __invoke(\Octris\Core\App\Web $app)
     {
