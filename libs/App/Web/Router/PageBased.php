@@ -78,15 +78,6 @@ class PageBased implements \Octris\Core\App\Web\IRouter
             }
         } while (--$max);
 
-        // fix security context
-        $secure = $next_page->isSecure();
-        $request = $app->getRequest();
-
-        if ($secure != $request->isSSL() && $request->getRequestMethod() == request::METHOD_GET) {
-            header('Location: ' . ($secure ? $request->getSSLUrl() : $request->getNonSSLUrl()));
-            exit;
-        }
-
         return $next_page;
     }
 

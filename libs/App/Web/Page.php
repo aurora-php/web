@@ -30,13 +30,6 @@ abstract class Page
     private $template = null;
 
     /**
-     * Whether the page should be delivered only through HTTPS.
-     *
-     * @type    bool
-     */
-    protected $secure = false;
-
-    /**
      * Breadcrumb for current page.
      *
      * @type    array
@@ -114,16 +107,6 @@ abstract class Page
     final public function __toString()
     {
         return get_called_class();
-    }
-
-    /**
-     * Returns whether page should be only delivered secured.
-     *
-     * @return  bool                                    Secured flag.
-     */
-    final public function isSecure()
-    {
-        return $this->secure;
     }
 
     /**
