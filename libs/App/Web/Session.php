@@ -124,8 +124,10 @@ class Session
         session_set_save_handler(
             array($handler, 'open'),
             array($handler, 'close'),
-            function ($id) use ($handler) {
+            function ($id) use ($handler) { 
                 self::$data = $handler->read($id);
+                
+                return '';
             },
             function ($id, $_data) use ($handler) {
                 $handler->write($id, self::$data);
