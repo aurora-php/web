@@ -36,6 +36,10 @@ class File implements \Octris\Core\App\Web\Session\IHandler
         $this->session_path = rtrim((isset($options['session_path'])
                                     ? $options['session_path']
                                     : session_save_path()), '/');
+
+        if (!is_dir($this->session_path) || !is_writable($this->session_path)) {
+            throw new \Exception(sprintf('Session path "%s/" is not writeable', $this->session_path));
+        }
     }
 
     /**
@@ -46,10 +50,6 @@ class File implements \Octris\Core\App\Web\Session\IHandler
      */
     public function open($path, $name)
     {
-        if (!is_dir($this->session_path) || !is_writable($this->session_path)) {
-            throw new \Exception(sprintf('Session path "%s/" is not writeable', $this->session_path));
-        }
-
         return true;
     }
 
