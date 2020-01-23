@@ -29,7 +29,7 @@ provider::set('files', $_FILES);
  * @copyright   copyright (c) 2011-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-abstract class Web extends \Octris\Web\App
+abstract class Web
 {
     /**
      * Instance of request object.
