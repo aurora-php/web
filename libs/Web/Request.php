@@ -27,7 +27,7 @@ class Request
      */
     const METHOD_CONNECT = 'CONNECT';
     const METHOD_DELETE = 'DELETE';
-    const METHOD_GET  = 'GET';
+    const METHOD_GET = 'GET';
     const METHOD_HEAD = 'HEAD';
     const METHOD_OPTIONS = 'OPTIONS';
     const METHOD_PATCH = 'PATCH';
