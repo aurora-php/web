@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'octris/core' package.
+ * This file is part of the 'octris/web' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Core\App;
+namespace Octris\Web\App;
 
 /**
  * Class Autoloader.
  *
- * @copyright   copyright (c) 2010-2014 by Harald Lapp
+ * @copyright   copyright (c) 2010-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
 class Autoloader
@@ -36,4 +36,4 @@ class Autoloader
     }
 }
 
-spl_autoload_register(array('\Octris\Core\App\Autoloader', 'autoload'));
+spl_autoload_register(array('\Octris\Web\App\Autoloader', 'autoload'));

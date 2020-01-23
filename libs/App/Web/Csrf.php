@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'octris/core' package.
+ * This file is part of the 'octris/web' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Core\App\Web;
+namespace Octris\Web\App\Web;
 
 /**
  * Class provides functionality for handling CSRF (cross-site request forgery) tokens.
  *
- * @copyright   copyright (c) 2014 by Harald Lapp
+ * @copyright   copyright (c) 2014-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
 class Csrf
@@ -22,14 +22,14 @@ class Csrf
     /**
      * Instance of a random bytes generator.
      *
-     * @type    null|\Octris\Core\Security\IRandom
+     * @type    null|\Octris\Web\Security\IRandom
      */
     protected static $random = null;
 
     /**
      * Server-side storage for CSRF tokens.
      *
-     * @type    null|\Octris\Core\App\Web\Csrf\IStorage
+     * @type    null|\Octris\Web\App\Web\Csrf\IStorage
      */
     protected static $storage = null;
 
@@ -53,9 +53,9 @@ class Csrf
     /**
      * Set random number generator / provider.
      *
-     * @param   \Octris\Core\Security\IRandom     $random             Instance of random number generator.
+     * @param   \Octris\Web\Security\IRandom     $random             Instance of random number generator.
      */
-    public static function setRandomProvider(\Octris\Core\Security\IRandom $random)
+    public static function setRandomProvider(\Octris\Web\Security\IRandom $random)
     {
         self::$random = $random;
     }
@@ -63,9 +63,9 @@ class Csrf
     /**
      * Set server-side storage for generated CSRF token.
      *
-     * @param   \Octris\Core\App\Web\Csrf\IStorage    $storage        Instance of CSRF token storage.
+     * @param   \Octris\Web\App\Web\Csrf\IStorage    $storage        Instance of CSRF token storage.
      */
-    public static function setStorage(\Octris\Core\App\Web\Csrf\IStorage $storage)
+    public static function setStorage(\Octris\Web\App\Web\Csrf\IStorage $storage)
     {
         self::$storage = $storage;
     }

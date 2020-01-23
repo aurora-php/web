@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'octris/core' package.
+ * This file is part of the 'octris/web' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Core\App;
+namespace Octris\Web\App;
 
 require_once(__DIR__ . '/Autoloader.php');
 
-use \Octris\Core\Validate as validate;
-use \Octris\Core\Provider as provider;
+use \Octris\Web\Validate as validate;
+use \Octris\Web\Provider as provider;
 
 provider::set('server', $_SERVER);
 provider::set('env', $_ENV);
@@ -29,7 +29,7 @@ provider::set('files', $_FILES);
  * OCTRiS autoloader and to provide some helper methods useful for
  * writing test cases.
  *
- * @copyright   copyright (c) 2010-2014 by Harald Lapp
+ * @copyright   copyright (c) 2010-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
 class Test

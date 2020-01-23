@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'octris/core' package.
+ * This file is part of the 'octris/web' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Core\App\Web\Router;
+namespace Octris\Web\App\Web\Router;
 
 /**
  * Interface for implementing routing callback handlers.
  *
- * @copyright   copyright (c) 2015 by Harald Lapp
+ * @copyright   copyright (c) 2015-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
 interface ICallbackHandler
@@ -29,8 +29,8 @@ interface ICallbackHandler
     /**
      * Make class instance a callable.
      *
-     * @param   \Octris\Core\App\Web                $app            Instance of application.
-     * @return  \Octris\Core\App\Web\Page|null                      Allowed return values.
+     * @param   \Octris\Web\App\Web                $app            Instance of application.
+     * @return  \Octris\Web\App\Web\Page|null                      Allowed return values.
      */
-    public function __invoke(\Octris\Core\App\Web $app);
+    public function __invoke(\Octris\Web\App\Web $app);
 }

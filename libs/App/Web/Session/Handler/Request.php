@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This request is part of the 'octris/core' package.
+ * This request is part of the 'octris/web' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,7 +9,7 @@
  * request that was distributed with this source code.
  */
 
-namespace Octris\Core\App\Web\Session\Handler;
+namespace Octris\Web\App\Web\Session\Handler;
 
 /**
  * The request session handler is the default session handler, which is set initially,
@@ -17,10 +17,10 @@ namespace Octris\Core\App\Web\Session\Handler;
  * during the current request. That means, that session data is not persistent, instead
  * every request starts with an empty session data storage.
  *
- * @copyright   copyright (c) 2011-2014 by Harald Lapp
+ * @copyright   copyright (c) 2011-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-class Request implements \Octris\Core\App\Web\Session\IHandler
+class Request implements \Octris\Web\App\Web\Session\IHandler
 {
     /**
      * Open session.

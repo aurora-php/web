@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'octris/core' package.
+ * This file is part of the 'octris/web' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,15 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Core\App\Web;
+namespace Octris\Web\App\Web;
 
-use \Octris\Core\Validate as validate;
-use \Octris\Core\Provider as provider;
+use \Octris\Web\Validate as validate;
+use \Octris\Web\Provider as provider;
 
 /**
  * Request helper functions
  *
- * @copyright   copyright (c) 2010-2015 by Harald Lapp
+ * @copyright   copyright (c) 2010-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
 class Request
@@ -39,7 +39,7 @@ class Request
     /**
      * Instance of headers object.
      *
-     * @type    \Octris\Core\App\Web\Headers
+     * @type    \Octris\Web\App\Web\Headers
      */
     protected $headers;
 

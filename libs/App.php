@@ -1,7 +1,9 @@
 <?php
 
+namespace Octris\Web;
+
 /*
- * This file is part of the 'octris/core' package.
+ * This file is part of the 'octris/web' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,57 +11,32 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Core {
-
-    use \Octris\Core\Registry as registry;
-
+/**
+ * Core web application class.
+ *
+ * @copyright   copyright (c) 2010-present by Harald Lapp
+ * @author      Harald Lapp <harald@octris.org>
+ */
+abstract class App
+{
     /**
-     * Core application class.
-     *
-     * @copyright   copyright (c) 2010-2014 by Harald Lapp
-     * @author      Harald Lapp <harald@octris.org>
+     * Constructor.
      */
-    abstract class App
+    public function __construct()
     {
-        /**
-         * Constructor.
-         */
-        public function __construct()
-        {
-        }
-
-        /**
-         * Initialize must be implemented by any subclass.
-         *
-         * @abstract
-         */
-        abstract protected function initialize();
-
-        /**
-         * Run must be implemented by any subclass.
-         *
-         * @abstract
-         */
-        abstract public function run();
     }
 
-}
-
-namespace {
-
-    require_once(__DIR__ . '/Error.php');
+    /**
+     * Initialize must be implemented by any subclass.
+     *
+     * @abstract
+     */
+    abstract protected function initialize();
 
     /**
-     * Global translate function.
+     * Run must be implemented by any subclass.
      *
-     * @param   string      $msg            Message to translate.
-     * @param   array       $args           Optional additional arguments.
-     * @param   string      $domain         Optional text domain.
-     * @return  string                      Localized text.
+     * @abstract
      */
-    function __($msg, array $args = array(), $domain = null)
-    {
-        return \Octris\Core\L10n::getInstance()->translate($msg, $args, $domain);
-    }
-
+    abstract public function run();
 }

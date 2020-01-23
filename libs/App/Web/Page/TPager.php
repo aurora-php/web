@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'octris/core' package.
+ * This file is part of the 'octris/web' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Core\App\Web\Page;
+namespace Octris\Web\App\Web\Page;
 
 /**
  * Implements functionality to generate pagers.
  *
- * @copyright   copyright (c) 2011-2014 by Harald Lapp
+ * @copyright   copyright (c) 2011-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
 trait TPager
@@ -92,7 +92,7 @@ trait TPager
             // either import or use default on first call
             $method  = $this->app->getRequest()->getRequestMethod();
 
-            $request = \Octris\Core\Provider::access(strtolower($method));
+            $request = \Octris\Web\Provider::access(strtolower($method));
 
             if ($request->isExist('page')) {
                 $page = $request->getValue('page', validate::T_DIGIT);
@@ -118,7 +118,7 @@ trait TPager
             // either import or use default on first call
             $method  = $this->app->getRequest()->getRequestMethod();
 
-            $request = \Octris\Core\Provider::access(strtolower($method));
+            $request = \Octris\Web\Provider::access(strtolower($method));
 
             if ($request->isExist('ipp')) {
                 $ipp = $request->getValue('ipp', validate::T_DIGIT);

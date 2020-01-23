@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'octris/core' package.
+ * This file is part of the 'octris/web' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Core\App;
+namespace Octris\Web\App;
 
-use \Octris\Core\App\Web\Request as request;
-use \Octris\Core\Validate as validate;
-use \Octris\Core\Provider as provider;
+use \Octris\Web\App\Web\Request as request;
+use \Octris\Web\Validate as validate;
+use \Octris\Web\Provider as provider;
 
 provider::set('server', $_SERVER);
 provider::set('env', $_ENV);
@@ -26,45 +26,45 @@ provider::set('files', $_FILES);
 /**
  * Core class for Web applications.
  *
- * @copyright   copyright (c) 2011-2014 by Harald Lapp
+ * @copyright   copyright (c) 2011-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-abstract class Web extends \Octris\Core\App
+abstract class Web extends \Octris\Web\App
 {
     /**
      * Instance of request object.
      *
-     * @type    \Octris\Core\App\Web\Request|null
+     * @type    \Octris\Web\App\Web\Request|null
      */
     protected $request = null;
 
     /**
      * Instance of response object.
      *
-     * @type    \Octris\Core\App\Web\Response|null
+     * @type    \Octris\Web\App\Web\Response|null
      */
     protected $response = null;
 
     /**
      * Application state.
      *
-     * @type    \Octris\Core\App\State|null
+     * @type    \Octris\Web\App\State|null
      */
     protected $state = null;
 
     /**
      * Instance of router.
      *
-     * @type    \Octris\Core\App\Web\IRouter
+     * @type    \Octris\Web\App\Web\RouterInterface
      */
     protected $router;
 
     /**
      * Constructor.
      *
-     * @param   \Octris\Core\App\Web\IRouter    $router     Instance of router to use.
+     * @param   \Octris\Web\App\Web\RouterInterface    $router     Instance of router to use.
      */
-    public function __construct(\Octris\Core\App\Web\IRouter $router)
+    public function __construct(\Octris\Web\App\Web\RouterInterface $router)
     {
         $this->router = $router;
 
@@ -74,12 +74,12 @@ abstract class Web extends \Octris\Core\App
     /**
      * Returns instance of request object.
      *
-     * @return  \Octris\Core\App\Web\Request                Instance of request object.
+     * @return  \Octris\Web\App\Web\Request                Instance of request object.
      */
     public function getRequest()
     {
         if (is_null($this->request)) {
-            $this->request = new \Octris\Core\App\Web\Request();
+            $this->request = new \Octris\Web\App\Web\Request();
         }
 
         return $this->request;
@@ -88,12 +88,12 @@ abstract class Web extends \Octris\Core\App
     /**
      * Returns instance of response object.
      *
-     * @return  \Octris\Core\App\Web\Response               Instance of response object.
+     * @return  \Octris\Web\App\Web\Response               Instance of response object.
      */
     public function getResponse()
     {
         if (is_null($this->response)) {
-            $this->response = new \Octris\Core\App\Web\Response();
+            $this->response = new \Octris\Web\App\Web\Response();
         }
 
         return $this->response;
@@ -102,7 +102,7 @@ abstract class Web extends \Octris\Core\App
     /**
      * Return application state.
      *
-     * @return  \Octris\Core\App\State          State of application.
+     * @return  \Octris\Web\App\State          State of application.
      */
     public function getState()
     {

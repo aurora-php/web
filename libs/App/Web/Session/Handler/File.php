@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'octris/core' package.
+ * This file is part of the 'octris/web' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,15 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Core\App\Web\Session\Handler;
+namespace Octris\Web\App\Web\Session\Handler;
 
 /**
  * Session handler for storing sesion data in files.
  *
- * @copyright   copyright (c) 2011-2014 by Harald Lapp
+ * @copyright   copyright (c) 2011-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-class File implements \Octris\Core\App\Web\Session\IHandler
+class File implements \Octris\Web\App\Web\Session\IHandler
 {
     /**
      * Stores the path the session files are stored in.

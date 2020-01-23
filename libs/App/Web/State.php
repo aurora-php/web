@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'octris/core' package.
+ * This file is part of the 'octris/web' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Core\App\Web;
+namespace Octris\Web\App\Web;
 
 /**
  * The state class is used to transfer page/action specific data between two
@@ -20,10 +20,10 @@ namespace Octris\Core\App\Web;
  * between two requests. The state helps to bring stateful requests to a web
  * application, too.
  *
- * @copyright   copyright (c) 2011-2014 by Harald Lapp
+ * @copyright   copyright (c) 2011-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-class State extends \Octris\Core\Type\Collection
+class State extends \Octris\Web\Type\Collection
 {
     /**
      * Hash algorithm to use to generate the checksum of the state.
@@ -99,7 +99,7 @@ class State extends \Octris\Core\Type\Collection
 
         $frozen = gzcompress(serialize($tmp));
         $sum    = hash(self::HASH_ALGO, $frozen . self::$secret);
-        $return = \Octris\Core\App\Web\Request::base64UrlEncode($sum . '|' . $frozen);
+        $return = \Octris\Web\App\Web\Request::base64UrlEncode($sum . '|' . $frozen);
 
         return $return;
     }
@@ -113,7 +113,7 @@ class State extends \Octris\Core\Type\Collection
      */
     public static function validate($state, array &$decoded = null)
     {
-        $tmp    = \Octris\Core\App\Web\Request::base64UrlDecode($state);
+        $tmp    = \Octris\Web\App\Web\Request::base64UrlDecode($state);
         $sum    = '';
         $frozen = '';
 
@@ -136,7 +136,7 @@ class State extends \Octris\Core\Type\Collection
      * Thaw frozen state object.
      *
      * @param   string          $state              State to thaw.
-     * @return  \Octris\Core\App\Web\State          Instance of state object.
+     * @return  \Octris\Web\App\Web\State          Instance of state object.
      */
     public static function thaw($state)
     {

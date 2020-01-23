@@ -9,15 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Core\App\Web\Service;
+namespace Octris\Web\App\Web\Service;
 
 /**
  * Service delegator.
  *
- * @copyright   copyright (c) 2015 by Harald Lapp
+ * @copyright   copyright (c) 2015-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-class Delegator implements \Octris\Core\App\Web\Router\ICallbackHandler
+class Delegator implements \Octris\Web\App\Web\Router\ICallbackHandler
 {
     /**
      * Service registry.
@@ -66,16 +66,16 @@ class Delegator implements \Octris\Core\App\Web\Router\ICallbackHandler
     /**
      * Invoke service delegator.
      *
-     * @param   \Octris\Core\App\Web        $app            Instance of application.
+     * @param   \Octris\Web\App\Web        $app            Instance of application.
      */
-    public function __invoke(\Octris\Core\App\Web $app)
+    public function __invoke(\Octris\Web\App\Web $app)
     {
         $result = array(
             'error' => array(),
             'data' => null
         );
 
-        $get = \Octris\Core\Provider::access('get');
+        $get = \Octris\Web\Provider::access('get');
 
         do {
             list($is_valid, $errors) = $this->validate($app);
@@ -86,7 +86,7 @@ class Delegator implements \Octris\Core\App\Web\Router\ICallbackHandler
             }
 
             if (!($get->isExist('SERVICE') &&
-                    $get->isValid('SERVICE', \Octris\Core\Validate::T_PATTERN, ['pattern' => '/^[a-zA-Z_][a-zA-Z0-9_]*$/']))) {
+                    $get->isValid('SERVICE', \Octris\Web\Validate::T_PATTERN, ['pattern' => '/^[a-zA-Z_][a-zA-Z0-9_]*$/']))) {
                 $result['error'][] = 'Invalid service name or service name not provided!';
                 break;
             }
@@ -100,7 +100,7 @@ class Delegator implements \Octris\Core\App\Web\Router\ICallbackHandler
 
             $class = $this->services[$service];
 
-            if (!(class_exists($class) && is_subclass_of($class, '\Octris\Core\App\Web\Service'))) {
+            if (!(class_exists($class) && is_subclass_of($class, '\Octris\Web\App\Web\Service'))) {
                 $result['error'][] = sprintf('Service implementation missing "%s"!', $class);
                 break;
             }
@@ -138,10 +138,10 @@ class Delegator implements \Octris\Core\App\Web\Router\ICallbackHandler
     /**
      * Generic validation of request to service class.
      *
-     * @param   \Octris\Core\App\Web        $app            Instance of application.
+     * @param   \Octris\Web\App\Web        $app            Instance of application.
      * @return  array                                       Array of (is_valid, errors).
      */
-    protected function validate(\Octris\Core\App\Web $app)
+    protected function validate(\Octris\Web\App\Web $app)
     {
         $errors = array();
         $is_valid = true;
@@ -166,7 +166,7 @@ class Delegator implements \Octris\Core\App\Web\Router\ICallbackHandler
                     break;
                 }
 
-                $csrf = new \Octris\Core\App\Web\Csrf();
+                $csrf = new \Octris\Web\App\Web\Csrf();
 
                 if (!($is_valid = $csrf->verifyToken($state->pop('__csrf_token')))) {
                     $errors[] = __('Provided CSRF token is invalid!');

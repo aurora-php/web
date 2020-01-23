@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'octris/core' package.
+ * This file is part of the 'octris/web' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,15 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Core\App\Web;
+namespace Octris\Web\App\Web;
 
-use \Octris\Core\Provider as provider;
-use \Octris\Core\Validate as validate;
+use \Octris\Web\Provider as provider;
+use \Octris\Web\Validate as validate;
 
 /**
  * Page controller for web applications.
  *
- * @copyright   copyright (c) 2010-2014 by Harald Lapp
+ * @copyright   copyright (c) 2010-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
 abstract class Page
@@ -25,7 +25,7 @@ abstract class Page
     /**
      * Template instance.
      *
-     * @type    \Octris\Core\Tpl
+     * @type    \Octris\Web\Tpl
      */
     private $template = null;
 
@@ -74,16 +74,16 @@ abstract class Page
     /**
      * Application instance.
      *
-     * @type    \Octris\Core\App\Web
+     * @type    \Octris\Web\App\Web
      */
     protected $app;
 
     /**
      * Constructor.
      *
-     * @param   \Octris\Core\App\Web        $app        Application instance.
+     * @param   \Octris\Web\App\Web        $app        Application instance.
      */
-    public function __construct(\Octris\Core\App\Web $app)
+    public function __construct(\Octris\Web\App\Web $app)
     {
         $this->app = $app;
     }
@@ -117,7 +117,7 @@ abstract class Page
      * @param   array                           $schema         Validation schema.
      * @param   int                             $mode           Validation mode.
      */
-    protected function addValidator($type, $action, array $schema, $mode = \Octris\Core\Validate\Schema::T_IGNORE)
+    protected function addValidator($type, $action, array $schema, $mode = \Octris\Web\Validate\Schema::T_IGNORE)
     {
         $actions = (array)$action;
 
@@ -170,7 +170,7 @@ abstract class Page
      *
      * @param   string                          $action         Action to get next page for.
      * @param   string                          $entry_page     Name of the entry page for possible fallback.
-     * @return  \Octris\Core\App\Web\Page                       Next page.
+     * @return  \Octris\Web\App\Web\Page                       Next page.
      */
     public function getNextPage($action, $entry_page)
     {
@@ -322,7 +322,7 @@ abstract class Page
             // CSRF token is not in state
             $this->addError(__('CSRF token is not provided in application state!'));
         } else {
-            $csrf = new \Octris\Core\App\Web\Csrf();
+            $csrf = new \Octris\Web\App\Web\Csrf();
 
             if (!($is_valid = $csrf->verifyToken($state->pop('__csrf_token'), $scope))) {
                 $this->addError(__('Provided CSRF token is invalid!'));
@@ -364,25 +364,25 @@ abstract class Page
     /**
      * Return instance of template for current page.
      *
-     * @return  \Octris\Core\Tpl                Instance of template engine.
+     * @return  \Octris\Web\Tpl                Instance of template engine.
      */
     public function getTemplate()
     {
         if (is_null($this->template)) {
-            $tpl = \Octris\Core\Registry::getInstance()->createTemplate;
+            $tpl = \Octris\Web\Registry::getInstance()->createTemplate;
 
             // register common template methods
             $tpl->registerMethod('getState', function (array $data = array()) {
                 return $this->app->getState()->freeze($data);
             }, array('min' => 0, 'max' => 1));
             $tpl->registerMethod('isAuthenticated', function () {
-                return \Octris\Core\Auth::getInstance()->isAuthenticated();
+                return \Octris\Web\Auth::getInstance()->isAuthenticated();
             }, array('min' => 0, 'max' => 0));
             $tpl->registerMethod('getBreadcrumb', function () {
                 return $this->breadcrumb;
             }, array('max' => 0));
             $tpl->registerMethod('getCsrfToken', function ($scope = '') {
-                $csrf = new \Octris\Core\App\Web\Csrf();
+                $csrf = new \Octris\Web\App\Web\Csrf();
 
                 return $csrf->createToken($scope);
             }, array('max' => 1));
@@ -400,12 +400,12 @@ abstract class Page
     /**
      * Abstract method definition.
      *
-     * @param   \Octris\Core\App\Web\Page       $last_page      Instance of last called page.
+     * @param   \Octris\Web\App\Web\Page       $last_page      Instance of last called page.
      * @param   string                          $action         Action that led to current page.
      * @return  mixed                                           Returns either page to redirect to or null.
      * @abstract
      */
-    abstract public function prepare(\Octris\Core\App\Web\Page $last_page, $action);
+    abstract public function prepare(\Octris\Web\App\Web\Page $last_page, $action);
 
     /**
      * Abstract method definition.

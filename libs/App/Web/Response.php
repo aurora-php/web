@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'octris/core' package.
+ * This file is part of the 'octris/web' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Core\App\Web;
+namespace Octris\Web\App\Web;
 
 /**
  * Response class.
  *
- * @copyright   copyright (c) 2015-2016 by Harald Lapp
+ * @copyright   copyright (c) 2015-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
 class Response
@@ -116,7 +116,7 @@ class Response
     /**
      * Instance of headers object.
      *
-     * @type    \Octris\Core\App\Web\Headers
+     * @type    \Octris\Web\App\Web\Headers
      */
     protected $headers;
 

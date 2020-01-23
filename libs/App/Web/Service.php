@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'octris/core' package.
+ * This file is part of the 'octris/web' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Core\App\Web;
+namespace Octris\Web\App\Web;
 
 /**
  * Service base class.
  *
- * @copyright   copyright (c) 2015 by Harald Lapp
+ * @copyright   copyright (c) 2015-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
 abstract class Service
@@ -22,7 +22,7 @@ abstract class Service
     /**
      * Application instance.
      *
-     * @type    \Octris\Core\App\Web
+     * @type    \Octris\Web\App\Web
      */
     protected $app;
 
@@ -32,7 +32,7 @@ abstract class Service
      * @type    array
      */
     protected $schema = array(
-        'type'       => \Octris\Core\Validate::T_OBJECT,
+        'type'       => \Octris\Web\Validate::T_OBJECT,
         'properties' => array()
     );
 
@@ -48,14 +48,14 @@ abstract class Service
      *
      * @type    string
      */
-    protected $method = \Octris\Core\App\Web\Request::METHOD_GET;
+    protected $method = \Octris\Web\App\Web\Request::METHOD_GET;
 
     /**
      * Constructor.
      *
-     * @param   \Octris\Core\App\Web        $app        Application instance.
+     * @param   \Octris\Web\App\Web        $app        Application instance.
      */
-    public function __construct(\Octris\Core\App\Web $app)
+    public function __construct(\Octris\Web\App\Web $app)
     {
         $this->app = $app;
     }
@@ -104,7 +104,7 @@ abstract class Service
 
         if ($is_valid) {
             // check arguments
-            $provider = \Octris\Core\Provider::access($this->method);
+            $provider = \Octris\Web\Provider::access($this->method);
 
             list($is_valid, , $errors, ) = $provider->doValidate($this->schema);
 

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the 'octris/core' package.
+ * This file is part of the 'octris/web' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
@@ -9,15 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Core\App\Web\Page;
+namespace Octris\Web\App\Web\Page;
 
 /**
  * Custom error pages.
  *
- * @copyright   copyright (c) 2015-2016 by Harald Lapp
+ * @copyright   copyright (c) 2015-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-class Error extends \Octris\Core\App\Web\Page
+class Error extends \Octris\Web\App\Web\Page
 {
     /**
      * Status code.
@@ -43,9 +43,9 @@ class Error extends \Octris\Core\App\Web\Page
     /**
      * Constructor.
      *
-     * @param   \Octris\Core\App                        Application instance.
+     * @param   \Octris\Web\App                        Application instance.
      */
-    public function __construct(\Octris\Core\App\Web $app)
+    public function __construct(\Octris\Web\App\Web $app)
     {
         parent::__construct($app);
     }
@@ -63,11 +63,11 @@ class Error extends \Octris\Core\App\Web\Page
     /**
      * Implements abstract prepare methof of parent class.
      *
-     * @param   \Octris\Core\App\Web\Page       $last_page      Instance of last called page.
+     * @param   \Octris\Web\App\Web\Page       $last_page      Instance of last called page.
      * @param   string                          $action         Action that led to current page.
      * @return  mixed                                           Returns either page to redirect to or null.
      */
-    public function prepare(\Octris\Core\App\Web\Page $last_page, $action)
+    public function prepare(\Octris\Web\App\Web\Page $last_page, $action)
     {
         $response = $this->app->getResponse();
 
