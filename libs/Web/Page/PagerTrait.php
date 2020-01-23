@@ -67,7 +67,7 @@ trait PagerTrait
      *
      * @type    string
      */
-    protected $filler_char = '...';
+    protected $filler_char = '&#8230;';
 
     /**
      * Set the total items of the page.
