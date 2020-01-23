@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Web\App\Web\Page;
+namespace Octris\Web\Page;
 
 /**
  * Special page for handling critical errors.
@@ -17,7 +17,7 @@ namespace Octris\Web\App\Web\Page;
  * @copyright   copyright (c) 2011-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-abstract class Critical extends \Octris\Web\App\Web\Page
+abstract class Critical extends \Octris\Web\Page
 {
     /**
      * Template filename of page for rendering critical error information.
@@ -48,7 +48,7 @@ abstract class Critical extends \Octris\Web\App\Web\Page
      *
      * @param   \Octris\Web\App        $app             Application instance.
      */
-    public function __construct(\Octris\Web\App\Web $app)
+    public function __construct(\Octris\Web $app)
     {
         parent::__construct($app);
     }
@@ -91,11 +91,11 @@ abstract class Critical extends \Octris\Web\App\Web\Page
     /**
      * Implements abstract prepare methof of parent class.
      *
-     * @param   \Octris\Web\App\Web\Page       $last_page      Instance of last called page.
+     * @param   \Octris\Web\Page       $last_page      Instance of last called page.
      * @param   string                          $action         Action that led to current page.
      * @return  mixed                                           Returns either page to redirect to or null.
      */
-    public function prepare(\Octris\Web\App\Web\Page $last_page, $action)
+    public function prepare(\Octris\Web\Page $last_page, $action)
     {
     }
 

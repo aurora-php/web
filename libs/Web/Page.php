@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Web\App\Web;
+namespace Octris\Web;
 
 use \Octris\Web\Provider as provider;
 use \Octris\Web\Validate as validate;
@@ -74,16 +74,16 @@ abstract class Page
     /**
      * Application instance.
      *
-     * @type    \Octris\Web\App\Web
+     * @type    \Octris\Web
      */
     protected $app;
 
     /**
      * Constructor.
      *
-     * @param   \Octris\Web\App\Web        $app        Application instance.
+     * @param   \Octris\Web        $app        Application instance.
      */
-    public function __construct(\Octris\Web\App\Web $app)
+    public function __construct(\Octris\Web $app)
     {
         $this->app = $app;
     }
@@ -170,7 +170,7 @@ abstract class Page
      *
      * @param   string                          $action         Action to get next page for.
      * @param   string                          $entry_page     Name of the entry page for possible fallback.
-     * @return  \Octris\Web\App\Web\Page                       Next page.
+     * @return  \Octris\Web\Page                       Next page.
      */
     public function getNextPage($action, $entry_page)
     {
@@ -322,7 +322,7 @@ abstract class Page
             // CSRF token is not in state
             $this->addError(__('CSRF token is not provided in application state!'));
         } else {
-            $csrf = new \Octris\Web\App\Web\Csrf();
+            $csrf = new \Octris\Web\Csrf();
 
             if (!($is_valid = $csrf->verifyToken($state->pop('__csrf_token'), $scope))) {
                 $this->addError(__('Provided CSRF token is invalid!'));
@@ -382,7 +382,7 @@ abstract class Page
                 return $this->breadcrumb;
             }, array('max' => 0));
             $tpl->registerMethod('getCsrfToken', function ($scope = '') {
-                $csrf = new \Octris\Web\App\Web\Csrf();
+                $csrf = new \Octris\Web\Csrf();
 
                 return $csrf->createToken($scope);
             }, array('max' => 1));
@@ -400,12 +400,12 @@ abstract class Page
     /**
      * Abstract method definition.
      *
-     * @param   \Octris\Web\App\Web\Page       $last_page      Instance of last called page.
+     * @param   \Octris\Web\Page       $last_page      Instance of last called page.
      * @param   string                          $action         Action that led to current page.
      * @return  mixed                                           Returns either page to redirect to or null.
      * @abstract
      */
-    abstract public function prepare(\Octris\Web\App\Web\Page $last_page, $action);
+    abstract public function prepare(\Octris\Web\Page $last_page, $action);
 
     /**
      * Abstract method definition.

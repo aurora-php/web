@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Web\App\Web\Router;
+namespace Octris\Web\Router;
 
 /**
  * Url-based routing using FastRoute
@@ -39,7 +39,7 @@ class UrlBased extends PageBased
             $this->router_dispatcher = \FastRoute\simpleDispatcher(
                 $setup,
                 [
-                    'routeCollector' => '\Octris\Web\App\Web\Router\RuleCollector'
+                    'routeCollector' => '\Octris\Web\Router\RuleCollector'
                 ]
             );
         } else {
@@ -47,7 +47,7 @@ class UrlBased extends PageBased
                 $setup,
                 [
                     'cacheFile' => $file,
-                    'routeCollector' => '\Octris\Web\App\Web\Router\RuleCollector'
+                    'routeCollector' => '\Octris\Web\Router\RuleCollector'
                 ]
             );
         }
@@ -58,11 +58,11 @@ class UrlBased extends PageBased
     /**
      * Routing.
      *
-     * @param   \Octris\Web\App\Web        $app            Instance of application.
-     * @param   \Octris\Web\App\Web\Page   $last_page      Last page.
-     * @return  \Octris\Web\App\Web\Page                   Returns instance of next page to render.
+     * @param   \Octris\Web        $app            Instance of application.
+     * @param   \Octris\Web\Page   $last_page      Last page.
+     * @return  \Octris\Web\Page                   Returns instance of next page to render.
      */
-    protected function routing(\Octris\Web\App\Web $app, \Octris\Web\App\Web\Page $last_page)
+    protected function routing(\Octris\Web $app, \Octris\Web\Page $last_page)
     {
         do {
             $request = $app->getRequest();
@@ -80,12 +80,12 @@ class UrlBased extends PageBased
                 case \FastRoute\Dispatcher::NOT_FOUND:
                     $response->setStatusCode(404);
 
-                    $next_page = new \Octris\Web\App\Web\Page\Error($app);
+                    $next_page = new \Octris\Web\Page\Error($app);
                     break;
                 case \FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
                     $response->setStatusCode(405);
 
-                    $next_page = new \Octris\Web\App\Web\Page\Error($app);
+                    $next_page = new \Octris\Web\Page\Error($app);
                     break;
                 case \FastRoute\Dispatcher::FOUND:
                     $handler = $result[1];
@@ -100,18 +100,18 @@ class UrlBased extends PageBased
                     if ($handler === '') {
                         // no handler provided use default routing
                         $next_page = parent::routing($app, $last_page);
-                    } elseif (is_callable($handler) && $handler instanceof \Octris\Web\App\Web\Router\CallbackHandlerInterface) {
+                    } elseif (is_callable($handler) && $handler instanceof \Octris\Web\Router\CallbackHandlerInterface) {
                         // an instance of a calback handler
                         $next_page = $handler($app);
 
-                        if (!(is_object($handler) && $handler instanceof \Octris\Web\App\Web\Page)) {
+                        if (!(is_object($handler) && $handler instanceof \Octris\Web\Page)) {
                             // callback did not return an instance of a page class, exit application
                             exit();
                         }
-                    } elseif (is_object($handler) && $handler instanceof \Octris\Web\App\Web\Page) {
+                    } elseif (is_object($handler) && $handler instanceof \Octris\Web\Page) {
                         // handler is the instance of a page class
                         $next_page = $handler;
-                    } elseif (is_string($handler) && class_exists($handler) && is_subclass_of($handler, '\Octris\Web\App\Web\Page')) {
+                    } elseif (is_string($handler) && class_exists($handler) && is_subclass_of($handler, '\Octris\Web\Page')) {
                         // handler is the name of a page class
                         $next_page = new $handler($app);
                     } else {

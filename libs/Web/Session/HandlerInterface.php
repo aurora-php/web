@@ -1,26 +1,23 @@
 <?php
 
 /*
- * This request is part of the 'octris/web' package.
+ * This file is part of the 'octris/web' package.
  *
  * (c) Harald Lapp <harald@octris.org>
  *
  * For the full copyright and license information, please view the LICENSE
- * request that was distributed with this source code.
+ * file that was distributed with this source code.
  */
 
-namespace Octris\Web\App\Web\Session\Handler;
+namespace Octris\Web\Session;
 
 /**
- * The request session handler is the default session handler, which is set initially,
- * when session library is included. This session handler stores session data only
- * during the current request. That means, that session data is not persistent, instead
- * every request starts with an empty session data storage.
+ * Interface for implementing session handlers.
  *
  * @copyright   copyright (c) 2011-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-class Request implements \Octris\Web\App\Web\Session\HandlerInterface
+interface HandlerInterface
 {
     /**
      * Open session.
@@ -28,28 +25,19 @@ class Request implements \Octris\Web\App\Web\Session\HandlerInterface
      * @param   string          $path               Session starage path.
      * @param   string          $name               Session name.
      */
-    public function open($path, $name)
-    {
-        return true;
-    }
+    public function open($path, $name);
 
     /**
      * Close session.
      */
-    public function close()
-    {
-        return true;
-    }
+    public function close();
 
     /**
      * Read session.
      *
      * @param   string      $id                     Id of session to read.
      */
-    public function read($id)
-    {
-        return array();
-    }
+    public function read($id);
 
     /**
      * Write session.
@@ -57,28 +45,20 @@ class Request implements \Octris\Web\App\Web\Session\HandlerInterface
      * @param   string      $id                     Id of session to write.
      * @param   array       $data                   Session data to write.
      */
-    public function write($id, array $data)
-    {
-        return true;
-    }
+    public function write($id, array $data);
 
     /**
      * Destroy session.
      *
      * @param   string      $id                     Id of session to destroy.
      */
-    public function destroy($id)
-    {
-        return true;
-    }
+    public function destroy($id);
 
     /**
      * Garbage collect a session.
      *
      * @param   int         $lifetime               Maximum lifetime of session.
      */
-    public function gc($lifetime)
-    {
-        return true;
-    }
+    public function gc($lifetime);
+    /**/
 }

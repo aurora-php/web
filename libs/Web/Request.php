@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Web\App\Web;
+namespace Octris\Web;
 
 use \Octris\Web\Validate as validate;
 use \Octris\Web\Provider as provider;
@@ -39,7 +39,7 @@ class Request
     /**
      * Instance of headers object.
      *
-     * @type    \Octris\Web\App\Web\Headers
+     * @type    \Octris\Web\Headers
      */
     protected $headers;
 

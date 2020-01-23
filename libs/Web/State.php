@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Web\App\Web;
+namespace Octris\Web;
 
 /**
  * The state class is used to transfer page/action specific data between two
@@ -99,7 +99,7 @@ class State extends \Octris\Web\Type\Collection
 
         $frozen = gzcompress(serialize($tmp));
         $sum    = hash(self::HASH_ALGO, $frozen . self::$secret);
-        $return = \Octris\Web\App\Web\Request::base64UrlEncode($sum . '|' . $frozen);
+        $return = \Octris\Web\Request::base64UrlEncode($sum . '|' . $frozen);
 
         return $return;
     }
@@ -113,7 +113,7 @@ class State extends \Octris\Web\Type\Collection
      */
     public static function validate($state, array &$decoded = null)
     {
-        $tmp    = \Octris\Web\App\Web\Request::base64UrlDecode($state);
+        $tmp    = \Octris\Web\Request::base64UrlDecode($state);
         $sum    = '';
         $frozen = '';
 
@@ -136,7 +136,7 @@ class State extends \Octris\Web\Type\Collection
      * Thaw frozen state object.
      *
      * @param   string          $state              State to thaw.
-     * @return  \Octris\Web\App\Web\State          Instance of state object.
+     * @return  \Octris\Web\State          Instance of state object.
      */
     public static function thaw($state)
     {

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Web\App\Web;
+namespace Octris\Web;
 
 /**
  * Class provides functionality for handling CSRF (cross-site request forgery) tokens.
@@ -29,7 +29,7 @@ class Csrf
     /**
      * Server-side storage for CSRF tokens.
      *
-     * @type    null|\Octris\Web\App\Web\Csrf\IStorage
+     * @type    null|\Octris\Web\Csrf\IStorage
      */
     protected static $storage = null;
 
@@ -63,9 +63,9 @@ class Csrf
     /**
      * Set server-side storage for generated CSRF token.
      *
-     * @param   \Octris\Web\App\Web\Csrf\IStorage    $storage        Instance of CSRF token storage.
+     * @param   \Octris\Web\Csrf\IStorage    $storage        Instance of CSRF token storage.
      */
-    public static function setStorage(\Octris\Web\App\Web\Csrf\IStorage $storage)
+    public static function setStorage(\Octris\Web\Csrf\IStorage $storage)
     {
         self::$storage = $storage;
     }

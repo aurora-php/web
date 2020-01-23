@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Web\App\Web\Router;
+namespace Octris\Web\Router;
 
 /**
  * Default -- page based -- router.
@@ -17,7 +17,7 @@ namespace Octris\Web\App\Web\Router;
  * @copyright   copyright (c) 2015-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-class PageBased implements \Octris\Web\App\Web\RouterInterface
+class PageBased implements \Octris\Web\RouterInterface
 {
     /**
      * Entry page to use if no other page is loaded.
@@ -39,11 +39,11 @@ class PageBased implements \Octris\Web\App\Web\RouterInterface
     /**
      * Application initial routing.
      *
-     * @param   \Octris\Web\App\Web        $app            Instance of application.
-     * @param   \Octris\Web\App\Web\Page   $last_page      Last page.
-     * @return  \Octris\Web\App\Web\Page                   Returns instance of next page to render.
+     * @param   \Octris\Web        $app            Instance of application.
+     * @param   \Octris\Web\Page   $last_page      Last page.
+     * @return  \Octris\Web\Page                   Returns instance of next page to render.
      */
-    protected function routing(\Octris\Web\App\Web $app, \Octris\Web\App\Web\Page $last_page)
+    protected function routing(\Octris\Web $app, \Octris\Web\Page $last_page)
     {
         $action = $last_page->getAction();
 
@@ -57,12 +57,12 @@ class PageBased implements \Octris\Web\App\Web\RouterInterface
     /**
      * Application rerouting.
      *
-     * @param   \Octris\Web\App\Web        $app            Instance of application.
-     * @param   \Octris\Web\App\Web\Page   $last_page      Last page.
-     * @param   \Octris\Web\App\Web\Page   $next_page      Expected page to render.
-     * @return  \Octris\Web\App\Web\Page                   Actual page to render.
+     * @param   \Octris\Web        $app            Instance of application.
+     * @param   \Octris\Web\Page   $last_page      Last page.
+     * @param   \Octris\Web\Page   $next_page      Expected page to render.
+     * @return  \Octris\Web\Page                   Actual page to render.
      */
-    protected function rerouting(\Octris\Web\App\Web $app, \Octris\Web\App\Web\Page $last_page, \Octris\Web\App\Web\Page $next_page)
+    protected function rerouting(\Octris\Web $app, \Octris\Web\Page $last_page, \Octris\Web\Page $next_page)
     {
         $action = $last_page->getAction();
 
@@ -84,10 +84,10 @@ class PageBased implements \Octris\Web\App\Web\RouterInterface
     /**
      * Initiate routing.
      *
-     * @param   \Octris\Web\App\Web        $app            Instance of application.
+     * @param   \Octris\Web        $app            Instance of application.
      * @return  string                                      Content to render.
      */
-    public function route(\Octris\Web\App\Web $app)
+    public function route(\Octris\Web $app)
     {
         // determine last page
         $state = $app->getState();

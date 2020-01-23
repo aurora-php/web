@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Web\App\Web\Router;
+namespace Octris\Web\Router;
 
 /**
  * Interface for implementing routing callback handlers.
@@ -29,8 +29,8 @@ interface CallbackHandlerInterface
     /**
      * Make class instance a callable.
      *
-     * @param   \Octris\Web\App\Web                $app            Instance of application.
-     * @return  \Octris\Web\App\Web\Page|null                      Allowed return values.
+     * @param   \Octris\Web                $app            Instance of application.
+     * @return  \Octris\Web\Page|null                      Allowed return values.
      */
-    public function __invoke(\Octris\Web\App\Web $app);
+    public function __invoke(\Octris\Web $app);
 }

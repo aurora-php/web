@@ -11,7 +11,7 @@
 
 namespace Octris\Web\App;
 
-use \Octris\Web\App\Web\Request as request;
+use \Octris\Web\Request as request;
 use \Octris\Web\Validate as validate;
 use \Octris\Web\Provider as provider;
 
@@ -34,14 +34,14 @@ abstract class Web extends \Octris\Web\App
     /**
      * Instance of request object.
      *
-     * @type    \Octris\Web\App\Web\Request|null
+     * @type    \Octris\Web\Request|null
      */
     protected $request = null;
 
     /**
      * Instance of response object.
      *
-     * @type    \Octris\Web\App\Web\Response|null
+     * @type    \Octris\Web\Response|null
      */
     protected $response = null;
 
@@ -55,16 +55,16 @@ abstract class Web extends \Octris\Web\App
     /**
      * Instance of router.
      *
-     * @type    \Octris\Web\App\Web\RouterInterface
+     * @type    \Octris\Web\RouterInterface
      */
     protected $router;
 
     /**
      * Constructor.
      *
-     * @param   \Octris\Web\App\Web\RouterInterface    $router     Instance of router to use.
+     * @param   \Octris\Web\RouterInterface    $router     Instance of router to use.
      */
-    public function __construct(\Octris\Web\App\Web\RouterInterface $router)
+    public function __construct(\Octris\Web\RouterInterface $router)
     {
         $this->router = $router;
 
@@ -74,12 +74,12 @@ abstract class Web extends \Octris\Web\App
     /**
      * Returns instance of request object.
      *
-     * @return  \Octris\Web\App\Web\Request                Instance of request object.
+     * @return  \Octris\Web\Request                Instance of request object.
      */
     public function getRequest()
     {
         if (is_null($this->request)) {
-            $this->request = new \Octris\Web\App\Web\Request();
+            $this->request = new \Octris\Web\Request();
         }
 
         return $this->request;
@@ -88,12 +88,12 @@ abstract class Web extends \Octris\Web\App
     /**
      * Returns instance of response object.
      *
-     * @return  \Octris\Web\App\Web\Response               Instance of response object.
+     * @return  \Octris\Web\Response               Instance of response object.
      */
     public function getResponse()
     {
         if (is_null($this->response)) {
-            $this->response = new \Octris\Web\App\Web\Response();
+            $this->response = new \Octris\Web\Response();
         }
 
         return $this->response;

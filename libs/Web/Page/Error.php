@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Web\App\Web\Page;
+namespace Octris\Web\Page;
 
 /**
  * Custom error pages.
@@ -17,7 +17,7 @@ namespace Octris\Web\App\Web\Page;
  * @copyright   copyright (c) 2015-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-class Error extends \Octris\Web\App\Web\Page
+class Error extends \Octris\Web\Page
 {
     /**
      * Status code.
@@ -45,7 +45,7 @@ class Error extends \Octris\Web\App\Web\Page
      *
      * @param   \Octris\Web\App                        Application instance.
      */
-    public function __construct(\Octris\Web\App\Web $app)
+    public function __construct(\Octris\Web $app)
     {
         parent::__construct($app);
     }
@@ -63,11 +63,11 @@ class Error extends \Octris\Web\App\Web\Page
     /**
      * Implements abstract prepare methof of parent class.
      *
-     * @param   \Octris\Web\App\Web\Page       $last_page      Instance of last called page.
+     * @param   \Octris\Web\Page       $last_page      Instance of last called page.
      * @param   string                          $action         Action that led to current page.
      * @return  mixed                                           Returns either page to redirect to or null.
      */
-    public function prepare(\Octris\Web\App\Web\Page $last_page, $action)
+    public function prepare(\Octris\Web\Page $last_page, $action)
     {
         $response = $this->app->getResponse();
 

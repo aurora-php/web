@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Web\App;
+namespace Octris\Web;
 
 /**
  * Class Autoloader.

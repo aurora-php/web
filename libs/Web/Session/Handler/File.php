@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Web\App\Web\Session\Handler;
+namespace Octris\Web\Session\Handler;
 
 /**
  * Session handler for storing sesion data in files.
@@ -17,7 +17,7 @@ namespace Octris\Web\App\Web\Session\Handler;
  * @copyright   copyright (c) 2011-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-class File implements \Octris\Web\App\Web\Session\HandlerInterface
+class File implements \Octris\Web\Session\HandlerInterface
 {
     /**
      * Stores the path the session files are stored in.

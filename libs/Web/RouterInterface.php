@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Web\App\Web;
+namespace Octris\Web;
 
 /**
  * Interface for implementing routers.
@@ -22,7 +22,7 @@ interface RouterInterface
     /**
      * Initiate routing.
      *
-     * @param   \Octris\Web\App\Web        $app            Instance of application.
+     * @param   \Octris\Web        $app            Instance of application.
      */
-    public function route(\Octris\Web\App\Web $app);
+    public function route(\Octris\Web $app);
 }

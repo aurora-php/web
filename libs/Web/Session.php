@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Octris\Web\App\Web;
+namespace Octris\Web;
 
 /**
  * Session base class.
@@ -22,14 +22,14 @@ class Session
     /**
      * Instance of session class.
      *
-     * @type    \Octris\Web\App\Web\Session
+     * @type    \Octris\Web\Session
      */
     private static $instance = null;
 
     /**
      * Instance of session handler.
      *
-     * @type    \Octris\Web\App\Web\Session\Handler
+     * @type    \Octris\Web\Session\Handler
      */
     private static $handler = null;
 
@@ -116,10 +116,10 @@ class Session
     /**
      * Set session handler.
      *
-     * @param   \Octris\Web\App\Web\Session\HandlerInterface           $handler        Instance of session handler.
+     * @param   \Octris\Web\Session\HandlerInterface           $handler        Instance of session handler.
      * @param   array                                           $options        Optional options overwrite settings from php.ini.
      */
-    public static function setHandler(\Octris\Web\App\Web\Session\HandlerInterface $handler, array $options = array())
+    public static function setHandler(\Octris\Web\Session\HandlerInterface $handler, array $options = array())
     {
         session_set_save_handler(
             array($handler, 'open'),
@@ -143,7 +143,7 @@ class Session
     /**
      * Return session handler instance.
      *
-     * @return  \Octris\Web\App\Web\Session\HandlerInterface                 Session handler of session class instance.
+     * @return  \Octris\Web\Session\HandlerInterface                 Session handler of session class instance.
      */
     public static function getHandler()
     {
@@ -153,7 +153,7 @@ class Session
     /**
      * Return instance of session handler backend.
      *
-     * @return  \Octris\Web\App\Web\Session                            Session class instance.
+     * @return  \Octris\Web\Session                            Session class instance.
      */
     public static function getInstance()
     {
@@ -310,4 +310,4 @@ class Session
 }
 
 // set default session handler
-session::setHandler(new \Octris\Web\App\Web\Session\Handler\Request());
+session::setHandler(new \Octris\Web\Session\Handler\Request());
