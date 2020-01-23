@@ -26,7 +26,7 @@ class Autoloader
      */
     public static function autoload($class)
     {
-        if (strpos($class, 'Octris\\Core\\') === 0) {
+        if (strpos($class, 'Octris\\Web\\') === 0) {
             $file = __DIR__ . '/../' . str_replace('\\', '/', substr($class, 12)) . '.php';
 
             if (file_exists($file)) {
@@ -36,4 +36,4 @@ class Autoloader
     }
 }
 
-spl_autoload_register(array('\Octris\Web\App\Autoloader', 'autoload'));
+spl_autoload_register(array(\Octris\Web\Autoloader::class, 'autoload'));
