@@ -17,7 +17,7 @@ namespace Octris\Web\App\Web\Page;
  * @copyright   copyright (c) 2011-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-trait TPager
+trait PagerTrait
 {
     /**
      * Current page number.
@@ -136,7 +136,7 @@ trait TPager
      *
      * @return  array                           Array of pager data.
      */
-    public function getPager()
+    public function gePager()
     {
         $page = $this->getPage();
         $ipp  = $this->getItemsPerPage();

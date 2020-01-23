@@ -17,7 +17,7 @@ namespace Octris\Web\App\Web\Service;
  * @copyright   copyright (c) 2015-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-class Delegator implements \Octris\Web\App\Web\Router\ICallbackHandler
+class Delegator implements \Octris\Web\App\Web\Router\CallbackHandlerInterface
 {
     /**
      * Service registry.

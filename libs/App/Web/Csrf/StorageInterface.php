@@ -17,7 +17,7 @@ namespace Octris\Web\App\Web\Csrf;
  * @copyright   copyright (c) 2014-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-interface IStorage
+interface StorageInterface
 {
     /**
      * Add a CSRF token to session storage.

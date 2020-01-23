@@ -17,7 +17,7 @@ namespace Octris\Web\App\Web\Session;
  * @copyright   copyright (c) 2011-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-interface IHandler
+interface HandlerInterface
 {
     /**
      * Open session.

@@ -17,7 +17,7 @@ namespace Octris\Web\App\Web\Router;
  * @copyright   copyright (c) 2015-present by Harald Lapp
  * @author      Harald Lapp <harald@octris.org>
  */
-interface ICallbackHandler
+interface CallbackHandlerInterface
 {
     /**
      * Recreate state of class instance.
