@@ -104,7 +104,7 @@ class UrlBased extends PageBased
                         // an instance of a calback handler
                         $next_page = $handler($app);
 
-                        if (!(is_object($handler) && $handler instanceof \Octris\Web\Page)) {
+                        if (!(is_object($next_page) && $next_page instanceof \Octris\Web\Page)) {
                             // callback did not return an instance of a page class, exit application
                             exit();
                         }
@@ -119,6 +119,12 @@ class UrlBased extends PageBased
                     }
 
                     break;
+            }
+
+            if (($action = $last_page->getAction()) !== '') {
+                $last_page->validate($action);
+
+                $next_page = $last_page->getNextPage($action, $this->entry_page);
             }
         } while (false);
 
