@@ -67,8 +67,6 @@ abstract class Web
     public function __construct(\Octris\Web\RouterInterface $router)
     {
         $this->router = $router;
-
-        parent::__construct();
     }
 
     /**
